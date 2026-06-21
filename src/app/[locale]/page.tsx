@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import { useTranslations, useLocale } from "next-intl";
 import { Button, Card, CardContent } from "@/components";
 import SchemaMarkup from "@/components/SchemaMarkup";
