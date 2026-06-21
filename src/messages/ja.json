@@ -18,9 +18,23 @@
       "spicy": "辛い"
     },
     "currency": "¥",
-    "phone": "+81-53-XXXX-XXXX",
+    "phone": "053-451-0154",
+    "phoneMobile": "+81-90-9276-6901",
+    "phoneSecondary": "+81-70-9062-1056",
+    "whatsapp": "+81-90-9276-6901",
     "email": "info@kumarhamamatsu.com",
-    "address": "浜松市、静岡県、日本"
+    "address": "〒430-7790 静岡県浜松市中区伊場町 アクトタワーB1",
+    "addressShort": "アクトタワーB1, 浜松",
+    "secondRestaurant": "クマールさんのカレー",
+    "secondAddress": "〒432-0041 浜松市北区平口2861番地 サンストリート浜北１F",
+    "secondPhone": "053-586-8339",
+    "facebook": "https://www.facebook.com/kumarhamamatsu/",
+    "twitter": "https://twitter.com/HamamatsuKumar",
+    "instagram": "https://www.instagram.com/kumarhamamatsu/",
+    "googleMaps": "https://g.page/kumarhamamatsu/review",
+    "whatsappLink": "https://wa.me/+819092766901",
+    "copyright": "2019 クマールレストラン | Powered by Nik's Consulting",
+    "poweredBy": "Nik's Consulting"
   },
   "nav": {
     "home": "ホーム",

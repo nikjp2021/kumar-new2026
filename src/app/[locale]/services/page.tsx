@@ -191,7 +191,7 @@ export default function ServicesPage() {
                   <p className="text-charcoal/70 mb-6 flex-1">
                     {t(`servicesList.${service.key}.description`)}
                   </p>
-                  <Link href={service.link}>
+                  <Link href={`/${locale}${service.link}`}>
                     <Button variant="secondary" size="sm" className="w-full">
                       {locale === "en" ? "Learn More" : "詳しく見る"}
                       <ArrowRight className="ml-2 w-4 h-4" />
@@ -242,7 +242,7 @@ export default function ServicesPage() {
           </div>
 
           <div className="text-center">
-            <Link href="/contact">
+            <Link href={`/${locale}/contact`}>
               <Button variant="primary" size="lg">
                 {locale === "en" ? "Request a Quote" : "見積もりを依頼する"}
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -324,13 +324,13 @@ export default function ServicesPage() {
               : "ご来店、テイクアウト、特別なイベントのご相談など、お気軽にご連絡ください。"}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link href="/contact">
+            <Link href={`/${locale}/contact`}>
               <Button variant="primary" size="lg">
                 {locale === "en" ? "Reserve Now" : "今すぐ予約"}
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <Link href="/contact">
+            <Link href={`/${locale}/contact`}>
               <Button
                 variant="ghost"
                 size="lg"

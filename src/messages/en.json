@@ -18,9 +18,23 @@
       "spicy": "Spicy"
     },
     "currency": "¥",
-    "phone": "+81-53-XXXX-XXXX",
+    "phone": "053-451-0154",
+    "phoneMobile": "+81-90-9276-6901",
+    "phoneSecondary": "+81-70-9062-1056",
+    "whatsapp": "+81-90-9276-6901",
     "email": "info@kumarhamamatsu.com",
-    "address": "Hamamatsu, Shizuoka, Japan"
+    "address": "430-7790 Shizuoka, Hamamatsu, Naka Ward, Itayamachi, Act Tower B1",
+    "addressShort": "Act Tower B1, Hamamatsu",
+    "secondRestaurant": "Kumar-san's Curry",
+    "secondAddress": "432-0041 Hamamatsu, Kita-ku, Higashiguchi 2861, Sun Street Hamakita 1F",
+    "secondPhone": "053-586-8339",
+    "facebook": "https://www.facebook.com/kumarhamamatsu/",
+    "twitter": "https://twitter.com/HamamatsuKumar",
+    "instagram": "https://www.instagram.com/kumarhamamatsu/",
+    "googleMaps": "https://g.page/kumarhamamatsu/review",
+    "whatsappLink": "https://wa.me/+819092766901",
+    "copyright": "2019 Kumar Restaurant | Powered by Nik's Consulting",
+    "poweredBy": "Nik's Consulting"
   },
   "nav": {
     "home": "Home",

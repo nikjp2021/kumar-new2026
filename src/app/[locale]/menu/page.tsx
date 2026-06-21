@@ -1,382 +1,72 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
-import { DietaryBadges, Button } from "@/components";
-import SchemaMarkup from "@/components/SchemaMarkup";
-import { generateMenuSchema } from "@/lib/schema";
-import {
-  UtensilsCrossed,
-  ShoppingBag,
-  Phone,
-} from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Phone } from "lucide-react";
 
-type DietaryTag = "vegetarian" | "vegan" | "halal" | "glutenFree";
-
-type MenuCategory =
-  | "all"
-  | "appetizers"
-  | "curries"
-  | "tandoori"
-  | "biryani"
-  | "breads"
-  | "desserts"
-  | "beverages";
-
-interface MenuItem {
-  name: string;
-  nameJa: string;
-  nameEn: string;
-  price: number;
-  description: string;
-  descriptionJa: string;
-  dietary: DietaryTag[];
-  category: Exclude<MenuCategory, "all">;
-  image?: string;
-}
-
-const menuItems: MenuItem[] = [
-  // Appetizers
-  {
-    name: "Samosa",
-    nameEn: "Samosa",
-    nameJa: "サモサ",
-    price: 500,
-    description: "Crispy pastry with spiced potatoes and peas",
-    descriptionJa: "スパイス入りジャガイモとエンドウ豆の入ったカリカリのパストリー",
-    dietary: ["vegetarian", "vegan"],
-    category: "appetizers",
-    image: "/images/menu/1-2.png",
-  },
-  {
-    name: "Paneer Tikka",
-    nameEn: "Paneer Tikka",
-    nameJa: "パニールティッカ",
-    price: 700,
-    description: "Grilled cottage cheese with spices",
-    descriptionJa: "スパイス入りグリルカッテージチーズ",
-    dietary: ["vegetarian"],
-    category: "appetizers",
-    image: "/images/menu/3-2.png",
-  },
-  {
-    name: "Vegetable Pakora",
-    nameEn: "Vegetable Pakora",
-    nameJa: "野菜パコラ",
-    price: 500,
-    description: "Crispy fried vegetable fritters",
-    descriptionJa: "カリカリの揚げ野菜フライター",
-    dietary: ["vegetarian", "vegan"],
-    category: "appetizers",
-    image: "/images/menu/2-2.png",
-  },
-  {
-    name: "Chicken Tikka",
-    nameEn: "Chicken Tikka",
-    nameJa: "チキンティッカ",
-    price: 800,
-    description: "Marinated chicken grilled in clay oven",
-    descriptionJa: "タンドールオーブンで焼いたマリネチキン",
-    dietary: ["halal"],
-    category: "appetizers",
-    image: "/images/menu/4-2.png",
-  },
-  // Curries
-  {
-    name: "Butter Chicken",
-    nameEn: "Butter Chicken",
-    nameJa: "バターチキン",
-    price: 1300,
-    description: "Clay oven roasted chicken in tomato sauce",
-    descriptionJa: "タンドールオーブンで焼いたチキンのトマトソース",
-    dietary: ["halal"],
-    category: "curries",
-    image: "/images/menu/5-2.png",
-  },
-  {
-    name: "Chana Masala",
-    nameEn: "Chana Masala",
-    nameJa: "チャナマサラ",
-    price: 1000,
-    description: "Chickpeas in tomato and spice gravy",
-    descriptionJa: "トマトとスパイスのグレービーのひよこ豆",
-    dietary: ["vegetarian", "vegan", "halal"],
-    category: "curries",
-    image: "/images/menu/6-2.png",
-  },
-  {
-    name: "Palak Paneer",
-    nameEn: "Palak Paneer",
-    nameJa: "パラックパニール",
-    price: 1200,
-    description: "Cottage cheese in spinach curry",
-    descriptionJa: "ほうれん草カレー入りカッテージチーズ",
-    dietary: ["vegetarian", "halal"],
-    category: "curries",
-    image: "/images/menu/7-2.png",
-  },
-  {
-    name: "Keema Curry",
-    nameEn: "Keema Curry",
-    nameJa: "キーマカレー",
-    price: 1100,
-    description: "Minced lamb with ginger and garlic",
-    descriptionJa: "ジンジャーとガーリック入りひき肉カレー",
-    dietary: ["halal"],
-    category: "curries",
-    image: "/images/menu/9-2.png",
-  },
-  {
-    name: "Dal Makhani",
-    nameEn: "Dal Makhani",
-    nameJa: "ダルマカニ",
-    price: 900,
-    description: "Black lentils slow-cooked with butter",
-    descriptionJa: "バターでゆっくり煮込んだ黒 lentils",
-    dietary: ["vegetarian", "halal"],
-    category: "curries",
-    image: "/images/menu/8-2.png",
-  },
-  {
-    name: "Chicken Vindaloo",
-    nameEn: "Chicken Vindaloo",
-    nameJa: "チキンヴィンダルー",
-    price: 1300,
-    description: "Spicy Goan curry with potatoes",
-    descriptionJa: "ジャガイモ入りスパイシーなゴアカレー",
-    dietary: ["halal"],
-    category: "curries",
-  },
-  {
-    name: "Lamb Rogan Josh",
-    nameEn: "Lamb Rogan Josh",
-    nameJa: "ラムロガンジョッシュ",
-    price: 1400,
-    description: "Aromatic lamb in Kashmiri spices",
-    descriptionJa: "カシミールスパイス入り香り高いラム",
-    dietary: ["halal"],
-    category: "curries",
-  },
-  {
-    name: "Paneer Butter Masala",
-    nameEn: "Paneer Butter Masala",
-    nameJa: "パニールバターマサラ",
-    price: 1200,
-    description: "Cottage cheese in creamy tomato",
-    descriptionJa: "クリーミーなトマト入りカッテージチーズ",
-    dietary: ["vegetarian", "halal"],
-    category: "curries",
-  },
-  // Tandoori
-  {
-    name: "Tandoori Chicken",
-    nameEn: "Tandoori Chicken",
-    nameJa: "タンドーリチキン",
-    price: 1200,
-    description: "Half chicken marinated and clay oven roasted",
-    descriptionJa: "マリネしてタンドールオーブンで焼いた半分のチキン",
-    dietary: ["halal"],
-    category: "tandoori",
-    image: "/images/menu/10-2.png",
-  },
-  {
-    name: "Seekh Kebab",
-    nameEn: "Seekh Kebab",
-    nameJa: "シーキューケバブ",
-    price: 1000,
-    description: "Minced lamb skewers with spices",
-    descriptionJa: "スパイス入りひき肉の串ケバブ",
-    dietary: ["halal"],
-    category: "tandoori",
-    image: "/images/menu/11.png",
-  },
-  {
-    name: "Tandoori Prawns",
-    nameEn: "Tandoori Prawns",
-    nameJa: "タンドーリエビ",
-    price: 1500,
-    description: "Jumbo prawns in clay oven",
-    descriptionJa: "タンドールオーブン入りジャンボエビ",
-    dietary: ["halal"],
-    category: "tandoori",
-  },
-  // Biryani & Rice
-  {
-    name: "Chicken Biryani",
-    nameEn: "Chicken Biryani",
-    nameJa: "チキンビリヤニ",
-    price: 1300,
-    description: "Aromatic basmati rice with chicken",
-    descriptionJa: "チキン入り香り高いバスマティライス",
-    dietary: ["halal"],
-    category: "biryani",
-    image: "/images/menu/13.png",
-  },
-  {
-    name: "Vegetable Biryani",
-    nameEn: "Vegetable Biryani",
-    nameJa: "野菜ビリヤニ",
-    price: 1000,
-    description: "Mixed vegetables with saffron rice",
-    descriptionJa: "サフランライス入り混合野菜",
-    dietary: ["vegetarian", "vegan", "halal"],
-    category: "biryani",
-    image: "/images/menu/14.png",
-  },
-  {
-    name: "Lamb Biryani",
-    nameEn: "Lamb Biryani",
-    nameJa: "ラムビリヤニ",
-    price: 1500,
-    description: "Tender lamb with fragrant rice",
-    descriptionJa: "柔らかいラムと香り高いライス",
-    dietary: ["halal"],
-    category: "biryani",
-  },
-  {
-    name: "Steamed Basmati Rice",
-    nameEn: "Steamed Basmati Rice",
-    nameJa: "蒸しバスマティライス",
-    price: 300,
-    description: "Plain basmati rice",
-    descriptionJa: "プレーンバスマティライス",
-    dietary: ["vegetarian", "vegan", "halal"],
-    category: "biryani",
-  },
-  // Naan & Breads
-  {
-    name: "Plain Naan",
-    nameEn: "Plain Naan",
-    nameJa: "プレーンナーン",
-    price: 200,
-    description: "Soft leavened bread",
-    descriptionJa: "柔らかい発酵パン",
-    dietary: ["vegetarian"],
-    category: "breads",
-    image: "/images/menu/12.png",
-  },
-  {
-    name: "Garlic Naan",
-    nameEn: "Garlic Naan",
-    nameJa: "ガーリックナーン",
-    price: 250,
-    description: "Naan with garlic and butter",
-    descriptionJa: "ガーリックとバター入りナーン",
-    dietary: ["vegetarian"],
-    category: "breads",
-  },
-  {
-    name: "Cheese Naan",
-    nameEn: "Cheese Naan",
-    nameJa: "チーズナーン",
-    price: 300,
-    description: "Naan stuffed with cheese",
-    descriptionJa: "チーズ入り詰め合わせナーン",
-    dietary: ["vegetarian"],
-    category: "breads",
-  },
-  {
-    name: "Keema Naan",
-    nameEn: "Keema Naan",
-    nameJa: "キーマナーン",
-    price: 350,
-    description: "Naan stuffed with spiced minced meat",
-    descriptionJa: "スパイス入りひき肉詰めナーン",
-    dietary: ["halal"],
-    category: "breads",
-  },
-  {
-    name: "Roti",
-    nameEn: "Roti",
-    nameJa: "ロティ",
-    price: 150,
-    description: "Whole wheat flatbread",
-    descriptionJa: "全粒粉フラットブレッド",
-    dietary: ["vegetarian", "vegan"],
-    category: "breads",
-  },
-  // Desserts
-  {
-    name: "Gulab Jamun",
-    nameEn: "Gulab Jamun",
-    nameJa: "グラブジャムン",
-    price: 400,
-    description: "Deep-fried milk dumplings in sugar syrup",
-    descriptionJa: "シロップ入り揚げミルクダンプリング",
-    dietary: ["vegetarian"],
-    category: "desserts",
-    image: "/images/menu/16.png",
-  },
-  {
-    name: "Kheer",
-    nameEn: "Kheer",
-    nameJa: "クヒール",
-    price: 400,
-    description: "Rice pudding with cardamom and nuts",
-    descriptionJa: "カルダモンとナッツ入りライスプリン",
-    dietary: ["vegetarian"],
-    category: "desserts",
-  },
-  {
-    name: "Mango Lassi",
-    nameEn: "Mango Lassi",
-    nameJa: "マンゴーラッシー",
-    price: 400,
-    description: "Sweet yogurt drink with mango",
-    descriptionJa: "マンゴー入り甘いヨーグルトドリンク",
-    dietary: ["vegetarian"],
-    category: "desserts",
-  },
-  // Beverages
-  {
-    name: "Masala Chai",
-    nameEn: "Masala Chai",
-    nameJa: "マサラチャイ",
-    price: 300,
-    description: "Spiced Indian tea with milk",
-    descriptionJa: "ミルク入りスパイシーなインドティー",
-    dietary: ["vegetarian"],
-    category: "beverages",
-  },
-  {
-    name: "Indian Beer",
-    nameEn: "Indian Beer",
-    nameJa: "インドビール",
-    price: 500,
-    description: "Kingfisher or Taj Mahal",
-    descriptionJa: "キングフィッシャーまたはタージマハル",
-    dietary: [],
-    category: "beverages",
-  },
-  {
-    name: "Soft Drinks",
-    nameEn: "Soft Drinks",
-    nameJa: "ソフトドリンク",
-    price: 200,
-    description: "Coke, Sprite, etc.",
-    descriptionJa: "コーラ、スプライトなど",
-    dietary: [],
-    category: "beverages",
-  },
+const seasonalMenuImages = [
+  { src: "/images/menu/H26春_クマールパーティー.jpg", alt: "Spring Party 2014" },
+  { src: "/images/menu/H28%E7%A7%8B_%E3%82%AF%E3%83%9E%E3%83%BC%E3%83%AB%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3%E3%83%BC.jpg", alt: "Autumn Party Menu 2016" },
+  { src: "/images/menu/H31%E6%98%A5_%E3%82%AF%E3%83%9E%E3%83%BC%E3%83%AB_%E3%83%91%E3%83%B3%E3%83%95%E2%91%A0-1024x683.jpg", alt: "Spring Lunch 1 2019" },
+  { src: "/images/menu/H31%E6%98%A5_%E3%82%AF%E3%83%9E%E3%83%BC%E3%83%AB_%E3%83%91%E3%83%B3%E3%83%95%E2%91%A1-1024x683.jpg", alt: "Spring Lunch 2 2019" },
+  { src: "/images/menu/H31%E6%98%A5_%E3%82%AF%E3%83%9E%E3%83%BC%E3%83%AB_%E3%83%91%E3%83%B3%E3%83%95%E2%91%A7-1024x683.jpg", alt: "Spring Lunch 3 2019" },
+  { src: "/images/menu/H31%E6%98%A5_%E3%82%AF%E3%83%9E%E3%83%BC%E3%83%AB_%E3%83%91%E3%83%B3%E3%83%95%E2%91%A8-1024x683.jpg", alt: "Spring Lunch 4 2019" },
+  { src: "/images/menu/28%E5%B9%B4%E5%BA%A6%E5%86%AC%E3%80%80%E3%82%AF%E3%83%9E%E3%83%BC%E3%83%AB%E3%80%80%E3%83%9B%E3%83%AA%E3%83%87%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%81.jpg", alt: "Holiday Lunch 2016" },
+  { src: "/images/menu/29%E5%A4%8F_%E3%82%AF%E3%83%9E%E3%83%BC%E3%83%AB_%E5%B9%B3%E6%97%A5%E3%83%A9%E3%83%B3%E3%83%81.jpg", alt: "Summer Lunch 2017" },
+  { src: "/images/menu/%E3%82%AF%E3%83%9E%E3%83%BC%E3%83%AB%E3%80%80%EF%BC%A828%E7%A7%8B%E2%91%A0.jpg", alt: "Autumn Menu 2016" },
 ];
 
-const categories: { key: MenuCategory; label: string; labelJa: string }[] = [
-  { key: "all", label: "All", labelJa: "すべて" },
-  { key: "appetizers", label: "Appetizers", labelJa: "前菜" },
-  { key: "curries", label: "Curries", labelJa: "カレー" },
-  { key: "tandoori", label: "Tandoori", labelJa: "タンドーリ" },
-  { key: "biryani", label: "Biryani & Rice", labelJa: "ビリヤニ＆ライス" },
-  { key: "breads", label: "Naan & Breads", labelJa: "ナーン＆ブレッド" },
-  { key: "desserts", label: "Desserts", labelJa: "デザート" },
-  { key: "beverages", label: "Beverages", labelJa: "ビバレッジ" },
+const delicacyImages = [
+  { src: "/images/food/india-indian-indian-food-1481500-1024x682.jpg", name: "Samosa", nameJa: "サモサ" },
+  { src: "/images/food/india-indian-indian-food-1481494-1024x682.jpg", name: "Tandoori Chicken", nameJa: "タンドーリチキン" },
+  { src: "/images/food/chole_bhature.jpg", name: "Chole Bhature", nameJa: "チョーレ バチューレ" },
+  { src: "/images/food/paneer-tikka-cheese-seek-4929034-1024x682.jpg", name: "Paneer Tikka", nameJa: "パニールティッカ" },
+  { src: "/images/food/skewer-kebab-barbecue-3370443-1024x679.jpg", name: "Kebab", nameJa: "ケバブ" },
+  { src: "/images/food/veg_manchurian-1024x498.jpg", name: "Veg Manchurian", nameJa: "ベジ マンチュリアン" },
 ];
 
-const dietaryFilters: { key: DietaryTag; label: string; labelJa: string }[] = [
-  { key: "vegetarian", label: "Vegetarian", labelJa: "ベジタリアン" },
-  { key: "vegan", label: "Vegan", labelJa: "ヴィーガン" },
-  { key: "halal", label: "Halal", labelJa: "ハラル" },
+const allMenuImages = [
+  "/images/menu/1-1-150x150.png",
+  "/images/menu/2-1-150x150.png",
+  "/images/menu/3-1-150x150.png",
+  "/images/menu/4-1-150x150.png",
+  "/images/menu/5-1-150x150.png",
+  "/images/menu/6-1-150x150.png",
+  "/images/menu/7-1-150x150.png",
+  "/images/menu/8-1-150x150.png",
+  "/images/menu/9-1-150x150.png",
+  "/images/menu/10-1-150x150.png",
+  "/images/menu/1-2.png",
+  "/images/menu/2-2.png",
+  "/images/menu/3-2.png",
+  "/images/menu/4-2.png",
+  "/images/menu/5-2.png",
+  "/images/menu/6-2.png",
+  "/images/menu/7-2.png",
+  "/images/menu/8-2.png",
+  "/images/menu/9-2.png",
+  "/images/menu/10-2.png",
+  "/images/menu/11.png",
+  "/images/menu/12.png",
+  "/images/menu/13.png",
+  "/images/menu/14.png",
+  "/images/menu/16.png",
+  "/images/menu/17.png",
+  "/images/menu/19.png",
+  "/images/menu/13-214x300.png",
+  "/images/menu/17-214x300.png",
+  "/images/menu/18-209x300.png",
+  "/images/menu/21-210x300.png",
+  "/images/menu/6-2-211x300.png",
+  "/images/menu/7-2-205x300.png",
+  "/images/menu/1-150x150.png",
+  "/images/menu/2-150x150.png",
+];
+
+const takeoutImages = [
+  "/images/menu/1-150x150.png",
+  "/images/menu/2-150x150.png",
 ];
 
 export default function MenuPage() {
@@ -384,12 +74,10 @@ export default function MenuPage() {
   const locale = useLocale();
   const isJa = locale === "ja";
 
-  const [activeCategory, setActiveCategory] = useState<MenuCategory>("all");
-  const [activeDietary, setActiveDietary] = useState<DietaryTag | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const baseUrl = "https://kumarhamamatsu.com";
-    const locale = useLocale();
     const canonicalPath = `/en/menu`;
 
     let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
@@ -430,159 +118,190 @@ export default function MenuPage() {
     };
   }, []);
 
-  const filteredItems = menuItems.filter((item) => {
-    const matchesCategory =
-      activeCategory === "all" || item.category === activeCategory;
-    const matchesDietary =
-      activeDietary === null || item.dietary.includes(activeDietary);
-    return matchesCategory && matchesDietary;
-  });
+  const openLightbox = useCallback((index: number) => {
+    setLightboxIndex(index);
+    document.body.style.overflow = "hidden";
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setLightboxIndex(null);
+    document.body.style.overflow = "";
+  }, []);
+
+  const navigateLightbox = useCallback((direction: "prev" | "next") => {
+    if (lightboxIndex === null) return;
+    if (direction === "next") {
+      setLightboxIndex((lightboxIndex + 1) % allMenuImages.length);
+    } else {
+      setLightboxIndex((lightboxIndex - 1 + allMenuImages.length) % allMenuImages.length);
+    }
+  }, [lightboxIndex]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") navigateLightbox("next");
+      if (e.key === "ArrowLeft") navigateLightbox("prev");
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxIndex, closeLightbox, navigateLightbox]);
 
   return (
     <div>
-      <SchemaMarkup data={generateMenuSchema(menuItems)} />
       {/* Hero Section */}
-      <section className="relative h-[400px] overflow-hidden">
+      <section className="relative h-[500px] overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url(/images/about/dine-out.jpg)" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
+        <div className="absolute top-4 right-4 md:top-8 md:right-8 opacity-20 pointer-events-none">
+          <Image
+            src="/images/decorative/frill-free-img.png"
+            alt=""
+            width={200}
+            height={200}
+          />
+        </div>
         <div className="relative z-10 h-full flex items-center justify-center">
           <div className="text-center px-4">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-              {isJa ? "メニュー" : "Our Menu"}
+              {isJa ? "クマールレストラン メニュー" : "Kumar restaurant Menu."}
             </h1>
-            <p className="text-xl md:text-2xl text-saffron-light">
-              {isJa ? "高品質な食材、美味しい料理" : "Quality Ingredients, Tasty Meals"}
+            <p className="text-xl md:text-2xl text-saffron-light max-w-3xl mx-auto">
+              {isJa
+                ? "日本の浜松の中心部に位置するクマールレストランは、本格的なインド料理の灯台です。"
+                : "Nestled in the heart of Hamamatsu, Japan, Kumar Restaurant stands as a beacon of authentic Indian cuisine."}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Category Tabs */}
-      <section className="sticky top-20 z-40 bg-white/95 backdrop-blur-sm shadow-sm">
+      {/* The Kumar Experience */}
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="overflow-x-auto py-4 scrollbar-hide">
-            <div className="flex gap-2 min-w-max">
-              {categories.map((cat) => (
-                <button
-                  key={cat.key}
-                  onClick={() => setActiveCategory(cat.key)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                    activeCategory === cat.key
-                      ? "bg-saffron text-charcoal shadow-md"
-                      : "bg-cream text-charcoal/70 hover:bg-saffron/20"
-                  }`}
-                >
-                  {isJa ? cat.labelJa : cat.label}
-                </button>
-              ))}
-            </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              {isJa ? "クマール体験" : "The Kumar Experience"}
+            </h2>
+            <p className="text-lg text-charcoal/70 max-w-3xl mx-auto">
+              {isJa
+                ? "伝統的なインド料理と温かいおもてなしをお楽しみください。季節の特别メニューで、新しい味わいをお届けします。"
+                : "Savor the warmth of traditional Indian hospitality paired with our carefully crafted seasonal menus. Each season brings new flavors to delight your palate."}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {seasonalMenuImages.map((img, i) => (
+              <div key={i} className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-lg group">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-lg font-semibold">{img.alt}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Dietary Filters */}
-      <section className="bg-white border-b border-cream-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-sm font-medium text-charcoal/70">
-              {isJa ? "食事制限で絞り込む:" : "Filter by dietary:"}
-            </span>
-            <button
-              onClick={() => setActiveDietary(null)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                activeDietary === null
-                  ? "bg-charcoal text-white"
-                  : "bg-cream text-charcoal/70 hover:bg-cream-dark"
-              }`}
-            >
-              {isJa ? "すべて" : "All"}
-            </button>
-            {dietaryFilters.map((filter) => (
+      {/* Indian Delicacies */}
+      <section className="py-16 bg-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 relative">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8 opacity-30 pointer-events-none">
+              <Image
+                src="/images/decorative/leaf-free-img.png"
+                alt=""
+                width={120}
+                height={120}
+              />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              {isJa ? "インドの美食" : "Indian Delicacies"}
+            </h2>
+            <p className="text-lg text-charcoal/70 max-w-2xl mx-auto">
+              {isJa
+                ? "最高の食材と伝統的な調理法で作られた、本格的なインド料理を味わってください。"
+                : "Discover our signature dishes crafted with the finest ingredients and traditional cooking methods passed down through generations."}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {delicacyImages.map((dish, i) => (
+              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={dish.src}
+                    alt={isJa ? dish.nameJa : dish.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="p-4 text-center">
+                  <h3 className="text-lg font-bold text-charcoal">
+                    {isJa ? dish.nameJa : dish.name}
+                  </h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Full Menu Gallery */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              {isJa ? "メニュー" : "Menu"}
+            </h2>
+            <p className="text-lg text-charcoal/70">
+              {isJa
+                ? "メニュー画像をクリックで拡大表示"
+                : "Click on any menu image to view full size"}
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {allMenuImages.map((src, i) => (
               <button
-                key={filter.key}
-                onClick={() =>
-                  setActiveDietary(activeDietary === filter.key ? null : filter.key)
-                }
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                  activeDietary === filter.key
-                    ? "bg-charcoal text-white"
-                    : "bg-cream text-charcoal/70 hover:bg-cream-dark"
-                }`}
+                key={i}
+                onClick={() => openLightbox(i)}
+                className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer group bg-charcoal/5"
               >
-                {isJa ? filter.labelJa : filter.label}
+                <Image
+                  src={src}
+                  alt={`Menu page ${i + 1}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 17vw"
+                />
+                <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                  <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm font-medium bg-charcoal/60 px-2 py-1 rounded">
+                    {isJa ? "拡大" : "View"}
+                  </span>
+                </div>
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Menu Grid */}
-      <section className="py-12 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredItems.length === 0 ? (
-            <div className="text-center py-20">
-              <UtensilsCrossed className="w-16 h-16 text-charcoal/20 mx-auto mb-4" />
-              <p className="text-xl text-charcoal/50">
-                {isJa
-                  ? "この条件に一致する料理は見つかりませんでした"
-                  : "No dishes match the selected filters"}
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredItems.map((item) => (
-                <div
-                  key={item.name}
-                  className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200"
-                >
-                  {item.image && (
-                    <div className="relative aspect-[16/10] bg-charcoal/5 overflow-hidden">
-                      <Image
-                        src={item.image}
-                        alt={isJa ? item.nameJa : item.nameEn}
-                        fill
-                        className="object-cover hover:scale-105 transition-transform duration-300"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    </div>
-                  )}
-                  <div className="p-5">
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <h3 className="text-lg font-bold text-charcoal">
-                        {isJa ? item.nameJa : item.nameEn}
-                      </h3>
-                      <span className="text-lg font-bold text-red whitespace-nowrap">
-                        ¥{item.price.toLocaleString()}
-                      </span>
-                    </div>
-                    <p className="text-sm text-charcoal/60 mb-3">
-                      {isJa ? item.descriptionJa : item.description}
-                    </p>
-                    {item.dietary.length > 0 && (
-                      <DietaryBadges dietary={item.dietary} />
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Takeout Specials */}
-      <section className="py-16 bg-charcoal text-white">
+      {/* Takeout Special */}
+      <section className="py-16 bg-charcoal">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <ShoppingBag className="w-8 h-8 text-saffron" />
-                <h2 className="text-3xl font-bold">
-                  {isJa ? "テイクアウト特集" : "Takeout Specials"}
-                </h2>
-              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                {isJa ? "テイクアウト特集" : "Takeout Special"}
+              </h2>
               <p className="text-gray-300 mb-6">
                 {isJa
                   ? "お気に入りの料理をお持ち帰りください。テイクアウトで10%割引！"
@@ -602,71 +321,123 @@ export default function MenuPage() {
                   {isJa ? "電話で事前注文可能" : "Pre-order by phone available"}
                 </li>
               </ul>
-              <div className="flex items-center gap-4">
-                <a href={`tel:${tCommon("phone")}`}>
-                  <Button variant="primary" size="lg">
-                    <Phone className="w-5 h-5 mr-2" />
-                    {tCommon("phone")}
-                  </Button>
-                </a>
-              </div>
+              <a
+                href="tel:053-451-0154"
+                className="inline-flex items-center gap-2 bg-saffron text-charcoal px-6 py-3 rounded-lg font-semibold hover:bg-saffron-light transition-colors"
+              >
+                <Phone className="w-5 h-5" />
+                {isJa ? "今すぐ注文" : "Order Now"}
+              </a>
             </div>
-            <div className="bg-charcoal/50 rounded-2xl p-8 border border-gray-700">
-              <h3 className="text-xl font-semibold mb-4 text-saffron">
-                {isJa ? "人気テイクアウトセット" : "Popular Takeout Sets"}
-              </h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-gray-700">
-                  <div>
-                    <p className="font-medium">{isJa ? "ビリヤニセット" : "Biryani Set"}</p>
-                    <p className="text-sm text-gray-400">
-                      {isJa ? "ビリヤニ + ナーン + ラッシー" : "Biryani + Naan + Lassi"}
-                    </p>
-                  </div>
-                  <span className="text-saffron font-bold">¥1,800</span>
+            <div className="grid grid-cols-2 gap-4">
+              {takeoutImages.map((src, i) => (
+                <div key={i} className="relative aspect-square rounded-xl overflow-hidden shadow-lg">
+                  <Image
+                    src={src}
+                    alt={`Takeout menu ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                  />
                 </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-700">
-                  <div>
-                    <p className="font-medium">{isJa ? "カレーセット" : "Curry Set"}</p>
-                    <p className="text-sm text-gray-400">
-                      {isJa ? "カレー + ライス + ナーン" : "Curry + Rice + Naan"}
-                    </p>
-                  </div>
-                  <span className="text-saffron font-bold">¥1,600</span>
-                </div>
-                <div className="flex justify-between items-center py-3">
-                  <div>
-                    <p className="font-medium">{isJa ? "タンドーリセット" : "Tandoori Set"}</p>
-                    <p className="text-sm text-gray-400">
-                      {isJa ? "タンドーリチキン + サラダ + ナーン" : "Tandoori Chicken + Salad + Naan"}
-                    </p>
-                  </div>
-                  <span className="text-saffron font-bold">¥2,000</span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-saffron">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
-            {isJa ? "ご予約" : "Reserve a Table"}
-          </h2>
-          <p className="text-lg text-charcoal/70 mb-8 max-w-2xl mx-auto">
-            {isJa
-              ? "レストランで本格インド料理をお楽しみください。ご予約をお待ちしております。"
-              : "Experience authentic Indian dining at its finest. We look forward to welcoming you."}
-          </p>
-          <Link href={`/${locale}/contact`}>
-            <Button variant="secondary" size="lg">
-              {isJa ? "ご予約はこちら" : "Reserve Now"}
-            </Button>
-          </Link>
+      {/* Footer */}
+      <footer className="bg-charcoal text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div className="text-center md:text-left">
+              <Image
+                src="/images/logos/cropped-KumarLogo1-2-1-300x143.png"
+                alt="Kumar Restaurant Logo"
+                width={200}
+                height={95}
+                className="mx-auto md:mx-0 mb-4"
+              />
+            </div>
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Image
+                  src="/images/decorative/old-typical-phone.png"
+                  alt="Phone"
+                  width={40}
+                  height={40}
+                  className="opacity-70"
+                />
+                <div>
+                  <p className="text-sm text-gray-400">
+                    {isJa ? "ご予約はこちら" : "Call for All Your Reservations"}
+                  </p>
+                  <a href="tel:053-451-0154" className="text-xl font-bold text-saffron hover:text-saffron-light transition-colors">
+                    053-451-0154
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="text-center md:text-right">
+              <p className="text-gray-400 text-sm mb-2">
+                {isJa
+                  ? `© ${new Date().getFullYear()} クマールレストラン. All rights reserved.`
+                  : `© ${new Date().getFullYear()} Kumar Restaurant. All rights reserved.`}
+              </p>
+              <p className="text-saffron font-semibold text-lg italic">
+                {isJa ? "スパイシーな生活を" : "Spice up life at Kumar Restaurant"}
+              </p>
+            </div>
+          </div>
         </div>
-      </section>
+      </footer>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-charcoal/95 flex items-center justify-center"
+          onClick={closeLightbox}
+        >
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 text-white hover:text-saffron transition-colors z-10"
+          >
+            <X className="w-8 h-8" />
+          </button>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); navigateLightbox("prev"); }}
+            className="absolute left-4 text-white hover:text-saffron transition-colors z-10 p-2"
+          >
+            <ChevronLeft className="w-10 h-10" />
+          </button>
+
+          <div
+            className="relative max-w-4xl max-h-[90vh] w-full h-full p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={allMenuImages[lightboxIndex]}
+              alt={`Menu page ${lightboxIndex + 1}`}
+              fill
+              className="object-contain"
+              sizes="90vw"
+              priority
+            />
+          </div>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); navigateLightbox("next"); }}
+            className="absolute right-4 text-white hover:text-saffron transition-colors z-10 p-2"
+          >
+            <ChevronRight className="w-10 h-10" />
+          </button>
+
+          <div className="absolute bottom-4 text-white text-sm">
+            {lightboxIndex + 1} / {allMenuImages.length}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
