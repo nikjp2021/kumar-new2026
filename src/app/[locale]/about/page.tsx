@@ -31,19 +31,6 @@ const galleryImages = [
   { src: "/images/about/image-1698146927.jpg", alt: "Kumar Restaurant Photo", caption: "Kumar Restaurant" },
   { src: "/images/about/Serving-chef-owcre1sm9n7ysujexuahw9245a7wb87bmmf02yig40.jpg", alt: "Chef Serving", caption: "Chef Serving" },
   { src: "/images/about/クマールMain-rotated.jpg", alt: "Kumar Restaurant Main", caption: "Kumar Restaurant Main" },
-  { src: "/images/food/IMG-20201123-WA0002__01-768x762.jpg", alt: "Mr. Kumar with Guests", caption: "Mr. Kumar with Guests" },
-  { src: "/images/blog/Screenshot_20201119-125135__01-1024x745.jpg", alt: "Mr. Binay Kumar", caption: "Mr. Binay Kumar" },
-  { src: "/images/blog/Screenshot_20201119-125214-300x274.jpg", alt: "Mr. Binay Kumar", caption: "Mr. Binay Kumar" },
-  { src: "/images/blog/Screenshot_20201119-125314-300x266.jpg", alt: "Mr. Binay Kumar", caption: "Mr. Binay Kumar" },
-  { src: "/images/blog/Screenshot_20201119-125401-768x537.jpg", alt: "Mr. Binay Kumar", caption: "Mr. Binay Kumar" },
-  { src: "/images/blog/Screenshot_20201119-125444.jpg", alt: "Mr. Binay Kumar", caption: "Mr. Binay Kumar" },
-  { src: "/images/blog/Screenshot_20201119-125456.jpg", alt: "Mr. Binay Kumar", caption: "Mr. Binay Kumar" },
-  { src: "/images/wedding/20231018_212357-1024x942.jpg", alt: "Wedding Celebration", caption: "Wedding Celebration" },
-  { src: "/images/wedding/20231018_212407-1024x909.jpg", alt: "Wedding Celebration", caption: "Wedding Celebration" },
-  { src: "/images/wedding/20231018_212424-1024x665.jpg", alt: "Wedding Celebration", caption: "Wedding Celebration" },
-  { src: "/images/wedding/20231018_212435-1024x766.jpg", alt: "Wedding Celebration", caption: "Wedding Celebration" },
-  { src: "/images/wedding/20231018_212449-1024x579.jpg", alt: "Wedding Celebration", caption: "Wedding Celebration" },
-  { src: "/images/wedding/20231018_212616-1024x1019.jpg", alt: "Wedding Celebration", caption: "Wedding Celebration" },
 ];
 
 const amenities = [
