@@ -15,6 +15,7 @@ import {
   Check,
 } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -126,25 +127,40 @@ export default function ServicesPage() {
     <div>
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center">
-        <div className="absolute inset-0 z-0">
+        <motion.div
+          className="absolute inset-0 z-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" as const }}
+        >
           <img
             src="/images/food/india-indian-indian-food-1481500-1024x682.jpg"
             alt="Kumar Restaurant Services"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-        </div>
+        </motion.div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              {locale === "en" ? "Our Services" : "サービス"}
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90">
+            <motion.h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" as const }}
+            >
+              {locale === "en"                 ? "Our Services" : "サービス"}
+            </motion.h1>
+            <motion.p
+              className="text-xl md:text-2xl text-white/90"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" as const }}
+            >
               {locale === "en"
                 ? "From dine-in to delivery, we bring authentic Indian flavors to you"
                 : " dine-inからデリバリーまで、本格的なインド料理をお届けします"}
-            </p>
+            </motion.p>
           </div>
         </div>
       </section>
@@ -152,7 +168,13 @@ export default function ServicesPage() {
       {/* Service Cards Section */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {locale === "en" ? "What We Offer" : "提供サービス"}
             </h2>
@@ -161,20 +183,36 @@ export default function ServicesPage() {
                 ? "Choose the service that suits your needs"
                 : "ご希望に合わせたサービスをお選びください"}
             </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service) => (
-              <Card key={service.key} hover className="h-full flex flex-col">
-                <CardContent className="pt-8 pb-8 flex flex-col flex-1">
-                  <div
-                    className={`w-16 h-16 mb-6 rounded-full flex items-center justify-center ${
-                      service.color === "saffron"
-                        ? "bg-saffron/20"
-                        : service.color === "forest"
-                        ? "bg-forest/20"
-                        : "bg-red/20"
-                    }`}
-                  >
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {services.map((service, index) => (
+              <motion.div
+                key={service.key}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 40px rgba(0,0,0,0.1)" }}
+              >
+                <Card hover className="h-full flex flex-col">
+                  <CardContent className="pt-8 pb-8 flex flex-col flex-1">
+                    <motion.div
+                      className={`w-16 h-16 mb-6 rounded-full flex items-center justify-center ${
+                        service.color === "saffron"
+                          ? "bg-saffron/20"
+                          : service.color === "forest"
+                          ? "bg-forest/20"
+                          : "bg-red/20"
+                      }`}
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring" as const, stiffness: 300 }}
+                    >
                     <service.icon
                       className={`w-8 h-8 ${
                         service.color === "saffron"
@@ -184,30 +222,37 @@ export default function ServicesPage() {
                           : "text-red"
                       }`}
                     />
-                  </div>
-                  <h3 className="text-xl font-semibold text-charcoal mb-3">
-                    {t(`servicesList.${service.key}.title`)}
-                  </h3>
-                  <p className="text-charcoal/70 mb-6 flex-1">
-                    {t(`servicesList.${service.key}.description`)}
-                  </p>
-                  <Link href={`/${locale}${service.link}`}>
-                    <Button variant="secondary" size="sm" className="w-full">
-                      {locale === "en" ? "Learn More" : "詳しく見る"}
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
+                    </motion.div>
+                    <h3 className="text-xl font-semibold text-charcoal mb-3">
+                      {t(`servicesList.${service.key}.title`)}
+                    </h3>
+                    <p className="text-charcoal/70 mb-6 flex-1">
+                      {t(`servicesList.${service.key}.description`)}
+                    </p>
+                    <Link href={`/${locale}${service.link}`}>
+                      <Button variant="secondary" size="sm" className="w-full">
+                        {locale === "en" ? "Learn More" : "詳しく見る"}
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Corporate Catering Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {locale === "en"
                 ? "Corporate Catering"
@@ -218,12 +263,26 @@ export default function ServicesPage() {
                 ? "Making Your Event Unforgettable"
                 : "イベントを难忘の思い出に"}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            {cateringOptions.map((option) => (
-              <Card key={option.key} hover className="text-center">
-                <CardContent className="pt-8 pb-8">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {cateringOptions.map((option, index) => (
+              <motion.div
+                key={option.key}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ scale: 1.03 }}
+              >
+                <Card hover className="text-center">
+                  <CardContent className="pt-8 pb-8">
                   <h3 className="text-xl font-semibold text-charcoal mb-2">
                     {t(`catering.options.${option.key}.title`)}
                   </h3>
@@ -238,24 +297,37 @@ export default function ServicesPage() {
                   </div>
                 </CardContent>
               </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="text-center">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <Link href={`/${locale}/contact`}>
               <Button variant="primary" size="lg">
                 {locale === "en" ? "Request a Quote" : "見積もりを依頼する"}
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Dietary Guide Section */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {locale === "en" ? "Dietary Guide" : "食事制限ガイド"}
             </h2>
@@ -264,13 +336,21 @@ export default function ServicesPage() {
                 ? "We cater to all dietary needs"
                 : "すべての食事制限に対応しています"}
             </p>
-          </div>
+          </motion.div>
 
           <Card className="max-w-2xl mx-auto">
             <CardContent className="pt-8 pb-8">
               <div className="grid grid-cols-2 gap-6">
-                {dietarySymbols.map((item) => (
-                  <div key={item.key} className="flex items-center gap-4">
+                {dietarySymbols.map((item, index) => (
+                  <motion.div
+                    key={item.key}
+                    className="flex items-center gap-4"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, type: "spring" as const, stiffness: 200, delay: index * 0.1 }}
+                    whileHover={{ scale: 1.05 }}
+                  >
                     <span
                       className={`inline-flex items-center justify-center w-12 h-12 rounded-full text-sm font-bold ${item.color}`}
                     >
@@ -285,13 +365,19 @@ export default function ServicesPage() {
                         {item.symbol}
                       </span>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </CardContent>
           </Card>
 
-          <div className="mt-8 max-w-2xl mx-auto">
+          <motion.div
+            className="mt-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <div className="flex flex-wrap gap-4 justify-center">
               {[
                 { key: "dairyFree", label: "Dairy-Free", labelJa: "乳製品不使用" },
@@ -308,22 +394,40 @@ export default function ServicesPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-charcoal text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             {locale === "en" ? "Ready to Experience India?" : "インドの味を体験しませんか？"}
-          </h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             {locale === "en"
               ? "Whether you're dining in, ordering takeaway, or planning a special event, we're here to serve you."
               : "ご来店、テイクアウト、特別なイベントのご相談など、お気軽にご連絡ください。"}
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          </motion.p>
+          <motion.div
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <Link href={`/${locale}/contact`}>
               <Button variant="primary" size="lg">
                 {locale === "en" ? "Reserve Now" : "今すぐ予約"}
@@ -348,7 +452,7 @@ export default function ServicesPage() {
                 053-451-0154
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

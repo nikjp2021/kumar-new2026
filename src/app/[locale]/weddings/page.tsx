@@ -23,6 +23,7 @@ import {
   MapPin,
 } from "lucide-react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const galleryImages = [
   { src: "/images/wedding/20231018_212357-1024x942.jpg", alt: "Indian Wedding Celebration at Kumar Restaurant" },
@@ -207,32 +208,57 @@ export default function WeddingsPage() {
     <div>
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center">
-        <div className="absolute inset-0 z-0">
+        <motion.div
+          className="absolute inset-0 z-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut" as const }}
+        >
           <img
             src="/images/wedding/20231018_212357-1024x942.jpg"
             alt="Indian Wedding at Kumar Restaurant"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-        </div>
+        </motion.div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+            <motion.div
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               <Heart className="w-4 h-4 text-saffron" />
               <span className="text-white text-sm font-medium">
                 {isJa ? "挙式プランニング" : "Wedding Planning"}
               </span>
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            </motion.div>
+            <motion.h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" as const }}
+            >
               {isJa ? "インド式挙式プランニング" : "Indian Wedding Planning"}
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8">
+            </motion.h1>
+            <motion.p
+              className="text-xl md:text-2xl text-white/90 mb-8"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
               {isJa
                 ? "浜松で夢のようなインド式挙式を実現しませんか"
                 : "Make your dream Indian wedding a reality in Hamamatsu"}
-            </p>
-            <div className="flex flex-wrap gap-4">
+            </motion.p>
+            <motion.div
+              className="flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
               <a href="#inquiry">
                 <Button variant="primary" size="lg">
                   {isJa ? "お問い合わせ" : "Inquire Now"}
@@ -249,7 +275,7 @@ export default function WeddingsPage() {
                   053-451-0154
                 </Button>
               </a>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -257,7 +283,13 @@ export default function WeddingsPage() {
       {/* Why Kumar Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {isJa ? "クマールが選ばれる理由" : "Why Choose Kumar"}
             </h2>
@@ -266,79 +298,123 @@ export default function WeddingsPage() {
                 ? "夢のようなインド式挙式を浜松で実現しませんか"
                 : "Make your dream Indian wedding a reality in Hamamatsu"}
             </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card hover className="text-center">
-              <CardContent className="pt-8 pb-8">
-                <div className="w-16 h-16 mx-auto mb-6 bg-saffron/20 rounded-full flex items-center justify-center">
-                  <Users className="w-8 h-8 text-saffron" />
-                </div>
-                <h3 className="text-xl font-semibold text-charcoal mb-3">
-                  {isJa ? "広々とした宴会場" : "Spacious Banquet Hall"}
-                </h3>
-                <p className="text-charcoal/70 text-sm">
-                  {isJa
-                    ? "最大200名様まで収容可能な広々とした宴会場"
-                    : "Accommodating up to 200 guests in our spacious venue"}
-                </p>
-              </CardContent>
-            </Card>
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Card hover className="text-center">
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-saffron/20 rounded-full flex items-center justify-center">
+                    <Users className="w-8 h-8 text-saffron" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-charcoal mb-3">
+                    {isJa ? "広々とした宴会場" : "Spacious Banquet Hall"}
+                  </h3>
+                  <p className="text-charcoal/70 text-sm">
+                    {isJa
+                      ? "最大200名様まで収容可能な広々とした宴会場"
+                      : "Accommodating up to 200 guests in our spacious venue"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card hover className="text-center">
-              <CardContent className="pt-8 pb-8">
-                <div className="w-16 h-16 mx-auto mb-6 bg-forest/20 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-8 h-8 text-forest" />
-                </div>
-                <h3 className="text-xl font-semibold text-charcoal mb-3">
-                  {isJa ? "本格インド料理" : "Authentic Indian Catering"}
-                </h3>
-                <p className="text-charcoal/70 text-sm">
-                  {isJa
-                    ? "本場インドのスパイスを使った本格的なケータリング"
-                    : "Genuine Indian cuisine with spices imported from India"}
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Card hover className="text-center">
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-forest/20 rounded-full flex items-center justify-center">
+                    <Sparkles className="w-8 h-8 text-forest" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-charcoal mb-3">
+                    {isJa ? "本格インド料理" : "Authentic Indian Catering"}
+                  </h3>
+                  <p className="text-charcoal/70 text-sm">
+                    {isJa
+                      ? "本場インドのスパイスを使った本格的なケータリング"
+                      : "Genuine Indian cuisine with spices imported from India"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card hover className="text-center">
-              <CardContent className="pt-8 pb-8">
-                <div className="w-16 h-16 mx-auto mb-6 bg-red/20 rounded-full flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-red" />
-                </div>
-                <h3 className="text-xl font-semibold text-charcoal mb-3">
-                  {isJa ? "文化的専門知識" : "Cultural Expertise"}
-                </h3>
-                <p className="text-charcoal/70 text-sm">
-                  {isJa
-                    ? "インドの挙式慣行に精通した専門スタッフ"
-                    : "Experienced staff knowledgeable in Indian wedding traditions"}
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Card hover className="text-center">
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-red/20 rounded-full flex items-center justify-center">
+                    <Heart className="w-8 h-8 text-red" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-charcoal mb-3">
+                    {isJa ? "文化的専門知識" : "Cultural Expertise"}
+                  </h3>
+                  <p className="text-charcoal/70 text-sm">
+                    {isJa
+                      ? "インドの挙式慣行に精通した専門スタッフ"
+                      : "Experienced staff knowledgeable in Indian wedding traditions"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card hover className="text-center">
-              <CardContent className="pt-8 pb-8">
-                <div className="w-16 h-16 mx-auto mb-6 bg-charcoal/10 rounded-full flex items-center justify-center">
-                  <span className="text-2xl font-bold text-charcoal">EN/JP</span>
-                </div>
-                <h3 className="text-xl font-semibold text-charcoal mb-3">
-                  {isJa ? "バイリンガル対応" : "Bilingual Support"}
-                </h3>
-                <p className="text-charcoal/70 text-sm">
-                  {isJa
-                    ? "英語と日本語のバイリンガルサポート"
-                    : "Full support in both English and Japanese"}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Card hover className="text-center">
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-charcoal/10 rounded-full flex items-center justify-center">
+                    <span className="text-2xl font-bold text-charcoal">EN/JP</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-charcoal mb-3">
+                    {isJa ? "バイリンガル対応" : "Bilingual Support"}
+                  </h3>
+                  <p className="text-charcoal/70 text-sm">
+                    {isJa
+                      ? "英語と日本語のバイリンガルサポート"
+                      : "Full support in both English and Japanese"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Traditional Elements Section */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {isJa ? "伝統的な要素" : "Traditional Elements"}
             </h2>
@@ -347,79 +423,123 @@ export default function WeddingsPage() {
                 ? "インドの伝統的な挙式要素を完全にサポート"
                 : "We help you incorporate authentic Indian wedding traditions"}
             </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card hover>
-              <CardContent className="pt-8 pb-8">
-                <div className="w-14 h-14 mb-5 bg-forest/20 rounded-xl flex items-center justify-center">
-                  <Gift className="w-7 h-7 text-forest" />
-                </div>
-                <h3 className="text-lg font-semibold text-charcoal mb-2">
-                  {isJa ? "メヘンディー" : "Mehendi Ceremony"}
-                </h3>
-                <p className="text-charcoal/70 text-sm">
-                  {isJa
-                    ? "ヘナを使った伝統的な装饰儀式"
-                    : "Traditional henna art ceremony for the bride"}
-                </p>
-              </CardContent>
-            </Card>
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Card hover>
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-14 h-14 mb-5 bg-forest/20 rounded-xl flex items-center justify-center">
+                    <Gift className="w-7 h-7 text-forest" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-charcoal mb-2">
+                    {isJa ? "メヘンディー" : "Mehendi Ceremony"}
+                  </h3>
+                  <p className="text-charcoal/70 text-sm">
+                    {isJa
+                      ? "ヘナを使った伝統的な装饰儀式"
+                      : "Traditional henna art ceremony for the bride"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card hover>
-              <CardContent className="pt-8 pb-8">
-                <div className="w-14 h-14 mb-5 bg-saffron/20 rounded-xl flex items-center justify-center">
-                  <Heart className="w-7 h-7 text-saffron" />
-                </div>
-                <h3 className="text-lg font-semibold text-charcoal mb-2">
-                  {isJa ? "サプタパディ" : "Saptapadi"}
-                </h3>
-                <p className="text-charcoal/70 text-sm">
-                  {isJa
-                    ? "七つの誓いの伝統的なセレモニー"
-                    : "The sacred seven steps around the holy fire"}
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Card hover>
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-14 h-14 mb-5 bg-saffron/20 rounded-xl flex items-center justify-center">
+                    <Heart className="w-7 h-7 text-saffron" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-charcoal mb-2">
+                    {isJa ? "サプタパディ" : "Saptapadi"}
+                  </h3>
+                  <p className="text-charcoal/70 text-sm">
+                    {isJa
+                      ? "七つの誓いの伝統的なセレモニー"
+                      : "The sacred seven steps around the holy fire"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card hover>
-              <CardContent className="pt-8 pb-8">
-                <div className="w-14 h-14 mb-5 bg-red/20 rounded-xl flex items-center justify-center">
-                  <Crown className="w-7 h-7 text-red" />
-                </div>
-                <h3 className="text-lg font-semibold text-charcoal mb-2">
-                  {isJa ? "マンダプ装饰" : "Mandap Decoration"}
-                </h3>
-                <p className="text-charcoal/70 text-sm">
-                  {isJa
-                    ? "華やかな挙式用テントの装饰"
-                    : "Beautifully decorated wedding canopy setup"}
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Card hover>
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-14 h-14 mb-5 bg-red/20 rounded-xl flex items-center justify-center">
+                    <Crown className="w-7 h-7 text-red" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-charcoal mb-2">
+                    {isJa ? "マンダプ装饰" : "Mandap Decoration"}
+                  </h3>
+                  <p className="text-charcoal/70 text-sm">
+                    {isJa
+                      ? "華やかな挙式用テントの装饰"
+                      : "Beautifully decorated wedding canopy setup"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card hover>
-              <CardContent className="pt-8 pb-8">
-                <div className="w-14 h-14 mb-5 bg-saffron-light/40 rounded-xl flex items-center justify-center">
-                  <Sparkles className="w-7 h-7 text-saffron" />
-                </div>
-                <h3 className="text-lg font-semibold text-charcoal mb-2">
-                  {isJa ? "バラート" : "Baraat"}
-                </h3>
-                <p className="text-charcoal/70 text-sm">
-                  {isJa
-                    ? "新郎の華やかな行列"
-                    : "The groom's grand celebratory procession"}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              whileHover={{ scale: 1.03 }}
+            >
+              <Card hover>
+                <CardContent className="pt-8 pb-8">
+                  <div className="w-14 h-14 mb-5 bg-saffron-light/40 rounded-xl flex items-center justify-center">
+                    <Sparkles className="w-7 h-7 text-saffron" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-charcoal mb-2">
+                    {isJa ? "バラート" : "Baraat"}
+                  </h3>
+                  <p className="text-charcoal/70 text-sm">
+                    {isJa
+                      ? "新郎の華やかな行列"
+                      : "The groom's grand celebratory procession"}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Wedding Packages Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {isJa ? "挙式パッケージ" : "Wedding Packages"}
             </h2>
@@ -428,11 +548,29 @@ export default function WeddingsPage() {
                 ? "お二人の特別な日に合わせた柔軟なプランをご用意しています"
                 : "Flexible packages tailored to your special day"}
             </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {packages.map((pkg) => (
-              <Card key={pkg.key} hover className="text-center">
-                <CardContent className="pt-8 pb-8">
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {packages.map((pkg, index) => (
+              <motion.div
+                key={pkg.key}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                whileHover={{ scale: 1.03 }}
+                className={pkg.key === "standard" ? "relative" : ""}
+              >
+                {pkg.key === "standard" && (
+                  <div className="absolute -inset-1 bg-gradient-to-r from-saffron to-forest rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+                )}
+                <Card hover className={`text-center relative ${pkg.key === "standard" ? "border-2 border-saffron" : ""}`}>
+                  <CardContent className="pt-8 pb-8">
                   <div
                     className={`w-16 h-16 mx-auto mb-6 ${
                       pkg.color === "saffron"
@@ -487,9 +625,16 @@ export default function WeddingsPage() {
                   </ul>
                 </CardContent>
               </Card>
+              </motion.div>
             ))}
-          </div>
-          <div className="text-center">
+          </motion.div>
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <Card hover className="inline-block">
               <CardContent className="pt-6 pb-6 px-8">
                 <p className="text-charcoal/70 mb-3">
@@ -505,14 +650,20 @@ export default function WeddingsPage() {
                 </a>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Gallery Section */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {isJa ? "ウェディングギャラリー" : "Wedding Gallery"}
             </h2>
@@ -521,13 +672,24 @@ export default function WeddingsPage() {
                 ? "過去の挙式の美しい瞬間"
                 : "Beautiful moments from past weddings"}
             </p>
-          </div>
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+          </motion.div>
+          <motion.div
+            className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             {galleryImages.map((image, index) => (
-              <div
+              <motion.div
                 key={index}
                 className="break-inside-avoid cursor-pointer group"
                 onClick={() => openLightbox(index)}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
               >
                 <div className="relative overflow-hidden rounded-xl shadow-md">
                   <img
@@ -537,45 +699,59 @@ export default function WeddingsPage() {
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Lightbox Modal */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 text-white hover:text-saffron transition-colors"
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <X className="w-8 h-8" />
-          </button>
-          <button
-            onClick={prevImage}
-            className="absolute left-4 text-white hover:text-saffron transition-colors"
-          >
-            <ChevronLeft className="w-12 h-12" />
-          </button>
-          <button
-            onClick={nextImage}
-            className="absolute right-4 text-white hover:text-saffron transition-colors"
-          >
-            <ChevronRight className="w-12 h-12" />
-          </button>
-          <div className="max-w-4xl max-h-[80vh] px-12">
-            <img
-              src={galleryImages[currentImageIndex].src}
-              alt={galleryImages[currentImageIndex].alt}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
-            />
-            <p className="text-white text-center mt-4">
-              {galleryImages[currentImageIndex].alt}
-            </p>
-          </div>
-        </div>
-      )}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 text-white hover:text-saffron transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <button
+              onClick={prevImage}
+              className="absolute left-4 text-white hover:text-saffron transition-colors"
+            >
+              <ChevronLeft className="w-12 h-12" />
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-4 text-white hover:text-saffron transition-colors"
+            >
+              <ChevronRight className="w-12 h-12" />
+            </button>
+            <motion.div
+              className="max-w-4xl max-h-[80vh] px-12"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <img
+                src={galleryImages[currentImageIndex].src}
+                alt={galleryImages[currentImageIndex].alt}
+                className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              />
+              <p className="text-white text-center mt-4">
+                {galleryImages[currentImageIndex].alt}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Wedding Inquiry Form */}
       <section id="inquiry" className="py-20 bg-white">
@@ -585,7 +761,13 @@ export default function WeddingsPage() {
             <div className="lg:col-span-3">
               <Card>
                 <CardContent className="p-6 sm:p-8">
-                  <div className="flex items-center gap-3 mb-6">
+                  <motion.div
+                    className="flex items-center gap-3 mb-6"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <div className="w-10 h-10 rounded-full bg-saffron/20 flex items-center justify-center">
                       <Heart className="w-5 h-5 text-saffron" />
                     </div>
@@ -597,10 +779,18 @@ export default function WeddingsPage() {
                         {isJa ? "ご希望をお聞かせください" : "Tell us about your dream wedding"}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  {submitted ? (
-                    <div className="text-center py-12">
+                  <AnimatePresence mode="wait">
+                    {submitted ? (
+                      <motion.div
+                        key="success"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.5, type: "spring" as const }}
+                        className="text-center py-12"
+                      >
                       <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-forest/10 flex items-center justify-center">
                         <CheckCircle2 className="w-10 h-10 text-forest" />
                       </div>
@@ -629,11 +819,25 @@ export default function WeddingsPage() {
                       >
                         {isJa ? "新しいお問い合わせ" : "New Inquiry"}
                       </Button>
-                    </div>
+                    </motion.div>
                   ) : (
-                    <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                    <motion.form
+                      key="form"
+                      onSubmit={handleSubmit}
+                      noValidate
+                      className="space-y-5"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
                       {/* Name */}
-                      <div>
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4 }}
+                      >
                         <label htmlFor="name" className={labelBase}>
                           {isJa ? "お名前" : "Name"} *
                         </label>
@@ -652,10 +856,16 @@ export default function WeddingsPage() {
                             {errors.name}
                           </p>
                         )}
-                      </div>
+                      </motion.div>
 
                       {/* Email & Phone Row */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                      >
                         <div>
                           <label htmlFor="email" className={labelBase}>
                             {isJa ? "メールアドレス" : "Email"} *
@@ -693,13 +903,18 @@ export default function WeddingsPage() {
                             <p className="mt-1 text-sm text-red flex items-center gap-1">
                               <AlertCircle className="w-3.5 h-3.5" />
                               {errors.phone}
-                            </p>
-                          )}
-                        </div>
+                          </p>
+                        )}
                       </div>
+                      </motion.div>
 
                       {/* Wedding Date */}
-                      <div>
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                      >
                         <label htmlFor="date" className={labelBase}>
                           {isJa ? "挙式予定日" : "Wedding Date"} *
                         </label>
@@ -718,10 +933,16 @@ export default function WeddingsPage() {
                             {errors.date}
                           </p>
                         )}
-                      </div>
+                      </motion.div>
 
                       {/* Guest Count & Budget Row */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.3 }}
+                      >
                         <div>
                           <label htmlFor="guests" className={labelBase}>
                             {isJa ? "ゲスト数" : "Guest Count"} *
@@ -780,13 +1001,18 @@ export default function WeddingsPage() {
                             <p className="mt-1 text-sm text-red flex items-center gap-1">
                               <AlertCircle className="w-3.5 h-3.5" />
                               {errors.budget}
-                            </p>
-                          )}
-                        </div>
+                          </p>
+                        )}
                       </div>
+                      </motion.div>
 
                       {/* Special Requests */}
-                      <div>
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.4 }}
+                      >
                         <label htmlFor="specialRequests" className={labelBase}>
                           {isJa ? "特別なご要望" : "Special Requests"}
                         </label>
@@ -803,14 +1029,27 @@ export default function WeddingsPage() {
                           }
                           className={`${inputBase} resize-none`}
                         />
-                      </div>
+                      </motion.div>
 
-                      <Button type="submit" variant="primary" size="lg" className="w-full">
-                        {isJa ? "今すぐお問い合わせ" : "Inquire Now"}
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                      </Button>
-                    </form>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                      >
+                        <motion.div
+                          animate={{ scale: [1, 1.02, 1] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" as const }}
+                        >
+                          <Button type="submit" variant="primary" size="lg" className="w-full">
+                            {isJa ? "今すぐお問い合わせ" : "Inquire Now"}
+                            <ArrowRight className="ml-2 w-5 h-5" />
+                          </Button>
+                        </motion.div>
+                      </motion.div>
+                    </motion.form>
                   )}
+                  </AnimatePresence>
                 </CardContent>
               </Card>
             </div>
@@ -945,7 +1184,13 @@ export default function WeddingsPage() {
       {/* Testimonials */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {isJa ? "お客様の声" : "Happy Couples"}
             </h2>
@@ -954,30 +1199,37 @@ export default function WeddingsPage() {
                 ? "クマールで挙式されたカップルの声"
                 : "What couples say about their wedding at Kumar"}
             </p>
-          </div>
+          </motion.div>
           <div className="max-w-3xl mx-auto">
-            <Card hover>
-              <CardContent className="p-8">
-                <Quote className="w-10 h-10 text-saffron/40 mb-4" />
-                <p className="text-lg text-charcoal/80 italic mb-6">
-                  &ldquo;
-                  {isJa
-                    ? "クマールレストランでの挙式は魔法のようでした！料理は素晴らしく、スタッフの皆さんがすべてを完璧にしてくれました。"
-                    : "Our wedding at Kumar Restaurant was magical! The food was incredible and the staff made everything perfect."}
-                  &rdquo;
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-saffron text-saffron" />
-                    ))}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <Card hover>
+                <CardContent className="p-8">
+                  <Quote className="w-10 h-10 text-saffron/40 mb-4" />
+                  <p className="text-lg text-charcoal/80 italic mb-6">
+                    &ldquo;
+                    {isJa
+                      ? "クマールレストランでの挙式は魔法のようでした！料理は素晴らしく、スタッフの皆さんがすべてを完璧にしてくれました。"
+                      : "Our wedding at Kumar Restaurant was magical! The food was incredible and the staff made everything perfect."}
+                    &rdquo;
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="flex gap-1">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} className="w-5 h-5 fill-saffron text-saffron" />
+                      ))}
+                    </div>
+                    <span className="font-semibold text-charcoal">
+                      {isJa ? "幸せなカップル" : "Happy Couple"}
+                    </span>
                   </div>
-                  <span className="font-semibold text-charcoal">
-                    {isJa ? "幸せなカップル" : "Happy Couple"}
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -985,15 +1237,33 @@ export default function WeddingsPage() {
       {/* CTA Section */}
       <section className="py-20 bg-charcoal text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             {isJa ? "挙式についてお問い合わせください" : "Ready to Plan Your Dream Wedding?"}
-          </h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             {isJa
               ? "クマールレストランであなたの特別な日を演出しませんか。まずはお問い合わせください。"
               : "Let Kumar Restaurant be the venue for your most special day. Contact us to get started."}
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          </motion.p>
+          <motion.div
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <a href="#inquiry">
               <Button variant="primary" size="lg">
                 {isJa ? "お問い合わせ" : "Contact Us"}
@@ -1009,7 +1279,7 @@ export default function WeddingsPage() {
                 053-451-0154
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface GalleryImage {
   src: string;
@@ -66,20 +67,42 @@ const celebrationsImages: GalleryImage[] = [
   { src: "/images/wedding/20231018_212616-1024x1019.jpg", alt: "Wedding Celebration", caption: "Festive Occasion", captionJa: "お祝いの場" },
 ];
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
+};
+
 function MasonryGallery({ images, onImageClick }: { images: GalleryImage[]; onImageClick: (index: number) => void }) {
   return (
-    <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+    <motion.div
+      className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={staggerContainer}
+    >
       {images.map((image, index) => (
-        <div
+        <motion.div
           key={index}
+          variants={fadeInUp}
+          transition={{ duration: 0.5 }}
           className="break-inside-avoid cursor-pointer group"
           onClick={() => onImageClick(index)}
         >
-          <div className="relative overflow-hidden rounded-xl shadow-md">
+          <motion.div
+            className="relative overflow-hidden rounded-xl shadow-md"
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.3 }}
+          >
             <img
               src={image.src}
               alt={image.alt}
-              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
+              className="w-full h-auto object-cover"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -87,10 +110,10 @@ function MasonryGallery({ images, onImageClick }: { images: GalleryImage[]; onIm
               <p className="text-white text-sm font-medium">{image.caption}</p>
               <p className="text-white/70 text-xs">{image.captionJa}</p>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
@@ -166,25 +189,40 @@ export default function MomentsPage() {
   return (
     <div>
       {/* HERO SECTION */}
-      <section className="relative min-h-[70vh] flex items-center">
-        <div className="absolute inset-0 z-0">
+      <section className="relative min-h-[70vh] flex items-center overflow-hidden">
+        <motion.div
+          className="absolute inset-0 z-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" as const }}
+        >
           <img
             src="/images/about/site-image.jpg"
             alt="Kumar Restaurant"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
-        </div>
+        </motion.div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            <motion.h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" as const }}
+            >
               {locale === "en" ? "Kumar Moments" : "クマールの思い出"}
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90">
+            </motion.h1>
+            <motion.p
+              className="text-xl md:text-2xl text-white/90"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" as const }}
+            >
               {locale === "en"
                 ? "Memories from our journey since 1995"
                 : "1995年からの歩みの思い出"}
-            </p>
+            </motion.p>
           </div>
         </div>
       </section>
@@ -192,7 +230,13 @@ export default function MomentsPage() {
       {/* MR. KUMAR WITH GUESTS SECTION */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {locale === "en" ? "Mr. Binay Kumar with Our Guests" : "ビナイ・クマー氏とお客様"}
             </h2>
@@ -201,7 +245,7 @@ export default function MomentsPage() {
                 ? "It's an honor that we could meet such highly noted personalities through our food over several years."
                 : "何年もの間、料理を通じて著名な方々とお会いできたことを光栄に思います。"}
             </p>
-          </div>
+          </motion.div>
           <MasonryGallery
             images={guestsImages}
             onImageClick={(index) => openLightbox(guestsImages, index)}
@@ -212,7 +256,13 @@ export default function MomentsPage() {
       {/* RESTAURANT ATMOSPHERE SECTION */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {locale === "en" ? "Our Restaurant" : "私たちのレストラン"}
             </h2>
@@ -221,7 +271,7 @@ export default function MomentsPage() {
                 ? "Step inside and experience the warm atmosphere of Kumar Restaurant."
                 : "クマールレストランの温かい雰囲気を体験してください。"}
             </p>
-          </div>
+          </motion.div>
           <MasonryGallery
             images={restaurantImages}
             onImageClick={(index) => openLightbox(restaurantImages, index)}
@@ -232,7 +282,13 @@ export default function MomentsPage() {
       {/* RESTAURANT MOMENTS SECTION */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {locale === "en" ? "Kumar Restaurant Moments" : "クマールレストランの思い出"}
             </h2>
@@ -241,7 +297,7 @@ export default function MomentsPage() {
                 ? "Every visit tells a story. These are the moments that make Kumar Restaurant special."
                 : "Each visit has its own story. これらの瞬間がクマールレストランを特別にしています。"}
             </p>
-          </div>
+          </motion.div>
           <MasonryGallery
             images={restaurantMomentsImages}
             onImageClick={(index) => openLightbox(restaurantMomentsImages, index)}
@@ -252,7 +308,13 @@ export default function MomentsPage() {
       {/* CELEBRATIONS SECTION */}
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {locale === "en" ? "Celebrations & Events" : "お祝いとイベント"}
             </h2>
@@ -261,7 +323,7 @@ export default function MomentsPage() {
                 ? "We've had the privilege of being part of many beautiful celebrations."
                 : "多くの美しいお祝いに参加できることを光栄に思います。"}
             </p>
-          </div>
+          </motion.div>
           <MasonryGallery
             images={celebrationsImages}
             onImageClick={(index) => openLightbox(celebrationsImages, index)}
@@ -272,23 +334,45 @@ export default function MomentsPage() {
       {/* CTA SECTION */}
       <section className="py-16 bg-charcoal text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <img
+          <motion.img
             src="/images/logos/cropped-KumarLogo1-2-1-300x143.png"
             alt="Kumar Restaurant Logo"
             className="h-16 mx-auto mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           />
-          <p className="text-xl md:text-2xl font-semibold mb-2">
+          <motion.p
+            className="text-xl md:text-2xl font-semibold mb-2"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             {locale === "en"
               ? "Call for All Your Reservations: 053-451-0154"
               : "ご予約はお電話で: 053-451-0154"}
-          </p>
-          <a
+          </motion.p>
+          <motion.a
             href="tel:053-451-0154"
-            className="text-saffron hover:text-saffron/80 transition-colors text-lg font-medium"
+            className="text-saffron hover:text-saffron/80 transition-colors text-lg font-medium inline-block"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            animate={{ scale: [1, 1.03, 1] }}
           >
             053-451-0154
-          </a>
-          <div className="mt-8 pt-8 border-t border-white/20">
+          </motion.a>
+          <motion.div
+            className="mt-8 pt-8 border-t border-white/20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <p className="text-white/60 text-sm">
               &copy; {new Date().getFullYear()} Kumar Restaurant. All rights reserved.
             </p>
@@ -297,48 +381,62 @@ export default function MomentsPage() {
                 ? "Authentic Indian Cuisine in Hamamatsu Since 1995"
                 : "1995年から浜松で本格的なインド料理を"}
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* LIGHTBOX MODAL */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95">
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 text-white hover:text-saffron transition-colors z-10"
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <X className="w-8 h-8" />
-          </button>
-          <button
-            onClick={prevImage}
-            className="absolute left-4 text-white hover:text-saffron transition-colors z-10"
-          >
-            <ChevronLeft className="w-12 h-12" />
-          </button>
-          <button
-            onClick={nextImage}
-            className="absolute right-4 text-white hover:text-saffron transition-colors z-10"
-          >
-            <ChevronRight className="w-12 h-12" />
-          </button>
-          <div className="max-w-4xl max-h-[80vh] px-16">
-            <img
-              src={currentImages[currentImageIndex]?.src}
-              alt={currentImages[currentImageIndex]?.alt}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
-            />
-            <p className="text-white text-center mt-4 text-lg">
-              {locale === "en"
-                ? currentImages[currentImageIndex]?.caption
-                : currentImages[currentImageIndex]?.captionJa}
-            </p>
-            <p className="text-white/50 text-center mt-1 text-sm">
-              {currentImageIndex + 1} / {currentImages.length}
-            </p>
-          </div>
-        </div>
-      )}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 text-white hover:text-saffron transition-colors z-10"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <button
+              onClick={prevImage}
+              className="absolute left-4 text-white hover:text-saffron transition-colors z-10"
+            >
+              <ChevronLeft className="w-12 h-12" />
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-4 text-white hover:text-saffron transition-colors z-10"
+            >
+              <ChevronRight className="w-12 h-12" />
+            </button>
+            <motion.div
+              className="max-w-4xl max-h-[80vh] px-16"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease: "easeOut" as const }}
+            >
+              <img
+                src={currentImages[currentImageIndex]?.src}
+                alt={currentImages[currentImageIndex]?.alt}
+                className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              />
+              <p className="text-white text-center mt-4 text-lg">
+                {locale === "en"
+                  ? currentImages[currentImageIndex]?.caption
+                  : currentImages[currentImageIndex]?.captionJa}
+              </p>
+              <p className="text-white/50 text-center mt-1 text-sm">
+                {currentImageIndex + 1} / {currentImages.length}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

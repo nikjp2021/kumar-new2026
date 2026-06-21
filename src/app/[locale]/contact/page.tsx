@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useLocale } from "next-intl";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface FormErrors {
   date?: string;
@@ -138,12 +139,27 @@ export default function ContactPage() {
         className="relative bg-cover bg-center bg-no-repeat py-20 lg:py-32"
         style={{ backgroundImage: "url(/images/about/site-image.jpg)" }}
       >
-        <div className="absolute inset-0 bg-black/50" />
+        <motion.div
+          className="absolute inset-0 bg-black/50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          transition={{ duration: 1 }}
+        />
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+          <motion.h1
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" as const }}
+          >
             {isJa ? "お問い合わせ" : "Kumar Restaurant Contact"}
-          </h1>
-          <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm md:text-base">
+          </motion.h1>
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 mt-6 text-sm md:text-base"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
             <a href="tel:053-451-0154" className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 hover:bg-white/20 transition-colors">
               📞 053-451-0154
             </a>
@@ -153,14 +169,20 @@ export default function ContactPage() {
             <a href="tel:+817090621056" className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 hover:bg-white/20 transition-colors">
               📱 +81-7090621056
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ───────── 2. BOOK A TABLE ───────── */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
               {isJa ? "ご予約" : "Book A Table at Kumar Restaurant"}
             </h2>
@@ -169,12 +191,27 @@ export default function ContactPage() {
                 ? "オンラインで予約すると、ご来店時にスムーズにお席をご案内いたします。ご希望の時間帯を事前にお楽しみいただけます。"
                 : "Book online for a seamless seating experience. Secure your preferred time and enjoy the advantages of a pre-arranged reservation."}
             </p>
-          </div>
+          </motion.div>
 
           <div className="max-w-3xl mx-auto">
-            {submitted ? (
-              <div className="text-center py-16 bg-saffron/5 rounded-2xl border border-saffron/20">
-                <div className="text-5xl mb-4">✅</div>
+            <AnimatePresence mode="wait">
+              {submitted ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.5, type: "spring" as const }}
+                  className="text-center py-16 bg-saffron/5 rounded-2xl border border-saffron/20"
+                >
+                  <motion.div
+                    className="text-5xl mb-4"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring" as const, stiffness: 200 }}
+                  >
+                    ✅
+                  </motion.div>
                 <h3 className="text-2xl font-bold text-charcoal mb-2">
                   {isJa ? "ご予約リクエストを受付しました！" : "Reservation Request Received!"}
                 </h3>
@@ -183,7 +220,7 @@ export default function ContactPage() {
                     ? "確認のご連絡をお待ちください。数時間以内にご連絡いたします。"
                     : "We will confirm your reservation shortly. Expect a call or email within a few hours."}
                 </p>
-                <button
+                <motion.button
                   onClick={() => {
                     setSubmitted(false);
                     setFormData({
@@ -197,13 +234,30 @@ export default function ContactPage() {
                     });
                   }}
                   className="px-6 py-3 bg-charcoal text-white rounded-lg hover:bg-charcoal/80 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {isJa ? "新しい予約" : "New Reservation"}
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} noValidate className="space-y-5 bg-saffron/5 p-6 sm:p-10 rounded-2xl border border-saffron/10">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                </motion.button>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  onSubmit={handleSubmit}
+                  noValidate
+                  className="space-y-5 bg-saffron/5 p-6 sm:p-10 rounded-2xl border border-saffron/10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                <motion.div
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
                   <div>
                     <label htmlFor="date" className={labelBase}>
                       {isJa ? "日付" : "Date"} *
@@ -237,9 +291,14 @@ export default function ContactPage() {
                     </select>
                     {errors.time && <p className="mt-1 text-sm text-red">{errors.time}</p>}
                   </div>
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
                   <label htmlFor="partySize" className={labelBase}>
                     {isJa ? "人数" : "Party Size"}
                   </label>
@@ -256,9 +315,14 @@ export default function ContactPage() {
                       </option>
                     ))}
                   </select>
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   <label htmlFor="name" className={labelBase}>
                     {isJa ? "お名前" : "Name"} *
                   </label>
@@ -272,9 +336,14 @@ export default function ContactPage() {
                     className={`${inputBase} ${errors.name ? inputError : ""}`}
                   />
                   {errors.name && <p className="mt-1 text-sm text-red">{errors.name}</p>}
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
                   <label htmlFor="phone" className={labelBase}>
                     {isJa ? "電話番号" : "Phone"} *
                   </label>
@@ -288,9 +357,14 @@ export default function ContactPage() {
                     className={`${inputBase} ${errors.phone ? inputError : ""}`}
                   />
                   {errors.phone && <p className="mt-1 text-sm text-red">{errors.phone}</p>}
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
                   <label htmlFor="email" className={labelBase}>
                     {isJa ? "メールアドレス" : "Email"}
                   </label>
@@ -304,9 +378,14 @@ export default function ContactPage() {
                     className={`${inputBase} ${errors.email ? inputError : ""}`}
                   />
                   {errors.email && <p className="mt-1 text-sm text-red">{errors.email}</p>}
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                >
                   <label htmlFor="specialRequests" className={labelBase}>
                     {isJa ? "特別なご要望" : "Special Requests"}
                   </label>
@@ -323,16 +402,23 @@ export default function ContactPage() {
                     }
                     className={`${inputBase} resize-none`}
                   />
-                </div>
+                </motion.div>
 
-                <button
+                <motion.button
                   type="submit"
                   className="w-full py-3 bg-saffron text-white font-semibold rounded-lg hover:bg-saffron/90 transition-colors text-lg"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, type: "spring" as const, stiffness: 200 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   {isJa ? "今すぐ予約" : "Reserve Now"}
-                </button>
-              </form>
-            )}
+                </motion.button>
+                </motion.form>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </section>
@@ -348,7 +434,13 @@ export default function ContactPage() {
 
       {/* ───────── 4. HOURS ───────── */}
       <section className="py-16 lg:py-24 bg-cream">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+        <motion.div
+          className="max-w-4xl mx-auto px-4 text-center"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-8">
             {isJa ? "営業時間" : "Hours"}
           </h2>
@@ -370,24 +462,42 @@ export default function ContactPage() {
               </tbody>
             </table>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ───────── 5. OUR LOCATION ───────── */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-4">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             {isJa ? "アクセス" : "Our Location"}
-          </h2>
-          <p className="text-center text-charcoal/70 mb-10 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="text-center text-charcoal/70 mb-10 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             {isJa
               ? "静岡県浜松市中区板屋町 アクトタワーB1"
               : "430-7790 Shizuoka, Hamamatsu, Naka Ward, Itayamachi, Act Tower B1"}
-          </p>
+          </motion.p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Map */}
-            <div className="rounded-2xl overflow-hidden shadow-sm border border-charcoal/10">
+            <motion.div
+              className="rounded-2xl overflow-hidden shadow-sm border border-charcoal/10"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.5!2d137.73!3d34.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQWN0IFRvd2VyIELDMSwg44GM44GP44GT44Gr44Gh44Gv!5e0!3m2!1sen!2sjp!4v1"
                 width="100%"
@@ -398,10 +508,16 @@ export default function ContactPage() {
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Kumar Restaurant Location"
               />
-            </div>
+            </motion.div>
 
             {/* Contact info cards */}
-            <div className="space-y-4">
+            <motion.div
+              className="space-y-4"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="bg-cream rounded-xl p-6">
                 <p className="text-sm font-medium text-charcoal/60 mb-1">{isJa ? "住所" : "Address"}</p>
                 <p className="text-charcoal leading-relaxed">
@@ -449,7 +565,7 @@ export default function ContactPage() {
                   </p>
                 </div>
               </a>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -457,22 +573,45 @@ export default function ContactPage() {
       {/* ───────── 6. CHECK REVIEWS ON ───────── */}
       <section className="py-16 lg:py-24 bg-cream">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-charcoal mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             {isJa ? "口コミをチェック" : "Check Reviews On"}
-          </h2>
-          <p className="text-charcoal/70 mb-10">
+          </motion.h2>
+          <motion.p
+            className="text-charcoal/70 mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             {isJa
               ? "各プラットフォームでお客様の声をご覧ください"
               : "See what our guests are saying on each platform"}
-          </p>
+          </motion.p>
 
-          <div className="flex flex-wrap justify-center gap-6">
+          <motion.div
+            className="flex flex-wrap justify-center gap-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             {/* Facebook */}
-            <a
+            <motion.a
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-3 bg-white rounded-2xl p-6 shadow-sm border border-charcoal/10 hover:shadow-md transition-shadow w-36"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, type: "spring" as const, stiffness: 200 }}
+              whileHover={{ scale: 1.2 }}
             >
               <img
                 src="/images/social/fb-free-imng.png"
@@ -480,14 +619,19 @@ export default function ContactPage() {
                 className="w-12 h-12 object-contain"
               />
               <span className="text-sm font-medium text-charcoal">Facebook</span>
-            </a>
+            </motion.a>
 
             {/* Twitter */}
-            <a
+            <motion.a
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-3 bg-white rounded-2xl p-6 shadow-sm border border-charcoal/10 hover:shadow-md transition-shadow w-36"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, type: "spring" as const, stiffness: 200, delay: 0.1 }}
+              whileHover={{ scale: 1.2 }}
             >
               <img
                 src="/images/social/tweet-free-img.png"
@@ -495,14 +639,19 @@ export default function ContactPage() {
                 className="w-12 h-12 object-contain"
               />
               <span className="text-sm font-medium text-charcoal">Twitter</span>
-            </a>
+            </motion.a>
 
             {/* Google Reviews */}
-            <a
+            <motion.a
               href="https://www.google.com/maps"
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-3 bg-white rounded-2xl p-6 shadow-sm border border-charcoal/10 hover:shadow-md transition-shadow w-36"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, type: "spring" as const, stiffness: 200, delay: 0.2 }}
+              whileHover={{ scale: 1.2 }}
             >
               <img
                 src="/images/social/google-reviews-free-img.png"
@@ -510,21 +659,26 @@ export default function ContactPage() {
                 className="w-12 h-12 object-contain"
               />
               <span className="text-sm font-medium text-charcoal">Google</span>
-            </a>
+            </motion.a>
 
             {/* Instagram */}
-            <a
+            <motion.a
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-3 bg-white rounded-2xl p-6 shadow-sm border border-charcoal/10 hover:shadow-md transition-shadow w-36"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, type: "spring" as const, stiffness: 200, delay: 0.3 }}
+              whileHover={{ scale: 1.2 }}
             >
               <svg className="w-12 h-12 text-pink-600" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
               </svg>
               <span className="text-sm font-medium text-charcoal">Instagram</span>
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
         </div>
       </section>
 
@@ -569,11 +723,23 @@ export default function ContactPage() {
       {/* ───────── 8. OUR OTHER RESTAURANT ───────── */}
       <section className="py-16 lg:py-24 bg-cream">
         <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-10">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-10"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             {isJa ? "もう一つのレストラン" : "Our Other Restaurant"}
-          </h2>
+          </motion.h2>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-charcoal/10 overflow-hidden flex flex-col md:flex-row">
+          <motion.div
+            className="bg-white rounded-2xl shadow-sm border border-charcoal/10 overflow-hidden flex flex-col md:flex-row"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="md:w-2/5">
               <img
                 src="/images/about/KumarSan.jpg"
@@ -609,7 +775,7 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

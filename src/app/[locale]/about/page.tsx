@@ -18,6 +18,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const galleryImages = [
   { src: "/images/about/AboutUs.png", alt: "Kumar Restaurant Interior", caption: "Restaurant Interior" },
@@ -47,6 +48,21 @@ const recommendedBy = [
   { name: "Facebook", logo: "/images/social/fb-free-imng.png" },
   { name: "Twitter", logo: "/images/social/tweet-free-img.png" },
 ];
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1, transition: { type: "spring" as const, stiffness: 260, damping: 20 } },
+};
 
 export default function AboutPage() {
   const t = useTranslations("about");
@@ -121,25 +137,40 @@ export default function AboutPage() {
       <SchemaMarkup data={generatePersonSchema()} />
 
       {/* HERO SECTION */}
-      <section className="relative min-h-[60vh] flex items-center">
-        <div className="absolute inset-0 z-0">
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
+        <motion.div
+          className="absolute inset-0 z-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" as const }}
+        >
           <img
             src="/images/about/site-image.jpg"
             alt="Kumar Restaurant"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-        </div>
+        </motion.div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            <motion.h1
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" as const }}
+            >
               {locale === "en" ? "About Kumar Restaurant" : "クマールレストランについて"}
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90">
+            </motion.h1>
+            <motion.p
+              className="text-xl md:text-2xl text-white/90"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" as const }}
+            >
               {locale === "en"
                 ? "Learn more about Kumar Restaurant, the first Indian restaurant in Hamamatsu, Japan."
                 : "日本初のインドレストラン、クマールレストランについて詳しくご紹介します。"}
-            </p>
+            </motion.p>
           </div>
         </div>
       </section>
@@ -148,7 +179,12 @@ export default function AboutPage() {
       <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut" as const }}
+            >
               <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-6 leading-tight">
                 {locale === "en"
                   ? "Our Restaurant Is A Collective Of Amazing People Striving To Build Delightful Indian Cuisine"
@@ -161,14 +197,20 @@ export default function AboutPage() {
                     : "クマールレストランは浜松市の中心、アクトタワーにあり、本格的なインド料理を提供しています。クマールレストランに入ると、オーナーのビナイ・クマール氏と彼のフレンドリーなスタッフに出迎えられます。レストランというだけでなく、インドの文化と伝統の居場所です。毎朝新鮮なスパイスを挽いて、最高の風味と香りを提供しています！"}
                 </p>
               </div>
-            </div>
-            <div className="relative">
+            </motion.div>
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, x: 60, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" as const }}
+            >
               <img
                 src="/images/about/AboutUs.png"
                 alt="Kumar Restaurant Interior"
                 className="rounded-xl shadow-xl w-full"
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -177,34 +219,58 @@ export default function AboutPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+            <motion.div
+              className="order-2 lg:order-1"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              <motion.h2
+                variants={fadeInUp}
+                transition={{ duration: 0.6 }}
+                className="text-3xl md:text-4xl font-bold text-charcoal mb-4"
+              >
                 {locale === "en" ? "Our Team" : "私たちのチーム"}
-              </h2>
-              <img
+              </motion.h2>
+              <motion.img
+                variants={fadeInUp}
+                transition={{ duration: 0.6 }}
                 src="/images/decorative/frill-free-img.png"
                 alt=""
                 className="w-32 mb-6"
               />
-              <p className="text-lg text-charcoal/80 mb-6">
+              <motion.p
+                variants={fadeInUp}
+                transition={{ duration: 0.6 }}
+                className="text-lg text-charcoal/80 mb-6"
+              >
                 {locale === "en"
                   ? "Mr. Binay Kumar (Owner) - Mr. Binay Kumar is highly respected in the Hamamatsu and Japanese communities for his exceptional integrity, dedication, and talent. His contributions to the community are widely recognized and deeply appreciated."
                   : "ビナイ・クマール氏（オーナー）- ビナイ・クマール氏は、卓越した誠実さ、献身、才能により、浜松および日本のコミュニティから高く尊敬されています。コミュニティへの貢献は広く認識され、深く感謝されています。"}
-              </p>
-              <Link href={`/${locale}/about/binay-kumar`}>
-                <Button variant="primary" size="lg">
-                  {locale === "en" ? "Know Mr. Binay Kumar" : "ビナイ・クマール氏を知る"}
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-            <div className="order-1 lg:order-2">
+              </motion.p>
+              <motion.div variants={fadeInUp} transition={{ duration: 0.6 }}>
+                <Link href={`/${locale}/about/binay-kumar`}>
+                  <Button variant="primary" size="lg">
+                    {locale === "en" ? "Know Mr. Binay Kumar" : "ビナイ・クマール氏を知る"}
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </Link>
+              </motion.div>
+            </motion.div>
+            <motion.div
+              className="order-1 lg:order-2"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ type: "spring" as const, stiffness: 200, damping: 20 }}
+            >
               <img
                 src="/images/about/Serving-chef.jpg"
                 alt="Mr. Binay Kumar"
                 className="rounded-xl shadow-xl w-full"
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -217,21 +283,29 @@ export default function AboutPage() {
               {locale === "en" ? "Restaurant Amenities" : "レストランの設備"}
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
             {amenities.map((amenity, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={scaleIn}
+                whileHover={{ scale: 1.1 }}
                 className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-sm"
               >
-                <div className="w-14 h-14 bg-saffron/20 rounded-full flex items-center justify-center mb-4">
+                <div className="w-14 h-14 bg-saffron/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-saffron/40 transition-colors">
                   <amenity.icon className="w-7 h-7 text-saffron" />
                 </div>
                 <span className="font-semibold text-charcoal">
                   {locale === "en" ? amenity.label : amenity.labelJa}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -248,67 +322,93 @@ export default function AboutPage() {
                 : "何年もの间、料理を通じて著名な方々とお会いできたことを光栄に思います。"}
             </p>
           </div>
-          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+          <motion.div
+            className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
             {galleryImages.map((image, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={fadeInUp}
+                transition={{ duration: 0.5 }}
                 className="break-inside-avoid cursor-pointer group"
                 onClick={() => openLightbox(index)}
               >
-                <div className="relative overflow-hidden rounded-xl shadow-md">
+                <motion.div
+                  className="relative overflow-hidden rounded-xl shadow-md"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="w-full h-auto object-cover"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white text-sm font-medium">{image.caption}</p>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* LIGHTBOX MODAL */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 text-white hover:text-saffron transition-colors z-10"
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <X className="w-8 h-8" />
-          </button>
-          <button
-            onClick={prevImage}
-            className="absolute left-4 text-white hover:text-saffron transition-colors z-10"
-          >
-            <ChevronLeft className="w-12 h-12" />
-          </button>
-          <button
-            onClick={nextImage}
-            className="absolute right-4 text-white hover:text-saffron transition-colors z-10"
-          >
-            <ChevronRight className="w-12 h-12" />
-          </button>
-          <div className="max-w-4xl max-h-[80vh] px-16">
-            <img
-              src={galleryImages[currentImageIndex].src}
-              alt={galleryImages[currentImageIndex].alt}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
-            />
-            <p className="text-white text-center mt-4 text-lg">
-              {galleryImages[currentImageIndex].caption}
-            </p>
-            <p className="text-white/50 text-center mt-1 text-sm">
-              {currentImageIndex + 1} / {galleryImages.length}
-            </p>
-          </div>
-        </div>
-      )}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 text-white hover:text-saffron transition-colors z-10"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <button
+              onClick={prevImage}
+              className="absolute left-4 text-white hover:text-saffron transition-colors z-10"
+            >
+              <ChevronLeft className="w-12 h-12" />
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-4 text-white hover:text-saffron transition-colors z-10"
+            >
+              <ChevronRight className="w-12 h-12" />
+            </button>
+            <motion.div
+              className="max-w-4xl max-h-[80vh] px-16"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease: "easeOut" as const }}
+            >
+              <img
+                src={galleryImages[currentImageIndex].src}
+                alt={galleryImages[currentImageIndex].alt}
+                className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              />
+              <p className="text-white text-center mt-4 text-lg">
+                {galleryImages[currentImageIndex].caption}
+              </p>
+              <p className="text-white/50 text-center mt-1 text-sm">
+                {currentImageIndex + 1} / {galleryImages.length}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* RECOMMENDED BY SECTION */}
       <section className="py-20 bg-cream">
@@ -318,10 +418,18 @@ export default function AboutPage() {
               {locale === "en" ? "Recommended By" : "おすすめ"}
             </h2>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+          <motion.div
+            className="flex flex-wrap justify-center items-center gap-8 md:gap-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
             {recommendedBy.map((platform, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={scaleIn}
+                whileHover={{ scale: 1.15 }}
                 className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
               >
                 <img
@@ -329,39 +437,66 @@ export default function AboutPage() {
                   alt={platform.name}
                   className="h-12 md:h-16 object-contain"
                 />
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* FOOTER / CTA SECTION */}
       <section className="py-16 bg-charcoal text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center mb-6">
+          <motion.div
+            className="flex justify-center mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <img
               src="/images/decorative/old-typical-phone.png"
               alt="Phone"
               className="w-16 h-16"
             />
-          </div>
-          <img
+          </motion.div>
+          <motion.img
             src="/images/logos/cropped-KumarLogo1-2-1-300x143.png"
             alt="Kumar Restaurant Logo"
             className="h-16 mx-auto mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           />
-          <p className="text-xl md:text-2xl font-semibold mb-2">
+          <motion.p
+            className="text-xl md:text-2xl font-semibold mb-2"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             {locale === "en"
               ? "Call for All Your Reservations: 053-451-0154"
               : "ご予約はお電話で: 053-451-0154"}
-          </p>
-          <a
+          </motion.p>
+          <motion.a
             href="tel:053-451-0154"
             className="text-saffron hover:text-saffron/80 transition-colors text-lg font-medium"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            whileHover={{ scale: 1.05 }}
           >
             053-451-0154
-          </a>
-          <div className="mt-8 pt-8 border-t border-white/20">
+          </motion.a>
+          <motion.div
+            className="mt-8 pt-8 border-t border-white/20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             <p className="text-white/60 text-sm">
               &copy; {new Date().getFullYear()} Kumar Restaurant. All rights reserved.
             </p>
@@ -370,7 +505,7 @@ export default function AboutPage() {
                 ? "Authentic Indian Cuisine in Hamamatsu Since 1995"
                 : "1995年から浜松で本格的なインド料理を"}
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>
