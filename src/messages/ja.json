@@ -1,0 +1,321 @@
+{
+  "common": {
+    "restaurantName": "クマールレストラン",
+    "tagline": "浜松の本格インド料理",
+    "description": "浜松の中心部にあるクマールレストランで、インドの豊かな味わいを体験してください。伝統的なレシピと最高のスパイスを使用しています。",
+    "cta": {
+      "viewMenu": "メニューを見る",
+      "orderNow": "注文する",
+      "bookReservation": "予約する",
+      "contactUs": "お問い合わせ",
+      "learnMore": "詳しく見る"
+    },
+    "dietary": {
+      "vegetarian": "ベジタリアン",
+      "vegan": "ヴィーガン",
+      "halal": "ハラル",
+      "glutenFree": "グルテンフリー",
+      "spicy": "辛い"
+    },
+    "currency": "¥",
+    "phone": "+81-53-XXXX-XXXX",
+    "email": "info@kumarhamamatsu.com",
+    "address": "浜松市、静岡県、日本"
+  },
+  "nav": {
+    "home": "ホーム",
+    "menu": "メニュー",
+    "about": "について",
+    "services": "サービス",
+    "weddings": "結婚式",
+    "blog": "ブログ",
+    "contact": "お問い合わせ",
+    "reservation": "予約"
+  },
+  "home": {
+    "hero": {
+      "title": "浜松の本格インド料理",
+      "subtitle": "インドの伝統と卓越した調理法の本場",
+      "description": "香り豊かなカレーから freshly baked ナーンまで、すべての料理は伝統と情熱の物語を語ります。",
+      "hours": "月〜金 11:00-15:00 & 17:00-22:00 | 土日 11:00-22:00"
+    },
+    "trustBar": {
+      "rating": "4.5/5 星 (168件のレビュー)",
+      "since": "1995年創業",
+      "g7": "G7サミット ケータリング",
+      "first": "浜松初のインド料理店"
+    },
+    "signatureDishes": {
+      "title": "伝統の味",
+      "subtitle": "シグネチャー料理をご堪能ください",
+      "dishes": {
+        "chanaMasala": {
+          "name": "チャナマサラ",
+          "description": "トマト、カシューナッツペースト、スパイスで煮たひよこ豆",
+          "price": "1,000"
+        },
+        "butterChicken": {
+          "name": "バターチキン",
+          "description": "レンガ窯でローストした鶏肉をスパイストマトソースで",
+          "price": "1,300"
+        },
+        "palakPaneer": {
+          "name": "パラクパニール",
+          "description": "ホウレン草とインドリコッテージチーズのクリーミーカレー",
+          "price": "1,200"
+        },
+        "keemaCurry": {
+          "name": "キーマカレー",
+          "description": "ジンジャー、ガーリック、スパイスとクリーム入りひき肉",
+          "price": "1,100"
+        }
+      }
+    },
+    "whyChoose": {
+      "title": "クマールを選ぶ理由",
+      "subtitle": "三代にわたる本格インド料理",
+      "freshSpices": {
+        "title": "毎日新鮮なスパイス",
+        "description": "最大限の風味と香りのために、毎朝手作業でスパイスをセレクトし挽いています。"
+      },
+      "oldRecipes": {
+        "title": "300年以上のレシピ",
+        "description": "世代に受け継がれてきたレシピで、何世紀もの料理の伝統を守り続けています。"
+      },
+      "family": {
+        "title": "1995年からの家族経営",
+        "description": "浜松コミュニティに温かさと心を込めてサービスを提供するファミリーレストラン。"
+      }
+    },
+    "reviews": {
+      "title": "お客様の声",
+      "subtitle": "お客様の声をご紹介",
+      "items": [
+        {
+          "quote": "Very good authentic Indian food... ambience is good and staff are very polite",
+          "name": "Richa Anand",
+          "rating": 5
+        },
+        {
+          "quote": "I love Indian food and I love Kumar Indian Restaurant!",
+          "name": "Joe Libby",
+          "rating": 5
+        },
+        {
+          "quote": "ディナーが特にメニュー豊富でオススメです",
+          "name": "Ayaka Takachio",
+          "rating": 5
+        }
+      ]
+    },
+    "locations": {
+      "title": "ご来店ください",
+      "subtitle": "浜松市内に2つの便利な場所",
+      "actTower": {
+        "name": "アクトタワー B1（本店）",
+        "address": "〒430-8588 静岡県浜松市中区1-1-1",
+        "phone": "053-451-0154",
+        "hours": "月〜金 11:00-15:00 & 17:00-22:00 | 土日 11:00-22:00"
+      },
+      "hamakita": {
+        "name": "クマールさんのカレー 浜北",
+        "address": "静岡県浜松市浜北区",
+        "phone": "053-586-0777",
+        "hours": "月〜日 11:00-22:00"
+      }
+    },
+    "cta": {
+      "title": "インドの味を体験しませんか？",
+      "subtitle": "今日ご予約ください",
+      "phone": "053-451-0154"
+    },
+    "features": {
+      "title": "選ばれる理由",
+      "fresh": {
+        "title": "新鮮な食材",
+        "description": "最高のスパイスと食材を使用し、すべての料理に本格的な味わいを提供しています。"
+      },
+      "traditional": {
+        "title": "伝統的なレシピ",
+        "description": "世代に受け継がれてきたレシピで、インドの本格的な味を守り続けています。"
+      },
+      "vegetarian": {
+        "title": "ベジタリアンメニュー",
+        "description": "健康を意識する方々のために、幅広いベジタリアンとヴィーガンメニューを提供しています。"
+      }
+    },
+    "specialties": {
+      "title": "スペシャリティ",
+      "subtitle": "最も人気のある料理をご紹介"
+    }
+  },
+  "menu": {
+    "title": "メニュー",
+    "subtitle": "高品質な食材、美味しい料理",
+    "categories": {
+      "all": "すべて",
+      "appetizers": "前菜",
+      "curries": "カレー",
+      "tandoori": "タンドーリ",
+      "biryani": "ビリヤニ＆ライス",
+      "breads": "ナーン＆ブレッド",
+      "desserts": "デザート",
+      "beverages": "ビバレッジ"
+    },
+    "dietaryFilter": "食事制限で絞り込む:",
+    "noResults": "この条件に一致する料理は見つかりませんでした",
+    "takeoutSpecials": "テイクアウト特集",
+    "takeoutDescription": "お気に入りの料理をお持ち帰りください。テイクアウトで10%割引！",
+    "takeoutAllItems": "全メニュー対象",
+    "takeoutDiscount": "テイクアウト10%割引",
+    "takeoutPreOrder": "電話で事前注文可能",
+    "popularSets": "人気テイクアウトセット",
+    "biryaniSet": "ビリヤニセット",
+    "biryaniSetDesc": "ビリヤニ + ナーン + ラッシー",
+    "currySet": "カレーセット",
+    "currySetDesc": "カレー + ライス + ナーン",
+    "tandooriSet": "タンドーリセット",
+    "tandooriSetDesc": "タンドーリチキン + サラダ + ナーン",
+    "reserveTable": "ご予約",
+    "reserveDescription": "レストランで本格インド料理をお楽しみください。ご予約をお待ちしております。",
+    "reserveNow": "ご予約はこちら"
+  },
+  "about": {
+    "title": "クマールについて",
+    "subtitle": "情熱と伝統の物語",
+    "story": {
+      "title": "私たちの物語",
+      "content": "クマールレストランは、シンプルなミッションで設立されました：インドの本格的な味を浜松に届けることです。インド料理への情熱と地域コミュニティとの共有という願いから、私たちの旅が始まりました。"
+    },
+    "values": {
+      "title": "私たちの価値観",
+      "authenticity": "本格性",
+      "quality": "品質",
+      "hospitality": "おもてなし"
+    }
+  },
+  "contact": {
+    "title": "お問い合わせ",
+    "subtitle": "お気軽にご連絡ください",
+    "form": {
+      "name": "お名前",
+      "email": "メールアドレス",
+      "phone": "電話番号",
+      "message": "メッセージ",
+      "submit": "送信する"
+    },
+    "info": {
+      "title": "連絡先情報",
+      "address": "住所",
+      "phone": "電話番号",
+      "email": "メール",
+      "hours": "営業時間"
+    }
+  },
+  "services": {
+    "title": "サービス",
+    "subtitle": "提供しているサービス",
+    "servicesList": {
+      "dineIn": {
+        "title": "ご来店",
+        "description": "温かみのあるレストランで本格的なインド料理をお楽しみください。ランチとディナーをご用意しています。"
+      },
+      "takeaway": {
+        "title": "テイクアウト",
+        "description": "インド料理の味をご自宅でお楽しみください。お電話で事前注文も可能です。"
+      },
+      "delivery": {
+        "title": "デリバリー",
+        "description": "熱々の新鮮なインド料理をお届けします。お電話またはWhatsAppでご注文ください。"
+      },
+      "catering": {
+        "title": "ケータリング",
+        "description": "インド料理のケータリングでイベントを特別なものに。法人イベント、パーティー、お祝いに。"
+      },
+      "wedding": {
+        "title": "結婚式プランニング",
+        "description": "伝統的なインドの結婚式を夢ではありませんか？美しいインド式結婚式の企画と運営をお手伝いします。"
+      },
+      "dietary": {
+        "title": "食事制限対応",
+        "description": "ベジタリアン、ヴィーガン、ハラル、グルテンフリー、乳製品不使用、ナッツ不使用 — すべての食事制限に対応しています。"
+      }
+    },
+    "catering": {
+      "title": "ケータリング",
+      "description": "大小各类のイベントに対応するプロフェッショナルなケータリングサービス。",
+      "options": {
+        "boxLunch": {
+          "title": "ボックスランチ",
+          "description": "ご飯、カレー、ナーン、サイドディッシュ付きの個別ボックス"
+        },
+        "buffet": {
+          "title": "ビュッフェ",
+          "description": "カレー、タンドーリ、ブレッド、デザートのフルビュッフェ"
+        },
+        "cocktail": {
+          "title": "カクテル",
+          "description": "アミューズやフィンガーフードのエレガントなカクテルスタイル"
+        }
+      }
+    },
+    "delivery": {
+      "title": "デリバリー",
+      "description": "美味しい料理をお届けします。"
+    },
+    "takeaway": {
+      "title": "テイクアウト",
+      "description": "オンラインで注文し、ご都合の良い時にご受取ください。"
+    },
+    "dietary": {
+      "vegetarian": "ベジタリアン",
+      "vegan": "ヴィーガン",
+      "halal": "ハラル",
+      "glutenFree": "グルテンフリー"
+    }
+  },
+  "weddings": {
+    "title": "結婚式サービス",
+    "subtitle": "特別な日をより特別に",
+    "description": "特別なお祝いに合わせたカスタマイズメニューで、包括的な結婚式ケータリングサービスを提供しています。",
+    "features": {
+      "customMenu": "カスタムメニュー",
+      "professionalService": "プロフェッショナルサービス",
+      "decorations": "装飾可能"
+    }
+  },
+  "blog": {
+    "title": "ブログ",
+    "subtitle": "クマールレストランのストーリー、レシピ、ニュース",
+    "readMore": "続きを読む",
+    "backToList": "ブログに戻る",
+    "featured": "注目",
+    "categories": {
+      "all": "すべて",
+      "food": "料理＆レシピ",
+      "culture": "文化＆イベント",
+      "story": "私たちのストーリー",
+      "wedding": "結婚式",
+      "services": "サービス"
+    },
+    "noPosts": "このカテゴリの投稿は見つかりませんでした。",
+    "cta": {
+      "title": "クマールレストランにご来店ください",
+      "subtitle": "浜松で本格的なインド料理を体験してください"
+    }
+  },
+  "privacy": {
+    "title": "プライバシーポリシー",
+    "lastUpdated": "最終更新日",
+    "content": "お客様のプライバシーポリシーは私たちにとって重要です。このポリシーでは、お客様の個人情報をどのように収集、使用、保護するかを説明しています。"
+  },
+  "footer": {
+    "copyright": "© {year} クマールレストラン。全著作権所有。",
+    "social": "フォローする",
+    "newsletter": {
+      "title": "ニュースレター",
+      "placeholder": "メールアドレスを入力",
+      "subscribe": "購読する"
+    }
+  }
+}

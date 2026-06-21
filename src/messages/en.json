@@ -1,0 +1,321 @@
+{
+  "common": {
+    "restaurantName": "Kumar Restaurant",
+    "tagline": "Authentic Indian Cuisine in Hamamatsu",
+    "description": "Experience the rich flavors of India at Kumar Restaurant, located in the heart of Hamamatsu, Japan. Our dishes are prepared with traditional recipes and the finest spices.",
+    "cta": {
+      "viewMenu": "View Menu",
+      "orderNow": "Order Now",
+      "bookReservation": "Book Reservation",
+      "contactUs": "Contact Us",
+      "learnMore": "Learn More"
+    },
+    "dietary": {
+      "vegetarian": "Vegetarian",
+      "vegan": "Vegan",
+      "halal": "Halal",
+      "glutenFree": "Gluten Free",
+      "spicy": "Spicy"
+    },
+    "currency": "¥",
+    "phone": "+81-53-XXXX-XXXX",
+    "email": "info@kumarhamamatsu.com",
+    "address": "Hamamatsu, Shizuoka, Japan"
+  },
+  "nav": {
+    "home": "Home",
+    "menu": "Menu",
+    "about": "About",
+    "services": "Services",
+    "weddings": "Weddings",
+    "blog": "Blog",
+    "contact": "Contact",
+    "reservation": "Reservation"
+  },
+  "home": {
+    "hero": {
+      "title": "Authentic Indian Cuisine in Hamamatsu",
+      "subtitle": "Home of Indian tradition and exquisite preparation",
+      "description": "From aromatic curries to freshly baked naan, every dish tells a story of tradition and passion.",
+      "hours": "Mon-Fri 11:00-15:00 & 17:00-22:00 | Sat-Sun 11:00-22:00"
+    },
+    "trustBar": {
+      "rating": "4.5/5 Stars (168 Reviews)",
+      "since": "Since 1995",
+      "g7": "G7 Summit Caterer",
+      "first": "Hamamatsu's First Indian Restaurant"
+    },
+    "signatureDishes": {
+      "title": "Tasty Traditions",
+      "subtitle": "Discover our signature flavors",
+      "dishes": {
+        "chanaMasala": {
+          "name": "Chana Masala",
+          "description": "Chickpeas cooked with tomatoes, cashew paste, spices",
+          "price": "1,000"
+        },
+        "butterChicken": {
+          "name": "Butter Chicken",
+          "description": "Clay oven roasted chicken in spiced tomato sauce",
+          "price": "1,300"
+        },
+        "palakPaneer": {
+          "name": "Palak Paneer",
+          "description": "Indian cottage cheese with spinach in creamy curry",
+          "price": "1,200"
+        },
+        "keemaCurry": {
+          "name": "Keema Curry",
+          "description": "Minced lamb with ginger, garlic, spices and cream",
+          "price": "1,100"
+        }
+      }
+    },
+    "whyChoose": {
+      "title": "Why Choose Kumar",
+      "subtitle": "Three generations of authentic Indian cuisine",
+      "freshSpices": {
+        "title": "Fresh Spices Daily",
+        "description": "We hand-select and grind our spices every morning for maximum flavor and aroma."
+      },
+      "oldRecipes": {
+        "title": "300+ Year Old Recipes",
+        "description": "Our recipes have been passed down through generations, preserving centuries of culinary tradition."
+      },
+      "family": {
+        "title": "Family Since 1995",
+        "description": "A family-run restaurant serving the Hamamatsu community with warmth and care."
+      }
+    },
+    "reviews": {
+      "title": "Happy Customers",
+      "subtitle": "What our guests say about us",
+      "items": [
+        {
+          "quote": "Very good authentic Indian food... ambience is good and staff are very polite",
+          "name": "Richa Anand",
+          "rating": 5
+        },
+        {
+          "quote": "I love Indian food and I love Kumar Indian Restaurant!",
+          "name": "Joe Libby",
+          "rating": 5
+        },
+        {
+          "quote": "ディナーが特にメニュー豊富でオススメです",
+          "name": "Ayaka Takachio",
+          "rating": 5
+        }
+      ]
+    },
+    "locations": {
+      "title": "Visit Us",
+      "subtitle": "Two convenient locations in Hamamatsu",
+      "actTower": {
+        "name": "Act Tower B1 (Main)",
+        "address": "1-1-1 Naka-ku, Hamamatsu, Shizuoka 430-8588",
+        "phone": "053-451-0154",
+        "hours": "Mon-Fri 11:00-15:00 & 17:00-22:00 | Sat-Sun 11:00-22:00"
+      },
+      "hamakita": {
+        "name": "Kumar-san's Curry Hamakita",
+        "address": "Hamakita-ku, Hamamatsu, Shizuoka",
+        "phone": "053-586-0777",
+        "hours": "Mon-Sun 11:00-22:00"
+      }
+    },
+    "cta": {
+      "title": "Ready to Experience India?",
+      "subtitle": "Reserve your table today",
+      "phone": "053-451-0154"
+    },
+    "features": {
+      "title": "Why Choose Us",
+      "fresh": {
+        "title": "Fresh Ingredients",
+        "description": "We source the finest spices and ingredients to ensure authentic flavors in every dish."
+      },
+      "traditional": {
+        "title": "Traditional Recipes",
+        "description": "Our recipes have been passed down through generations, preserving the authentic taste of India."
+      },
+      "vegetarian": {
+        "title": "Vegetarian Options",
+        "description": "We offer a wide variety of vegetarian and vegan dishes for health-conscious diners."
+      }
+    },
+    "specialties": {
+      "title": "Our Specialties",
+      "subtitle": "Discover our most popular dishes"
+    }
+  },
+  "menu": {
+    "title": "Our Menu",
+    "subtitle": "Quality Ingredients, Tasty Meals",
+    "categories": {
+      "all": "All",
+      "appetizers": "Appetizers",
+      "curries": "Curries",
+      "tandoori": "Tandoori",
+      "biryani": "Biryani & Rice",
+      "breads": "Naan & Breads",
+      "desserts": "Desserts",
+      "beverages": "Beverages"
+    },
+    "dietaryFilter": "Filter by dietary:",
+    "noResults": "No dishes match the selected filters",
+    "takeoutSpecials": "Takeout Specials",
+    "takeoutDescription": "Take your favorite dishes to go. Get 10% off on takeout orders!",
+    "takeoutAllItems": "All menu items available for takeout",
+    "takeoutDiscount": "10% discount on takeout orders",
+    "takeoutPreOrder": "Pre-order by phone available",
+    "popularSets": "Popular Takeout Sets",
+    "biryaniSet": "Biryani Set",
+    "biryaniSetDesc": "Biryani + Naan + Lassi",
+    "currySet": "Curry Set",
+    "currySetDesc": "Curry + Rice + Naan",
+    "tandooriSet": "Tandoori Set",
+    "tandooriSetDesc": "Tandoori Chicken + Salad + Naan",
+    "reserveTable": "Reserve a Table",
+    "reserveDescription": "Experience authentic Indian dining at its finest. We look forward to welcoming you.",
+    "reserveNow": "Reserve Now"
+  },
+  "about": {
+    "title": "About Kumar",
+    "subtitle": "Our story of passion and tradition",
+    "story": {
+      "title": "Our Story",
+      "content": "Kumar Restaurant was founded with a simple mission: to bring the authentic flavors of India to Hamamatsu. Our journey began with a passion for traditional Indian cuisine and a desire to share it with the local community."
+    },
+    "values": {
+      "title": "Our Values",
+      "authenticity": "Authenticity",
+      "quality": "Quality",
+      "hospitality": "Hospitality"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with us",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "message": "Your Message",
+      "submit": "Send Message"
+    },
+    "info": {
+      "title": "Contact Information",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Opening Hours"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "What we offer",
+    "servicesList": {
+      "dineIn": {
+        "title": "Dine-In",
+        "description": "Enjoy authentic Indian cuisine in our warm and inviting restaurant. Lunch and dinner service available."
+      },
+      "takeaway": {
+        "title": "Takeaway",
+        "description": "Take the flavors of India home with you. Call ahead for quick pickup."
+      },
+      "delivery": {
+        "title": "Delivery",
+        "description": "We deliver hot, fresh Indian food right to your door. Order via phone or WhatsApp."
+      },
+      "catering": {
+        "title": "Catering",
+        "description": "Make your event special with our Indian catering services. Corporate events, parties, and celebrations."
+      },
+      "wedding": {
+        "title": "Wedding Planning",
+        "description": "Dream of a traditional Indian wedding? We help plan and host beautiful Indian wedding ceremonies."
+      },
+      "dietary": {
+        "title": "Dietary Options",
+        "description": "Vegetarian, Vegan, Halal, Gluten-Free, Dairy-Free, Nut-Free — we cater to all dietary needs."
+      }
+    },
+    "catering": {
+      "title": "Catering",
+      "description": "Professional catering services for events of all sizes.",
+      "options": {
+        "boxLunch": {
+          "title": "Box Lunch",
+          "description": "Individual boxed meals with rice, curry, naan, and sides"
+        },
+        "buffet": {
+          "title": "Buffet",
+          "description": "Full buffet spread with variety of curries, tandoori, breads, and desserts"
+        },
+        "cocktail": {
+          "title": "Cocktail",
+          "description": "Elegant cocktail-style catering with appetizers and finger foods"
+        }
+      }
+    },
+    "delivery": {
+      "title": "Delivery",
+      "description": "Enjoy our delicious food delivered to your doorstep."
+    },
+    "takeaway": {
+      "title": "Takeaway",
+      "description": "Order online and pick up at your convenience."
+    },
+    "dietary": {
+      "vegetarian": "Vegetarian",
+      "vegan": "Vegan",
+      "halal": "Halal",
+      "glutenFree": "Gluten-Free"
+    }
+  },
+  "weddings": {
+    "title": "Wedding Services",
+    "subtitle": "Make your special day truly special",
+    "description": "We offer comprehensive wedding catering services with customized menus for your special celebration.",
+    "features": {
+      "customMenu": "Customized Menu",
+      "professionalService": "Professional Service",
+      "decorations": "Decorations Available"
+    }
+  },
+  "blog": {
+    "title": "Our Blog",
+    "subtitle": "Stories, recipes, and news from Kumar Restaurant",
+    "readMore": "Read More",
+    "backToList": "Back to Blog",
+    "featured": "Featured",
+    "categories": {
+      "all": "All",
+      "food": "Food & Recipes",
+      "culture": "Culture & Events",
+      "story": "Our Story",
+      "wedding": "Weddings",
+      "services": "Services"
+    },
+    "noPosts": "No posts found in this category.",
+    "cta": {
+      "title": "Visit Kumar Restaurant",
+      "subtitle": "Experience authentic Indian cuisine in Hamamatsu"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated",
+    "content": "Your privacy is important to us. This policy outlines how we collect, use, and protect your personal information."
+  },
+  "footer": {
+    "copyright": "© {year} Kumar Restaurant. All rights reserved.",
+    "social": "Follow Us",
+    "newsletter": {
+      "title": "Newsletter",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    }
+  }
+}
