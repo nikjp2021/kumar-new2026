@@ -34,6 +34,29 @@ const restaurantImages: GalleryImage[] = [
   { src: "/images/about/Serving-chef-owcre1sm9n7ysujexuahw9245a7wb87bmmf02yig40.jpg", alt: "Chef Serving", caption: "Dedicated Chef", captionJa: "熱心なシェフ" },
 ];
 
+const restaurantMomentsImages: GalleryImage[] = [
+  { src: "/images/menu/1-2.png", alt: "Kumar Restaurant Moment", caption: "Restaurant Moment", captionJa: "レストランの思い出" },
+  { src: "/images/menu/2-2.png", alt: "Kumar Restaurant Moment", caption: "Dining Memory", captionJa: "ダイニングの思い出" },
+  { src: "/images/menu/3-2.png", alt: "Kumar Restaurant Moment", caption: "Special Occasion", captionJa: "特別な瞬間" },
+  { src: "/images/menu/4-2.png", alt: "Kumar Restaurant Moment", caption: "Guest Experience", captionJa: "お客様の体験" },
+  { src: "/images/menu/5-2.png", alt: "Kumar Restaurant Moment", caption: "Memorable Event", captionJa: "忘れられないイベント" },
+  { src: "/images/menu/6-2-211x300.png", alt: "Kumar Restaurant Moment", caption: "Festive Moment", captionJa: "お祝いの瞬間" },
+  { src: "/images/menu/7-2-205x300.png", alt: "Kumar Restaurant Moment", caption: "Celebration", captionJa: "お祝い" },
+  { src: "/images/menu/9-2.png", alt: "Kumar Restaurant Moment", caption: "Restaurant Life", captionJa: "レストランの日常" },
+  { src: "/images/menu/10-2.png", alt: "Kumar Restaurant Moment", caption: "Happy Times", captionJa: "幸せな時間" },
+  { src: "/images/menu/11.png", alt: "Kumar Restaurant Moment", caption: "Cherished Memory", captionJa: "大切な思い出" },
+  { src: "/images/menu/12.png", alt: "Kumar Restaurant Moment", caption: "Special Day", captionJa: "特別な日" },
+  { src: "/images/menu/13.png", alt: "Kumar Restaurant Moment", caption: "Wonderful Moment", captionJa: "素晴らしい瞬間" },
+  { src: "/images/menu/14.png", alt: "Kumar Restaurant Moment", caption: "Precious Memory", captionJa: "貴重な思い出" },
+  { src: "/images/menu/16.png", alt: "Kumar Restaurant Moment", caption: "Joyful Occasion", captionJa: "楽しい出来事" },
+  { src: "/images/menu/17.png", alt: "Kumar Restaurant Moment", caption: "Beautiful Memory", captionJa: "美しい思い出" },
+  { src: "/images/menu/19.png", alt: "Kumar Restaurant Moment", caption: "Heartfelt Moment", captionJa: "心温まる瞬間" },
+  { src: "/images/menu/13-214x300.png", alt: "Kumar Restaurant Moment", caption: "Restaurant Scene", captionJa: "レストランの風景" },
+  { src: "/images/menu/17-214x300.png", alt: "Kumar Restaurant Moment", caption: "Dining Scene", captionJa: "食事の風景" },
+  { src: "/images/menu/18-209x300.png", alt: "Kumar Restaurant Moment", caption: "Kumar Life", captionJa: "クマールの日常" },
+  { src: "/images/menu/21-210x300.png", alt: "Kumar Restaurant Moment", caption: "Restaurant Story", captionJa: "レストランの物語" },
+];
+
 const celebrationsImages: GalleryImage[] = [
   { src: "/images/wedding/20231018_212357-1024x942.jpg", alt: "Wedding Celebration", caption: "Wedding Ceremony", captionJa: "結婚式" },
   { src: "/images/wedding/20231018_212407-1024x909.jpg", alt: "Wedding Celebration", caption: "Joyful Moments", captionJa: "幸せな瞬間" },
@@ -206,8 +229,28 @@ export default function MomentsPage() {
         </div>
       </section>
 
-      {/* CELEBRATIONS SECTION */}
+      {/* RESTAURANT MOMENTS SECTION */}
       <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              {locale === "en" ? "Kumar Restaurant Moments" : "クマールレストランの思い出"}
+            </h2>
+            <p className="text-lg text-charcoal/70 max-w-3xl mx-auto">
+              {locale === "en"
+                ? "Every visit tells a story. These are the moments that make Kumar Restaurant special."
+                : "Each visit has its own story. これらの瞬間がクマールレストランを特別にしています。"}
+            </p>
+          </div>
+          <MasonryGallery
+            images={restaurantMomentsImages}
+            onImageClick={(index) => openLightbox(restaurantMomentsImages, index)}
+          />
+        </div>
+      </section>
+
+      {/* CELEBRATIONS SECTION */}
+      <section className="py-20 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
