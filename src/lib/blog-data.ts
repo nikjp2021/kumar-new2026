@@ -185,7 +185,7 @@ Soft, syrupy dumplings soaked in rose-flavored sugar syrup. The sweet ending to 
 
 *アクトタワーB1または浜北でこれらの料理をお試しください！*`,
     },
-    image: "/images/blog/india-indian-indian-food-1481494-1024x682.jpg",
+    image: "/images/food/india-indian-indian-food-1481494-1024x682.jpg",
     date: "2024-02-10",
     author: "Chef Kumar",
     readingTime: 6,

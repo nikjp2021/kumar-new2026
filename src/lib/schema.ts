@@ -235,7 +235,7 @@ export function generateArticleSchema(post: BlogPost, locale: string) {
       name: "Kumar Restaurant",
       logo: {
         "@type": "ImageObject",
-        url: `${BASE_URL}/images/logo.png`,
+        url: `${BASE_URL}/images/logos/cropped-KumarLogo1-2-1-300x143.png`,
       },
     },
     mainEntityOfPage: {
