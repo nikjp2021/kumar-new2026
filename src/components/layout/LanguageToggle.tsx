@@ -1,17 +1,18 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 export function LanguageToggle({ className }: { className?: string }) {
   const locale = useLocale();
   const router = useRouter();
-  const pathname = usePathname();
 
   const toggleLanguage = () => {
     const newLocale = locale === "en" ? "ja" : "en";
-    const pathWithoutLocale = pathname.replace(`/${locale}`, "") || "/";
+    // Get current path from window, remove locale prefix, and navigate
+    const currentPath = window.location.pathname;
+    const pathWithoutLocale = currentPath.replace(/^\/(en|ja)/, "") || "/";
     router.push(`/${newLocale}${pathWithoutLocale}`);
   };
 
@@ -19,7 +20,7 @@ export function LanguageToggle({ className }: { className?: string }) {
     <button
       onClick={toggleLanguage}
       className={cn(
-        "flex items-center rounded-full border border-charcoal/15 overflow-hidden text-[13px] font-medium transition-all duration-300",
+        "flex items-center rounded-full border border-charcoal/15 overflow-hidden text-[13px] font-medium transition-all duration-300 cursor-pointer",
         className
       )}
       aria-label={locale === "en" ? "Switch to Japanese" : "Switch to English"}
