@@ -13,19 +13,25 @@ const navLinks = [
   { href: "/moments", labelKey: "moments" },
   { href: "/blog", labelKey: "blog" },
   { href: "/contact", labelKey: "contact" },
-];
+] as const;
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const locale = useLocale();
   const t = useTranslations("nav");
+  const pathname = typeof window !== "undefined" ? window.location.pathname : "";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const isActive = (href: string) => {
+    const fullPath = `/${locale}${href}`;
+    return pathname === fullPath || (href !== "/" && pathname.startsWith(fullPath));
+  };
 
   return (
     <header
@@ -56,15 +62,20 @@ export function Header() {
               <Link
                 key={link.href}
                 href={`/${locale}${link.href}`}
+                aria-current={isActive(link.href) ? "page" : undefined}
                 className={cn(
                   "relative text-[13px] font-[family-name:var(--font-dm-sans)] font-medium tracking-[0.1em] uppercase transition-colors duration-300 pb-1 group",
                   locale === "ja" && "tracking-normal capitalize",
                   scrolled ? "text-charcoal" : "text-charcoal/80",
-                  "hover:text-saffron"
+                  "hover:text-saffron",
+                  isActive(link.href) && "text-saffron"
                 )}
               >
                 {t(link.labelKey)}
-                <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-saffron origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                <span className={cn(
+                  "absolute bottom-0 left-0 w-full h-[1.5px] bg-saffron origin-left transition-transform duration-300",
+                  isActive(link.href) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                )} />
               </Link>
             ))}
           </nav>
@@ -106,8 +117,10 @@ export function Header() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-charcoal hover:text-saffron transition-colors"
-              aria-label="Toggle menu"
+              className="lg:hidden min-w-[44px] min-h-[44px] flex items-center justify-center text-charcoal hover:text-saffron transition-colors"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -117,6 +130,10 @@ export function Header() {
 
       {/* Mobile Navigation */}
       <div
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
         className={cn(
           "lg:hidden fixed inset-y-0 right-0 w-[min(320px,85vw)] bg-white/95 backdrop-blur-xl shadow-2xl transition-transform duration-500 ease-out z-50",
           isOpen ? "translate-x-0" : "translate-x-full"
@@ -126,7 +143,7 @@ export function Header() {
         <div className="flex justify-end p-5">
           <button
             onClick={() => setIsOpen(false)}
-            className="p-2 text-charcoal hover:text-saffron transition-colors"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center text-charcoal hover:text-saffron transition-colors"
             aria-label="Close menu"
           >
             <X className="w-6 h-6" />
@@ -134,17 +151,19 @@ export function Header() {
         </div>
 
         {/* Mobile nav links */}
-        <nav className="px-6 space-y-1">
+        <nav className="px-6 space-y-1" aria-label="Mobile navigation">
           {navLinks.map((link, i) => (
             <Link
               key={link.href}
               href={`/${locale}${link.href}`}
+              aria-current={isActive(link.href) ? "page" : undefined}
               className={cn(
-                "block py-3 text-[15px] font-medium tracking-[0.06em] text-charcoal hover:text-saffron transition-all duration-300 border-b border-charcoal/5",
+                "block min-h-[44px] py-3 text-[15px] font-medium tracking-[0.06em] text-charcoal hover:text-saffron transition-all duration-300 border-b border-charcoal/5",
                 locale === "ja" && "tracking-normal",
                 isOpen
                   ? "translate-x-0 opacity-100"
-                  : "translate-x-4 opacity-0"
+                  : "translate-x-4 opacity-0",
+                isActive(link.href) && "text-saffron font-semibold"
               )}
               style={{ transitionDelay: isOpen ? `${i * 60 + 100}ms` : "0ms" }}
               onClick={() => setIsOpen(false)}

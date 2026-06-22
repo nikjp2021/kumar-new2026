@@ -20,15 +20,16 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-5 py-2.5 text-sm",
-  md: "px-8 py-3.5 text-base",
-  lg: "px-10 py-4 text-lg",
+  sm: "px-5 py-2.5 text-sm min-h-[44px]",
+  md: "px-8 py-3.5 text-base min-h-[44px]",
+  lg: "px-10 py-4 text-lg min-h-[48px]",
 };
 
 export function Button({
   variant = "primary",
   size = "md",
   className,
+  disabled,
   children,
   ...props
 }: ButtonProps) {
@@ -36,10 +37,12 @@ export function Button({
 
   return (
     <motion.button
-      whileHover={{ y: -2 }}
-      whileTap={{ y: 0 }}
+      whileHover={disabled ? undefined : { y: -2 }}
+      whileTap={disabled ? undefined : { y: 0 }}
+      disabled={disabled}
+      aria-disabled={disabled || undefined}
       className={cn(
-        "inline-flex items-center justify-center rounded-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-saffron focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center rounded-none transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed",
         variantStyles[variant],
         sizeStyles[size],
         isPrimary && "shadow-[0_4px_15px_rgba(212,132,26,0.3)] hover:shadow-[0_6px_20px_rgba(212,132,26,0.4)]",

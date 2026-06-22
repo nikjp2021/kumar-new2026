@@ -118,6 +118,8 @@ export default function WeddingsPage() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
 
   const openLightbox = (index: number) => {
     setCurrentImageIndex(index);
@@ -157,11 +159,16 @@ export default function WeddingsPage() {
     return newErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) setSubmitted(true);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+      await new Promise((r) => setTimeout(r, 1500));
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   const handleChange = (
@@ -169,8 +176,19 @@ export default function WeddingsPage() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof FormErrors]) {
+    if (touchedFields.has(name) && errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name } = e.target;
+    setTouchedFields((prev) => new Set(prev).add(name));
+    const fieldErrors = validate();
+    if (fieldErrors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: fieldErrors[name as keyof FormErrors] }));
     }
   };
 
@@ -525,19 +543,22 @@ export default function WeddingsPage() {
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors"
+              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/60 hover:text-white transition-colors"
+              aria-label="Close lightbox"
             >
               <X className="w-8 h-8" />
             </button>
             <button
               onClick={prevImage}
-              className="absolute left-4 md:left-8 text-white/60 hover:text-white transition-colors"
+              className="absolute left-4 md:left-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/60 hover:text-white transition-colors"
+              aria-label="Previous image"
             >
               <ChevronLeft className="w-10 h-10" />
             </button>
             <button
               onClick={nextImage}
-              className="absolute right-4 md:right-8 text-white/60 hover:text-white transition-colors"
+              className="absolute right-4 md:right-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/60 hover:text-white transition-colors"
+              aria-label="Next image"
             >
               <ChevronRight className="w-10 h-10" />
             </button>
@@ -624,11 +645,14 @@ export default function WeddingsPage() {
                       <label htmlFor="name" className={labelBase}>{isJa ? "お名前" : "Name"} *</label>
                       <input
                         id="name" name="name" type="text"
-                        value={formData.name} onChange={handleChange}
+                        value={formData.name} onChange={handleChange} onBlur={handleBlur}
                         placeholder={isJa ? "山田 太郎" : "Your Name"}
                         className={`${inputBase} ${errors.name ? inputError : ""}`}
+                        aria-required="true"
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? "w-name-error" : undefined}
                       />
-                      {errors.name && <p className="mt-1.5 text-xs text-red flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.name}</p>}
+                      {errors.name && <p id="w-name-error" className="mt-1.5 text-xs text-red flex items-center gap-1" role="alert"><AlertCircle className="w-3 h-3" />{errors.name}</p>}
                     </motion.div>
 
                     <motion.div
@@ -643,21 +667,27 @@ export default function WeddingsPage() {
                         <label htmlFor="email" className={labelBase}>{isJa ? "メールアドレス" : "Email"} *</label>
                         <input
                           id="email" name="email" type="email"
-                          value={formData.email} onChange={handleChange}
+                          value={formData.email} onChange={handleChange} onBlur={handleBlur}
                           placeholder="example@email.com"
                           className={`${inputBase} ${errors.email ? inputError : ""}`}
+                          aria-required="true"
+                          aria-invalid={!!errors.email}
+                          aria-describedby={errors.email ? "w-email-error" : undefined}
                         />
-                        {errors.email && <p className="mt-1.5 text-xs text-red flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.email}</p>}
+                        {errors.email && <p id="w-email-error" className="mt-1.5 text-xs text-red flex items-center gap-1" role="alert"><AlertCircle className="w-3 h-3" />{errors.email}</p>}
                       </div>
                       <div>
                         <label htmlFor="phone" className={labelBase}>{isJa ? "電話番号" : "Phone"} *</label>
                         <input
                           id="phone" name="phone" type="tel"
-                          value={formData.phone} onChange={handleChange}
+                          value={formData.phone} onChange={handleChange} onBlur={handleBlur}
                           placeholder="090-1234-5678"
                           className={`${inputBase} ${errors.phone ? inputError : ""}`}
+                          aria-required="true"
+                          aria-invalid={!!errors.phone}
+                          aria-describedby={errors.phone ? "w-phone-error" : undefined}
                         />
-                        {errors.phone && <p className="mt-1.5 text-xs text-red flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.phone}</p>}
+                        {errors.phone && <p id="w-phone-error" className="mt-1.5 text-xs text-red flex items-center gap-1" role="alert"><AlertCircle className="w-3 h-3" />{errors.phone}</p>}
                       </div>
                     </motion.div>
 
@@ -672,10 +702,13 @@ export default function WeddingsPage() {
                       <input
                         id="date" name="date" type="date"
                         min={getTodayString()}
-                        value={formData.date} onChange={handleChange}
+                        value={formData.date} onChange={handleChange} onBlur={handleBlur}
                         className={`${inputBase} ${errors.date ? inputError : ""}`}
+                        aria-required="true"
+                        aria-invalid={!!errors.date}
+                        aria-describedby={errors.date ? "w-date-error" : undefined}
                       />
-                      {errors.date && <p className="mt-1.5 text-xs text-red flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.date}</p>}
+                      {errors.date && <p id="w-date-error" className="mt-1.5 text-xs text-red flex items-center gap-1" role="alert"><AlertCircle className="w-3 h-3" />{errors.date}</p>}
                     </motion.div>
 
                     <motion.div
@@ -690,22 +723,28 @@ export default function WeddingsPage() {
                         <label htmlFor="guests" className={labelBase}>{isJa ? "ゲスト数" : "Guest Count"} *</label>
                         <select
                           id="guests" name="guests"
-                          value={formData.guests} onChange={handleChange}
+                          value={formData.guests} onChange={handleChange} onBlur={handleBlur}
                           className={`${inputBase} ${errors.guests ? inputError : ""}`}
+                          aria-required="true"
+                          aria-invalid={!!errors.guests}
+                          aria-describedby={errors.guests ? "w-guests-error" : undefined}
                         >
                           <option value="">{isJa ? "ゲスト数を選択" : "Select guest count"}</option>
                           {guestOptions.slice(1).map((opt) => (
                             <option key={opt} value={opt}>{opt} {isJa ? "名" : "guests"}</option>
                           ))}
                         </select>
-                        {errors.guests && <p className="mt-1.5 text-xs text-red flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.guests}</p>}
+                        {errors.guests && <p id="w-guests-error" className="mt-1.5 text-xs text-red flex items-center gap-1" role="alert"><AlertCircle className="w-3 h-3" />{errors.guests}</p>}
                       </div>
                       <div>
                         <label htmlFor="budget" className={labelBase}>{isJa ? "予算" : "Budget Range"} *</label>
                         <select
                           id="budget" name="budget"
-                          value={formData.budget} onChange={handleChange}
+                          value={formData.budget} onChange={handleChange} onBlur={handleBlur}
                           className={`${inputBase} ${errors.budget ? inputError : ""}`}
+                          aria-required="true"
+                          aria-invalid={!!errors.budget}
+                          aria-describedby={errors.budget ? "w-budget-error" : undefined}
                         >
                           <option value="">{isJa ? "予算を選択" : "Select budget"}</option>
                           <option value="500000">{isJa ? "~ ¥500,000" : "~ ¥500,000"}</option>
@@ -713,7 +752,7 @@ export default function WeddingsPage() {
                           <option value="1000000-2000000">¥1,000,000 - ¥2,000,000</option>
                           <option value="2000000+">{isJa ? "¥2,000,000以上" : "¥2,000,000+"}</option>
                         </select>
-                        {errors.budget && <p className="mt-1.5 text-xs text-red flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.budget}</p>}
+                        {errors.budget && <p id="w-budget-error" className="mt-1.5 text-xs text-red flex items-center gap-1" role="alert"><AlertCircle className="w-3 h-3" />{errors.budget}</p>}
                       </div>
                     </motion.div>
 
@@ -742,11 +781,14 @@ export default function WeddingsPage() {
                     >
                       <motion.button
                         type="submit"
-                        className="w-full py-4 bg-gradient-to-r from-saffron to-burgundy text-white font-sans font-medium rounded-xl hover:shadow-lg hover:shadow-saffron/25 transition-all duration-300 text-sm tracking-wide"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        disabled={isSubmitting}
+                        className="w-full py-4 bg-gradient-to-r from-saffron to-burgundy text-white font-sans font-medium rounded-xl hover:shadow-lg hover:shadow-saffron/25 transition-all duration-300 text-sm tracking-wide disabled:opacity-70 disabled:cursor-wait"
+                        whileHover={isSubmitting ? undefined : { scale: 1.02 }}
+                        whileTap={isSubmitting ? undefined : { scale: 0.98 }}
                       >
-                        {isJa ? "今すぐお問い合わせ" : "Inquire Now"}
+                        {isSubmitting
+                          ? (isJa ? "送信中..." : "Submitting...")
+                          : (isJa ? "今すぐお問い合わせ" : "Inquire Now")}
                       </motion.button>
                     </motion.div>
                   </motion.form>

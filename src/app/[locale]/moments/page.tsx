@@ -369,19 +369,22 @@ export default function MomentsPage() {
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              aria-label="Close lightbox"
             >
               <X className="w-8 h-8" />
             </button>
             <button
               onClick={prevImage}
-              className="absolute left-4 md:left-8 text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute left-4 md:left-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              aria-label="Previous image"
             >
               <ChevronLeft className="w-10 h-10 md:w-12 md:h-12" />
             </button>
             <button
               onClick={nextImage}
-              className="absolute right-4 md:right-8 text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute right-4 md:right-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              aria-label="Next image"
             >
               <ChevronRight className="w-10 h-10 md:w-12 md:h-12" />
             </button>

@@ -79,6 +79,8 @@ export default function ContactPage() {
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
 
   const timeSlots = Array.from({ length: 22 }, (_, i) => {
     const hour = 11 + Math.floor(i / 2);
@@ -117,11 +119,14 @@ export default function ContactPage() {
     return newErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+      await new Promise((r) => setTimeout(r, 1500));
+      setIsSubmitting(false);
       setSubmitted(true);
     }
   };
@@ -131,8 +136,19 @@ export default function ContactPage() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof FormErrors]) {
+    if (touchedFields.has(name) && errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name } = e.target;
+    setTouchedFields((prev) => new Set(prev).add(name));
+    const fieldErrors = validate();
+    if (fieldErrors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: fieldErrors[name as keyof FormErrors] }));
     }
   };
 
@@ -310,9 +326,13 @@ export default function ContactPage() {
                           min={getTodayString()}
                           value={formData.date}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                           className={`${inputBase} ${errors.date ? inputError : ""}`}
+                          aria-required="true"
+                          aria-invalid={!!errors.date}
+                          aria-describedby={errors.date ? "date-error" : undefined}
                         />
-                        {errors.date && <p className="mt-1.5 text-xs text-red">{errors.date}</p>}
+                        {errors.date && <p id="date-error" className="mt-1.5 text-xs text-red" role="alert">{errors.date}</p>}
                       </div>
                       <div>
                         <label htmlFor="time" className={labelBase}>
@@ -323,14 +343,18 @@ export default function ContactPage() {
                           name="time"
                           value={formData.time}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                           className={`${inputBase} ${errors.time ? inputError : ""}`}
+                          aria-required="true"
+                          aria-invalid={!!errors.time}
+                          aria-describedby={errors.time ? "time-error" : undefined}
                         >
                           <option value="">{isJa ? "時間を選択" : "Select time"}</option>
                           {timeSlots.map((slot) => (
                             <option key={slot} value={slot}>{slot}</option>
                           ))}
                         </select>
-                        {errors.time && <p className="mt-1.5 text-xs text-red">{errors.time}</p>}
+                        {errors.time && <p id="time-error" className="mt-1.5 text-xs text-red" role="alert">{errors.time}</p>}
                       </div>
                     </motion.div>
 
@@ -375,10 +399,14 @@ export default function ContactPage() {
                         type="text"
                         value={formData.name}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         placeholder={isJa ? "山田 太郎" : "John Smith"}
                         className={`${inputBase} ${errors.name ? inputError : ""}`}
+                        aria-required="true"
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? "name-error" : undefined}
                       />
-                      {errors.name && <p className="mt-1.5 text-xs text-red">{errors.name}</p>}
+                      {errors.name && <p id="name-error" className="mt-1.5 text-xs text-red" role="alert">{errors.name}</p>}
                     </motion.div>
 
                     <motion.div
@@ -397,10 +425,14 @@ export default function ContactPage() {
                         type="tel"
                         value={formData.phone}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         placeholder="090-1234-5678"
                         className={`${inputBase} ${errors.phone ? inputError : ""}`}
+                        aria-required="true"
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? "phone-error" : undefined}
                       />
-                      {errors.phone && <p className="mt-1.5 text-xs text-red">{errors.phone}</p>}
+                      {errors.phone && <p id="phone-error" className="mt-1.5 text-xs text-red" role="alert">{errors.phone}</p>}
                     </motion.div>
 
                     <motion.div
@@ -419,10 +451,13 @@ export default function ContactPage() {
                         type="email"
                         value={formData.email}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         placeholder="example@email.com"
                         className={`${inputBase} ${errors.email ? inputError : ""}`}
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? "email-error" : undefined}
                       />
-                      {errors.email && <p className="mt-1.5 text-xs text-red">{errors.email}</p>}
+                      {errors.email && <p id="email-error" className="mt-1.5 text-xs text-red" role="alert">{errors.email}</p>}
                     </motion.div>
 
                     <motion.div
@@ -452,15 +487,18 @@ export default function ContactPage() {
 
                     <motion.button
                       type="submit"
-                      className="w-full py-4 bg-gradient-to-r from-saffron to-burgundy text-white font-sans font-medium rounded-xl hover:shadow-lg hover:shadow-saffron/25 transition-all duration-300 text-sm tracking-wide"
+                      disabled={isSubmitting}
+                      className="w-full py-4 bg-gradient-to-r from-saffron to-burgundy text-white font-sans font-medium rounded-xl hover:shadow-lg hover:shadow-saffron/25 transition-all duration-300 text-sm tracking-wide disabled:opacity-70 disabled:cursor-wait"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, type: "spring" as const, stiffness: 200 }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={isSubmitting ? undefined : { scale: 1.02 }}
+                      whileTap={isSubmitting ? undefined : { scale: 0.98 }}
                     >
-                      {isJa ? "今すぐ予約" : "Reserve Now"}
+                      {isSubmitting
+                        ? (isJa ? "送信中..." : "Submitting...")
+                        : (isJa ? "今すぐ予約" : "Reserve Now")}
                     </motion.button>
                   </motion.form>
                 )}

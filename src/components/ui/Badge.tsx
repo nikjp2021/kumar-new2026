@@ -31,6 +31,8 @@ export function Badge({ variant, className }: BadgeProps) {
         variantStyles[variant],
         className
       )}
+      aria-label={variant === "vegetarian" ? "Vegetarian" : variant === "vegan" ? "Vegan" : variant === "halal" ? "Halal" : variant === "glutenFree" ? "Gluten Free" : "Spicy"}
+      role="img"
     >
       {labels[variant]}
     </span>

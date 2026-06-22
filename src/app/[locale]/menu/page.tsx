@@ -708,7 +708,8 @@ export default function MenuPage() {
           >
             <motion.button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              aria-label="Close lightbox"
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -717,7 +718,8 @@ export default function MenuPage() {
 
             <motion.button
               onClick={(e) => { e.stopPropagation(); navigateLightbox("prev"); }}
-              className="absolute left-4 md:left-8 text-white/70 hover:text-gold transition-colors z-10 p-3"
+              className="absolute left-4 md:left-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 p-3"
+              aria-label="Previous image"
               whileHover={{ scale: 1.15, x: -4 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring" as const, stiffness: 400, damping: 15 }}
@@ -748,7 +750,8 @@ export default function MenuPage() {
 
             <motion.button
               onClick={(e) => { e.stopPropagation(); navigateLightbox("next"); }}
-              className="absolute right-4 md:right-8 text-white/70 hover:text-gold transition-colors z-10 p-3"
+              className="absolute right-4 md:right-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 p-3"
+              aria-label="Next image"
               whileHover={{ scale: 1.15, x: 4 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring" as const, stiffness: 400, damping: 15 }}

@@ -35,10 +35,13 @@ export default async function LocaleLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="min-h-full flex flex-col bg-cream text-charcoal font-sans">
+        <a href="#main-content" className="sr-only skip-link">
+          Skip to main content
+        </a>
         <HreflangTags locale={locale} />
         <NextIntlClientProvider messages={messages}>
           <Header />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1">{children}</main>
           <Footer locale={locale} />
         </NextIntlClientProvider>
       </body>
