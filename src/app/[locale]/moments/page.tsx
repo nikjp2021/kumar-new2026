@@ -76,17 +76,18 @@ function SectionHeader({ titleEn, titleJa, subtitleEn, subtitleJa, locale }: { t
       viewport={{ once: true }}
       transition={{ duration: 0.7 }}
     >
-      <div className="flex items-center justify-center gap-4 mb-4">
-        <span className="w-16 h-[1px] bg-gold/40" />
-        <span className="text-gold font-sans text-xs tracking-[0.25em] uppercase">
-          {locale === "en" ? titleEn : titleJa}
-        </span>
-        <span className="w-16 h-[1px] bg-gold/40" />
+      <div className="flex items-center justify-center gap-3 mb-4">
+        <span className="w-12 h-[1px] bg-gradient-to-r from-transparent to-gold/50" />
+        <span className="text-gold text-[10px] leading-none">✦ ◆ ✦</span>
+        <span className="w-12 h-[1px] bg-gradient-to-l from-transparent to-gold/50" />
       </div>
+      <span className="text-gold font-sans text-xs tracking-[0.25em] uppercase block mb-4">
+        {locale === "en" ? titleEn : titleJa}
+      </span>
       <h2 className="font-display text-3xl md:text-4xl text-charcoal mb-4">
         {locale === "en" ? titleEn : titleJa}
       </h2>
-      <p className="font-sans text-charcoal/60 max-w-2xl mx-auto text-lg">
+      <p className="font-sans text-charcoal/60 max-w-2xl mx-auto text-lg leading-relaxed">
         {locale === "en" ? subtitleEn : subtitleJa}
       </p>
     </motion.div>
@@ -105,38 +106,44 @@ function MasonryGallery({ images, onImageClick, locale }: { images: GalleryImage
         visible: { opacity: 1, transition: { staggerChildren: 0.06 } },
       }}
     >
-      {images.map((image, index) => (
-        <motion.div
-          key={index}
-          variants={{
-            hidden: { opacity: 0, y: 30 },
-            visible: { opacity: 1, y: 0 },
-          }}
-          transition={{ duration: 0.5 }}
-          className="break-inside-avoid cursor-pointer group"
-          onClick={() => onImageClick(index)}
-        >
+      {images.map((image, index) => {
+        const isLarge = index % 5 === 0;
+        return (
           <motion.div
-            className="relative overflow-hidden rounded-xl shadow-md"
-            whileHover={{ scale: 1.04 }}
-            transition={{ duration: 0.35 }}
+            key={index}
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.5 }}
+            className={`break-inside-avoid cursor-pointer group ${isLarge ? "mb-5" : ""}`}
+            onClick={() => onImageClick(index)}
           >
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="w-full h-auto object-cover"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-            <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-2 group-hover:translate-y-0">
-              <p className="font-sans text-white text-sm font-medium">{image.caption}</p>
-              <p className="font-sans text-white/60 text-xs mt-0.5">
-                {locale === "ja" ? image.captionJa : ""}
-              </p>
-            </div>
+            <motion.div
+              className={`relative overflow-hidden rounded-xl shadow-md ring-1 ring-gold/10 group-hover:ring-gold/30 transition-all duration-300 ${isLarge ? "shadow-lg" : ""}`}
+              whileHover={{ scale: 1.04 }}
+              transition={{ duration: 0.35 }}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-auto object-cover transition-all duration-500 group-hover:brightness-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="w-6 h-[2px] bg-gold" />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                <p className="font-sans text-white text-sm font-medium">{image.caption}</p>
+                <p className="font-sans text-white/60 text-xs mt-0.5">
+                  {locale === "ja" ? image.captionJa : ""}
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      ))}
+        );
+      })}
     </motion.div>
   );
 }
@@ -224,9 +231,9 @@ export default function MomentsPage() {
             </div>
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-white mb-6 leading-[1.1] tracking-tight">
               {locale === "en" ? (
-                <>Kumar <span className="text-gradient">Moments</span></>
+                <>Kumar <span className="accent-text">Moments</span></>
               ) : (
-                <>クマールの<span className="text-gradient">思い出</span></>
+                <>クマールの<span className="accent-text">思い出</span></>
               )}
             </h1>
             <p className="font-display italic text-xl md:text-2xl text-white/75 max-w-xl leading-relaxed">
@@ -256,6 +263,9 @@ export default function MomentsPage() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
+
       {/* RESTAURANT ATMOSPHERE */}
       <section className="py-24 bg-cream pattern-overlay relative overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -274,6 +284,9 @@ export default function MomentsPage() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
+
       {/* RESTAURANT MOMENTS */}
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -291,6 +304,9 @@ export default function MomentsPage() {
           />
         </div>
       </section>
+
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
 
       {/* CELEBRATIONS */}
       <section className="py-24 bg-cream pattern-overlay relative overflow-hidden">
@@ -369,21 +385,21 @@ export default function MomentsPage() {
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 focus-visible:ring-2 focus-visible:ring-gold rounded"
               aria-label="Close lightbox"
             >
               <X className="w-8 h-8" />
             </button>
             <button
               onClick={prevImage}
-              className="absolute left-4 md:left-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute left-4 md:left-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 focus-visible:ring-2 focus-visible:ring-gold rounded"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-10 h-10 md:w-12 md:h-12" />
             </button>
             <button
               onClick={nextImage}
-              className="absolute right-4 md:right-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute right-4 md:right-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 focus-visible:ring-2 focus-visible:ring-gold rounded"
               aria-label="Next image"
             >
               <ChevronRight className="w-10 h-10 md:w-12 md:h-12" />

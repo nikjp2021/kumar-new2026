@@ -130,9 +130,9 @@ export default function AboutPage() {
             </div>
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-white mb-6 leading-[1.1] tracking-tight">
               {locale === "en" ? (
-                <>About <span className="text-gradient">Kumar</span> Restaurant</>
+                <>About <span className="accent-text">Kumar</span> Restaurant</>
               ) : (
-                <>クマールレストラン<span className="text-gradient">について</span></>
+                <>クマールレストラン<span className="accent-text">について</span></>
               )}
             </h1>
             <p className="font-sans text-xl md:text-2xl text-white/80 max-w-xl leading-relaxed font-light">
@@ -162,9 +162,9 @@ export default function AboutPage() {
               </div>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-charcoal mb-8 leading-tight">
                 {locale === "en" ? (
-                  <>A Collective of Amazing People, One <span className="text-gradient">Delightful</span> Cuisine</>
+                  <>A Collective of Amazing People, One <span className="accent-text">Delightful</span> Cuisine</>
                 ) : (
-                  <>素晴らしい人々が集い、<span className="text-gradient">おいしい</span>インド料理を</>
+                  <>素晴らしい人々が集い、<span className="accent-text">おいしい</span>インド料理を</>
                 )}
               </h2>
               <div className="space-y-5">
@@ -182,7 +182,7 @@ export default function AboutPage() {
               <div className="flex items-center gap-4 mt-8">
                 <Link
                   href={`/${locale}/about/binay-kumar`}
-                  className="inline-flex items-center gap-2 font-sans text-saffron hover:text-burgundy transition-colors font-medium group"
+                  className="inline-flex items-center gap-2 font-sans text-saffron hover:text-burgundy transition-colors font-medium group focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded"
                 >
                   {locale === "en" ? "Meet Mr. Binay Kumar" : "ビナイ・クマール氏に会う"}
                   <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
@@ -196,14 +196,15 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" as const }}
             >
-              <div className="relative">
-                <div className="absolute -inset-3 border-2 border-gold/30 rounded-2xl" />
-                <div className="absolute -inset-6 border border-gold/15 rounded-3xl" />
+              <div className="relative group">
+                <div className="absolute -inset-3 border-2 border-gold/30 rounded-2xl transition-all duration-300 group-hover:border-gold/50 group-hover:-inset-4" />
+                <div className="absolute -inset-6 border border-gold/15 rounded-3xl transition-all duration-300 group-hover:border-gold/25 group-hover:-inset-7" />
                 <img
                   src="/images/about/AboutUs.png"
                   alt="Kumar Restaurant Interior"
-                  className="rounded-xl shadow-2xl w-full relative z-10"
+                  className="rounded-xl shadow-2xl w-full relative z-10 transition-shadow duration-300 group-hover:shadow-3xl"
                 />
+                <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-gold/10 z-20 pointer-events-none" />
               </div>
             </motion.div>
           </div>
@@ -244,7 +245,7 @@ export default function AboutPage() {
               </p>
               <Link
                 href={`/${locale}/about/binay-kumar`}
-                className="inline-flex items-center gap-2 font-sans text-gold hover:text-gold-light transition-colors font-medium group"
+                className="inline-flex items-center gap-2 font-sans text-gold hover:text-gold-light transition-colors font-medium group focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded"
               >
                 {locale === "en" ? "Learn More" : "詳しく見る"}
                 <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
@@ -255,19 +256,24 @@ export default function AboutPage() {
               initial={{ opacity: 0, scale: 0.85 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ type: "spring" as const, stiffness: 180, damping: 20 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
             >
-              <div className="relative">
-                <div className="w-72 h-72 md:w-80 md:h-80 rounded-full border-4 border-gold/40 overflow-hidden shadow-2xl">
+              <div className="relative group">
+                <motion.div
+                  className="w-72 h-72 md:w-80 md:h-80 rounded-full border-4 border-gold/40 overflow-hidden shadow-2xl"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
+                >
                   <img
                     src="/images/about/Serving-chef.jpg"
                     alt="Mr. Binay Kumar"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                </div>
-                <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-gold rounded-full flex items-center justify-center shadow-lg">
+                </motion.div>
+                <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-gold rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110">
                   <span className="font-display text-burgundy text-xl font-bold">G7</span>
                 </div>
+                <div className="absolute inset-0 rounded-full ring-2 ring-gold/20 ring-offset-4 ring-offset-burgundy pointer-events-none" />
               </div>
             </motion.div>
           </div>
@@ -376,18 +382,21 @@ export default function AboutPage() {
                 onClick={() => openLightbox(index)}
               >
                 <motion.div
-                  className="relative overflow-hidden rounded-xl shadow-md"
+                  className="relative overflow-hidden rounded-xl shadow-md ring-1 ring-gold/10 group-hover:ring-gold/30 transition-all duration-300"
                   whileHover={{ scale: 1.04 }}
                   transition={{ duration: 0.35 }}
                 >
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className="w-full h-auto object-cover"
+                    className="w-full h-auto object-cover transition-all duration-500 group-hover:brightness-110"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400 translate-y-2 group-hover:translate-y-0">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-6 h-[2px] bg-gold" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                     <p className="font-sans text-white text-sm font-medium">{image.caption}</p>
                   </div>
                 </motion.div>
@@ -409,21 +418,21 @@ export default function AboutPage() {
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 focus-visible:ring-2 focus-visible:ring-gold rounded"
               aria-label="Close lightbox"
             >
               <X className="w-8 h-8" />
             </button>
             <button
               onClick={prevImage}
-              className="absolute left-4 md:left-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute left-4 md:left-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 focus-visible:ring-2 focus-visible:ring-gold rounded"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-10 h-10 md:w-12 md:h-12" />
             </button>
             <button
               onClick={nextImage}
-              className="absolute right-4 md:right-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute right-4 md:right-8 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 focus-visible:ring-2 focus-visible:ring-gold rounded"
               aria-label="Next image"
             >
               <ChevronRight className="w-10 h-10 md:w-12 md:h-12" />
@@ -488,9 +497,9 @@ export default function AboutPage() {
                 key={index}
                 variants={{
                   hidden: { opacity: 0, scale: 0.8 },
-                  visible: { opacity: 1, scale: 1, transition: { type: "spring" as const, stiffness: 200, damping: 15 } },
+                  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const } },
                 }}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.08 }}
                 className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border border-gold/15 hover:border-gold/40 hover:shadow-md transition-all duration-300 p-3"
               >
                 <img

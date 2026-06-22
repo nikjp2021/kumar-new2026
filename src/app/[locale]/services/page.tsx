@@ -163,7 +163,7 @@ export default function ServicesPage() {
                 transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -6, transition: { duration: 0.3 } }}
               >
-                <div className="bg-white rounded-3xl border border-charcoal/5 p-8 h-full flex flex-col hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-shadow duration-300">
+                <div className="bg-white rounded-3xl border border-charcoal/5 p-8 h-full flex flex-col hover:shadow-[0_8px_40px_rgba(26,26,26,0.06)] transition-shadow duration-300">
                   <div className="w-14 h-14 mb-6 rounded-2xl bg-gradient-to-br from-saffron/10 to-gold/10 flex items-center justify-center">
                     <service.icon className="w-7 h-7 text-saffron" />
                   </div>

@@ -103,7 +103,7 @@ const scaleIn = {
   visible: (delay: number = 0) => ({
     opacity: 1,
     scale: 1,
-    transition: { type: "spring" as const, stiffness: 160, damping: 20, delay },
+    transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
   }),
 };
 
@@ -138,7 +138,7 @@ const staggerItem = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring" as const, stiffness: 180, damping: 22 },
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
   },
 };
 
@@ -215,10 +215,9 @@ function AnimatedStars({ count, inView }: { count: number; inView: boolean }) {
               : { opacity: 0, scale: 0, rotate: -30 }
           }
           transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 15,
-            delay: i * 0.1,
+            duration: 0.4,
+            ease: [0.16, 1, 0.3, 1] as const,
+            delay: i * 0.08,
           }}
         >
           <Star className="w-3 h-3 fill-gold text-gold" />
@@ -232,9 +231,9 @@ function AnimatedStars({ count, inView }: { count: number; inView: boolean }) {
 
 function GoldDivider({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center justify-center gap-4 ${className}`}>
+    <div className={`flex items-center justify-center gap-3 ${className}`}>
       <span className="h-px flex-1 max-w-[80px] bg-gradient-to-r from-transparent to-gold/60" />
-      <span className="text-gold text-xs">◆</span>
+      <span className="text-gold text-[10px] leading-none">✦ ◆ ✦</span>
       <span className="h-px flex-1 max-w-[80px] bg-gradient-to-l from-transparent to-gold/60" />
     </div>
   );
@@ -254,17 +253,20 @@ export default function HomePage() {
 
       {/* ===== 1. HERO SECTION ===== */}
       <section className="relative min-h-screen flex items-center justify-center noise-overlay">
-        <div className="absolute inset-0 z-0">
-          <motion.img
+        <motion.div
+          className="absolute inset-0 z-0"
+          style={{ y: 0 }}
+          initial={{ y: -30, scale: 1.08 }}
+          animate={{ y: 0, scale: 1 }}
+          transition={{ duration: 1.8, ease: "easeOut" as const }}
+        >
+          <img
             src="/images/about/クマールMain-rotated.jpg"
             alt="Kumar Restaurant Interior"
             className="w-full h-full object-cover"
-            initial={{ scale: 1.08 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.8, ease: "easeOut" as const }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-        </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
+        </motion.div>
 
         {/* Decorative fork left */}
         <motion.img
@@ -290,7 +292,7 @@ export default function HomePage() {
             className="mb-8"
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 120, damping: 18, delay: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const, delay: 0.1 }}
           >
             <img
               src="/images/decorative/frill-free-img.png"
@@ -342,27 +344,27 @@ export default function HomePage() {
             className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-12"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 180, damping: 20, delay: 0.8 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const, delay: 0.8 }}
           >
             <Link href={`/${locale}/contact`}>
-              <Button variant="primary" size="lg" className="min-w-[220px]">
+              <Button variant="primary" size="lg" className="min-w-[220px] focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2">
                 {locale === "en" ? "Reserve a Table" : "ご予約"}
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
             <Link href={`/${locale}/menu`}>
-              <Button variant="secondary" size="lg" className="min-w-[220px] border-white/40 text-white hover:bg-white/10 hover:border-white/60">
+              <Button variant="secondary" size="lg" className="min-w-[220px] border-white/40 text-white hover:bg-white/10 hover:border-white/60 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2">
                 {locale === "en" ? "View Menu" : "メニューを見る"}
               </Button>
             </Link>
           </motion.div>
 
-          {/* Hours Badge - Glass Morphism */}
+          {/* Hours Badge */}
           <motion.div
-            className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/10 rounded-full px-6 py-3"
+            className="inline-flex items-center gap-3 bg-saffron/10 border border-saffron/20 rounded-full px-6 py-3"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.0 }}
+            transition={{ duration: 0.5, delay: 1.0, ease: [0.16, 1, 0.3, 1] as const }}
           >
             <Clock className="w-4 h-4 text-gold" />
             <span className="text-white/90 text-xs md:text-sm tracking-wide">
@@ -378,8 +380,8 @@ export default function HomePage() {
             transition={{ delay: 1.5, duration: 0.5 }}
           >
             <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" as const }}
+              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: [0.16, 1, 0.3, 1] as const }}
             >
               <ChevronDown className="w-6 h-6 text-white/40" />
             </motion.div>
@@ -387,46 +389,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 2. BOOK A TABLE ===== */}
-      <motion.section
-        className="py-20 bg-cream pattern-overlay relative"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={{
-          hidden: { opacity: 1 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
-        }}
-      >
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <motion.h2
-            className="font-display text-4xl md:text-5xl text-charcoal mb-4"
-            variants={fadeInUp}
-          >
-            {locale === "en" ? "Book a Table" : "ご予約"}
-          </motion.h2>
-          <GoldDivider className="mb-6" />
-          <motion.p
-            className="text-base md:text-lg text-charcoal/60 mb-10 max-w-2xl mx-auto font-light leading-relaxed"
-            variants={fadeInUp}
-          >
-            {locale === "en"
-              ? "Discover the convenience of booking a table online without any hassle."
-              : "お手間をかけずにオンラインでテーブルを予約する便利さをご体験ください。"}
-          </motion.p>
-          <motion.div variants={scaleIn}>
-            <Link href={`/${locale}/contact`}>
-              <Button variant="primary" size="lg">
-                {locale === "en" ? "Reserve Now" : "今すぐ予約"}
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
-      </motion.section>
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
 
       {/* ===== 3. WELCOME SECTION ===== */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -492,7 +459,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, scale: 0.6 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.4 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const, delay: 0.4 }}
               >
                 <p className="font-display text-xl font-semibold tracking-wide">Since 1995</p>
               </motion.div>
@@ -500,6 +467,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
 
       {/* ===== 4. MEET BINAY KUMAR ===== */}
       <section className="py-24 bg-burgundy text-white relative overflow-hidden">
@@ -532,7 +502,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, scale: 0.6 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.3 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const, delay: 0.3 }}
               >
                 <p className="font-display text-lg font-semibold tracking-wide">G7 Summit 2023</p>
               </motion.div>
@@ -647,7 +617,7 @@ export default function HomePage() {
           </motion.h2>
           <GoldDivider className="mb-10" />
           <motion.div
-            className="bg-white/5 backdrop-blur-sm border border-white/10 p-10 md:p-14 max-w-lg mx-auto"
+            className="bg-white/5 border border-white/10 p-10 md:p-14 max-w-lg mx-auto"
             variants={scaleIn}
           >
             <div className="space-y-8">
@@ -670,6 +640,9 @@ export default function HomePage() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
 
       {/* ===== 6. OUR MENU ===== */}
       <section className="py-24 bg-cream relative">
@@ -724,10 +697,10 @@ export default function HomePage() {
               </motion.p>
               <motion.div variants={slideInRight}>
                 <Link href={`/${locale}/menu`}>
-                  <Button variant="primary" size="lg">
-                    {locale === "en" ? "Discover Entire Menu" : "全メニューを見る"}
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
+              <Button variant="primary" size="lg" className="focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2">
+                {locale === "en" ? "Reserve Now" : "今すぐ予約"}
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
                 </Link>
               </motion.div>
             </motion.div>
@@ -736,7 +709,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== 7. TASTY TRADITIONS ===== */}
-      <section className="py-24 bg-white relative">
+      <section className="py-24 bg-cream relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -776,18 +749,21 @@ export default function HomePage() {
               <motion.div
                 key={dish.key}
                 variants={staggerItem}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                whileHover={{ y: -6, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const } }}
               >
                 <Card hover className="h-full">
-                  <div className="aspect-[4/3] relative overflow-hidden">
+                  <div className="aspect-[4/3] relative overflow-hidden group">
                     <img
                       src={dish.image}
                       alt={t(`signatureDishes.dishes.${dish.key}.name`)}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                      className="w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-110 group-hover:brightness-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                    <span className="absolute bottom-3 right-3 text-lg font-display font-semibold text-gold drop-shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                    <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-8 h-[2px] bg-gold" />
+                    </div>
+                    <span className="absolute bottom-3 right-3 text-lg font-display font-semibold text-gold drop-shadow-lg transition-transform duration-300 group-hover:scale-110">
                       ¥{dish.price}
                     </span>
                   </div>
@@ -886,8 +862,8 @@ export default function HomePage() {
               <motion.div
                 key={index}
                 variants={staggerItem}
-                whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
               >
                 <Card hover className="h-full">
                   <CardContent className="pt-8 pb-8">
@@ -945,8 +921,8 @@ export default function HomePage() {
               <motion.div
                 key={index}
                 variants={staggerItem}
-                whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
               >
                 <Card hover className="h-full">
                   <CardContent className="pt-8 pb-8">
@@ -1006,12 +982,12 @@ export default function HomePage() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-gold/30 transition-all duration-300"
+                className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-gold/30 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal"
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.15 }}
-                transition={{ type: "spring", stiffness: 400, damping: 15, delay: i * 0.1 }}
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] as const, delay: i * 0.08 }}
               >
                 <img
                   src={social.img}
@@ -1024,12 +1000,12 @@ export default function HomePage() {
               href="https://www.instagram.com/kumarhamamatsu/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 flex items-center justify-center hover:scale-110 transition-transform duration-300"
+              className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 flex items-center justify-center hover:scale-110 transition-transform duration-300 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal"
               initial={{ opacity: 0, scale: 0 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.15 }}
-              transition={{ type: "spring", stiffness: 400, damping: 15, delay: 0.3 }}
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] as const, delay: 0.25 }}
             >
               <span className="text-white font-bold text-lg">Ig</span>
             </motion.a>
@@ -1059,8 +1035,8 @@ export default function HomePage() {
           <motion.div
             className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-saffron/10 border border-saffron/20 mb-8"
             variants={fadeInUp}
-            whileHover={{ rotate: [0, -8, 8, -4, 4, 0] }}
-            transition={{ duration: 0.5 }}
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
           >
             <Phone className="w-8 h-8 text-saffron" />
           </motion.div>
@@ -1077,14 +1053,6 @@ export default function HomePage() {
             href="tel:053-451-0154"
             className="font-display text-4xl md:text-5xl text-saffron hover:text-gold transition-colors duration-300 mb-10 inline-block font-light tracking-wide"
             variants={fadeInUp}
-            animate={{
-              textShadow: [
-                "0 0 0px rgba(201,168,76,0)",
-                "0 0 20px rgba(201,168,76,0.25)",
-                "0 0 0px rgba(201,168,76,0)",
-              ],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" as const }}
           >
             053-451-0154
           </motion.a>

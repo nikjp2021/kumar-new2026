@@ -199,7 +199,7 @@ export default function ContactPage() {
           >
             <a
               href="tel:053-451-0154"
-              className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 rounded-full px-6 py-3 text-white text-sm hover:bg-white/20 transition-all duration-300"
+              className="flex items-center gap-2 bg-saffron/10 border border-saffron/20 rounded-full px-6 py-3 text-white text-sm hover:bg-saffron/20 transition-all duration-300"
             >
               <svg className="w-4 h-4 text-saffron" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
@@ -208,7 +208,7 @@ export default function ContactPage() {
             </a>
             <a
               href="tel:+819092766901"
-              className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 rounded-full px-6 py-3 text-white text-sm hover:bg-white/20 transition-all duration-300"
+              className="flex items-center gap-2 bg-saffron/10 border border-saffron/20 rounded-full px-6 py-3 text-white text-sm hover:bg-saffron/20 transition-all duration-300"
             >
               <svg className="w-4 h-4 text-saffron" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
@@ -217,7 +217,7 @@ export default function ContactPage() {
             </a>
             <a
               href="tel:+817090621056"
-              className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 rounded-full px-6 py-3 text-white text-sm hover:bg-white/20 transition-all duration-300"
+              className="flex items-center gap-2 bg-saffron/10 border border-saffron/20 rounded-full px-6 py-3 text-white text-sm hover:bg-saffron/20 transition-all duration-300"
             >
               <svg className="w-4 h-4 text-saffron" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
@@ -263,14 +263,14 @@ export default function ContactPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.5, type: "spring" as const }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
                     className="text-center py-16 bg-cream rounded-3xl border border-saffron/15"
                   >
                     <motion.div
                       className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-saffron to-gold flex items-center justify-center"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ delay: 0.2, type: "spring" as const, stiffness: 200 }}
+                      transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
                     >
                       <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -301,7 +301,7 @@ export default function ContactPage() {
                     key="form"
                     onSubmit={handleSubmit}
                     noValidate
-                    className="space-y-5 bg-white rounded-3xl border border-charcoal/10 p-8 sm:p-10 shadow-[0_4px_40px_rgba(0,0,0,0.04)]"
+                    className="space-y-5 bg-white rounded-3xl border border-charcoal/10 p-8 sm:p-10 shadow-[0_4px_40px_rgba(26,26,26,0.04)]"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -492,7 +492,7 @@ export default function ContactPage() {
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.5, type: "spring" as const, stiffness: 200 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
                       whileHover={isSubmitting ? undefined : { scale: 1.02 }}
                       whileTap={isSubmitting ? undefined : { scale: 0.98 }}
                     >
@@ -610,7 +610,7 @@ export default function ContactPage() {
           </motion.div>
 
           <motion.div
-            className="inline-block bg-white rounded-3xl border border-charcoal/5 overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.03)]"
+            className="inline-block bg-white rounded-3xl border border-charcoal/5 overflow-hidden shadow-[0_4px_40px_rgba(26,26,26,0.03)]"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -663,7 +663,7 @@ export default function ContactPage() {
           </motion.div>
 
           <motion.div
-            className="rounded-3xl overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.06)] border border-charcoal/5"
+            className="rounded-3xl overflow-hidden shadow-[0_4px_40px_rgba(26,26,26,0.06)] border border-charcoal/5"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -773,7 +773,7 @@ export default function ContactPage() {
           </motion.div>
 
           <motion.div
-            className="bg-white rounded-3xl border border-charcoal/5 overflow-hidden flex flex-col md:flex-row shadow-[0_4px_40px_rgba(0,0,0,0.04)]"
+            className="bg-white rounded-3xl border border-charcoal/5 overflow-hidden flex flex-col md:flex-row shadow-[0_4px_40px_rgba(26,26,26,0.04)]"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}

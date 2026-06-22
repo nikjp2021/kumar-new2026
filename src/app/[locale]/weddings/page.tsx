@@ -222,7 +222,7 @@ export default function WeddingsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 rounded-full px-5 py-2.5 mb-6">
+            <div className="inline-flex items-center gap-2 bg-saffron/10 border border-saffron/20 rounded-full px-5 py-2.5 mb-6">
               <Heart className="w-4 h-4 text-saffron" />
               <span className="text-white text-sm font-sans font-medium">
                 {isJa ? "挙式プランニング" : "Wedding Planning"}
@@ -595,14 +595,14 @@ export default function WeddingsPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.5, type: "spring" as const }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
                     className="text-center py-16 bg-cream rounded-3xl border border-saffron/15"
                   >
                     <motion.div
                       className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-saffron to-gold flex items-center justify-center"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ delay: 0.2, type: "spring" as const, stiffness: 200 }}
+                      transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
                     >
                       <CheckCircle2 className="w-8 h-8 text-white" />
                     </motion.div>
@@ -629,7 +629,7 @@ export default function WeddingsPage() {
                     key="form"
                     onSubmit={handleSubmit}
                     noValidate
-                    className="space-y-5 bg-white rounded-3xl border border-charcoal/10 p-8 sm:p-10 shadow-[0_4px_40px_rgba(0,0,0,0.04)]"
+                    className="space-y-5 bg-white rounded-3xl border border-charcoal/10 p-8 sm:p-10 shadow-[0_4px_40px_rgba(26,26,26,0.04)]"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -909,7 +909,7 @@ export default function WeddingsPage() {
           </motion.div>
 
           <motion.div
-            className="mt-12 bg-white rounded-3xl border border-charcoal/5 p-10 sm:p-12 relative shadow-[0_4px_40px_rgba(0,0,0,0.03)]"
+            className="mt-12 bg-white rounded-3xl border border-charcoal/5 p-10 sm:p-12 relative shadow-[0_4px_40px_rgba(26,26,26,0.03)]"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}

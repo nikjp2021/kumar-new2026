@@ -61,7 +61,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring" as const, stiffness: 100, damping: 15 },
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
   },
 } as const;
 
@@ -80,7 +80,7 @@ const gridItemVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring" as const, stiffness: 120, damping: 14 },
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
   },
 } as const;
 
@@ -234,7 +234,7 @@ export default function MenuPage() {
             className="font-display text-6xl md:text-7xl lg:text-8xl text-white mb-6 leading-[0.95] tracking-tight"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring" as const, stiffness: 70, damping: 14, delay: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay: 0.2 }}
             viewport={{ once: true }}
           >
             {isJa ? "クマールレストラン メニュー" : "Kumar Restaurant Menu"}
@@ -272,8 +272,30 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* Category Navigation */}
+      <nav className="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-gold/10 py-3">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-center gap-2 md:gap-6 overflow-x-auto scrollbar-hide">
+          {[
+            { id: "experience", en: "Seasonal", ja: "季節のメニュー" },
+            { id: "delicacies", en: "Delicacies", ja: "美食" },
+            { id: "full-menu", en: "Full Menu", ja: "全メニュー" },
+            { id: "takeout", en: "Takeout", ja: "テイクアウト" },
+          ].map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => {
+                document.getElementById(cat.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className="whitespace-nowrap px-4 py-1.5 text-xs md:text-sm font-sans tracking-wider uppercase text-charcoal/60 hover:text-saffron hover:bg-saffron/5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+            >
+              {isJa ? cat.ja : cat.en}
+            </button>
+          ))}
+        </div>
+      </nav>
+
       {/* The Kumar Experience */}
-      <section className="py-24 bg-white pattern-overlay relative">
+      <section id="experience" className="py-24 bg-white pattern-overlay relative scroll-mt-14">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.div
@@ -294,7 +316,7 @@ export default function MenuPage() {
               className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring" as const, stiffness: 100, damping: 15 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
               viewport={{ once: true }}
             >
               {isJa ? "クマール体験" : "The Kumar Experience"}
@@ -353,8 +375,11 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
+
       {/* Indian Delicacies */}
-      <section className="py-24 bg-cream">
+      <section id="delicacies" className="py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 relative">
             <motion.div
@@ -390,7 +415,7 @@ export default function MenuPage() {
               className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ type: "spring" as const, stiffness: 100, damping: 15 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
               viewport={{ once: true }}
             >
               {isJa ? "インドの美食" : "Indian Delicacies"}
@@ -444,8 +469,11 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
+
       {/* Full Menu Gallery */}
-      <section className="py-24 bg-white pattern-overlay relative">
+      <section id="full-menu" className="py-24 bg-white pattern-overlay relative scroll-mt-14">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.div
@@ -466,7 +494,7 @@ export default function MenuPage() {
               className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-4"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring" as const, stiffness: 80, damping: 12 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
               viewport={{ once: true }}
             >
               {isJa ? "メニュー" : "Our Menu"}
@@ -497,19 +525,22 @@ export default function MenuPage() {
                 variants={gridItemVariants}
                 onClick={() => openLightbox(i)}
                 whileHover={{ y: -6, boxShadow: "0 20px 40px rgba(107,29,42,0.2)" }}
-                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md cursor-pointer group bg-cream-dark"
+                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md cursor-pointer group bg-cream-dark focus:outline-none focus:ring-2 focus:ring-gold/50 focus:ring-offset-2"
               >
                 <Image
                   src={src}
                   alt={`Menu page ${i + 1}`}
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+                  className="object-cover group-hover:scale-110 transition-all duration-500 ease-out group-hover:brightness-105"
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 17vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end justify-center pb-4">
-                  <span className="text-white text-xs font-sans tracking-wider uppercase bg-charcoal/50 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                  <span className="text-white text-xs font-sans tracking-wider uppercase bg-charcoal/50 backdrop-blur-sm px-3 py-1.5 rounded-full translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                     {isJa ? "拡大" : "View"}
                   </span>
+                </div>
+                <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="w-6 h-[2px] bg-gold" />
                 </div>
               </motion.button>
             ))}
@@ -517,15 +548,18 @@ export default function MenuPage() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
+
       {/* Takeout Special */}
-      <section className="py-24 bg-burgundy noise-overlay relative overflow-hidden">
+      <section id="takeout" className="py-24 bg-burgundy noise-overlay relative overflow-hidden">
         <div className="absolute inset-0 pattern-overlay opacity-10" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ type: "spring" as const, stiffness: 80, damping: 15 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-6">
@@ -564,7 +598,7 @@ export default function MenuPage() {
               </ul>
               <motion.a
                 href="tel:053-451-0154"
-                className="inline-flex items-center gap-3 bg-gold text-charcoal px-8 py-4 rounded-full font-sans font-semibold hover:bg-gold-light transition-colors duration-300 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-3 bg-gold text-charcoal px-8 py-4 rounded-full font-sans font-semibold hover:bg-gold-light transition-colors duration-300 shadow-lg hover:shadow-xl focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-burgundy"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -653,7 +687,7 @@ export default function MenuPage() {
               href="tel:053-451-0154"
               className="font-display text-4xl md:text-5xl text-saffron hover:text-saffron-light transition-colors duration-300 inline-block mb-8"
               whileHover={{ scale: 1.08 }}
-              transition={{ type: "spring" as const, stiffness: 300, damping: 15 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
             >
               053-451-0154
             </motion.a>
@@ -708,7 +742,7 @@ export default function MenuPage() {
           >
             <motion.button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10"
+              className="absolute top-6 right-6 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/70 hover:text-gold transition-colors z-10 focus-visible:ring-2 focus-visible:ring-gold rounded"
               aria-label="Close lightbox"
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
@@ -722,7 +756,7 @@ export default function MenuPage() {
               aria-label="Previous image"
               whileHover={{ scale: 1.15, x: -4 }}
               whileTap={{ scale: 0.9 }}
-              transition={{ type: "spring" as const, stiffness: 400, damping: 15 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
             >
               <ChevronLeft className="w-10 h-10" />
             </motion.button>
@@ -734,7 +768,7 @@ export default function MenuPage() {
                 initial={{ opacity: 0, scale: 0.88, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.88, y: -20 }}
-                transition={{ type: "spring" as const, stiffness: 120, damping: 20 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
                 key={lightboxIndex}
               >
                 <Image
@@ -754,7 +788,7 @@ export default function MenuPage() {
               aria-label="Next image"
               whileHover={{ scale: 1.15, x: 4 }}
               whileTap={{ scale: 0.9 }}
-              transition={{ type: "spring" as const, stiffness: 400, damping: 15 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
             >
               <ChevronRight className="w-10 h-10" />
             </motion.button>

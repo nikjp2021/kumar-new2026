@@ -42,7 +42,7 @@ export function Button({
       disabled={disabled}
       aria-disabled={disabled || undefined}
       className={cn(
-        "inline-flex items-center justify-center rounded-none transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center rounded-none transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:opacity-50 disabled:cursor-not-allowed",
         variantStyles[variant],
         sizeStyles[size],
         isPrimary && "shadow-[0_4px_15px_rgba(212,132,26,0.3)] hover:shadow-[0_6px_20px_rgba(212,132,26,0.4)]",

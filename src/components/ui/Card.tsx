@@ -20,11 +20,11 @@ export function Card({
       role={asClickable ? "button" : undefined}
       tabIndex={asClickable ? 0 : undefined}
       className={cn(
-        "rounded-none bg-white border border-black/5 overflow-hidden",
+        "rounded-none bg-cream border border-charcoal/5 overflow-hidden",
         hover
-          ? "shadow-[0_2px_10px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.1)] transition-all duration-300"
-          : "shadow-[0_2px_10px_rgba(0,0,0,0.05)]",
-        asClickable && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron focus-visible:ring-offset-2",
+          ? "shadow-[0_2px_10px_rgba(26,26,26,0.05)] hover:shadow-[0_12px_30px_rgba(26,26,26,0.1)] transition-all duration-300"
+          : "shadow-[0_2px_10px_rgba(26,26,26,0.05)]",
+        asClickable && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron focus-visible:ring-offset-2 focus-visible:ring-offset-cream",
         className
       )}
       {...props}
