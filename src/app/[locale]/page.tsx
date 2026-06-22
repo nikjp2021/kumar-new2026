@@ -265,7 +265,7 @@ export default function HomePage() {
             alt="Kumar Restaurant Interior"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/85" />
         </motion.div>
 
         {/* Decorative fork left */}
@@ -302,7 +302,7 @@ export default function HomePage() {
           </motion.div>
 
           <motion.h1
-            className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-white mb-4 leading-[0.95] tracking-tight"
+            className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-white mb-4 leading-[0.95] tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -315,7 +315,7 @@ export default function HomePage() {
           </motion.h1>
 
           <motion.p
-            className="text-base sm:text-lg md:text-xl text-white/80 mb-6 font-light tracking-[0.15em] uppercase"
+            className="text-base sm:text-lg md:text-xl text-white/90 mb-6 font-light tracking-[0.15em] uppercase drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -332,7 +332,7 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.7 }}
           >
             <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold" />
-            <p className="text-sm md:text-base text-gold font-light tracking-[0.25em] uppercase">
+            <p className="text-sm md:text-base text-gold font-medium tracking-[0.25em] uppercase drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)]">
               {locale === "en"
                 ? "Good Food | Good Culture"
                 : "美味しい食べ物 | 美しい文化"}
@@ -367,7 +367,7 @@ export default function HomePage() {
             transition={{ duration: 0.5, delay: 1.0, ease: [0.16, 1, 0.3, 1] as const }}
           >
             <Clock className="w-4 h-4 text-gold" />
-            <span className="text-white/90 text-xs md:text-sm tracking-wide">
+            <span className="text-white text-xs md:text-sm tracking-wide drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]">
               {t("hero.hours")}
             </span>
           </motion.div>
