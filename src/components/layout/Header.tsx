@@ -6,6 +6,25 @@ import { useLocale, useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+function LanguageToggleBtn() {
+  const locale = useLocale();
+  const toggle = () => {
+    const newLocale = locale === "en" ? "ja" : "en";
+    const path = window.location.pathname.replace(/^\/(en|ja)/, "") || "/";
+    window.location.href = `/${newLocale}${path}`;
+  };
+  return (
+    <button
+      onClick={toggle}
+      className="flex items-center rounded-full border border-current/15 overflow-hidden text-[13px] font-medium cursor-pointer"
+      aria-label={locale === "en" ? "Switch to Japanese" : "Switch to English"}
+    >
+      <span className={cn("px-3 py-1.5 transition-all duration-300", locale === "en" ? "bg-saffron text-white" : "text-charcoal/60 hover:text-charcoal")}>EN</span>
+      <span className={cn("px-3 py-1.5 transition-all duration-300", locale === "ja" ? "bg-saffron text-white" : "text-charcoal/60 hover:text-charcoal")}>JP</span>
+    </button>
+  );
+}
+
 const navLinks = [
   { href: "/", labelKey: "home" },
   { href: "/menu", labelKey: "menu" },
@@ -66,8 +85,7 @@ export function Header() {
                 className={cn(
                   "relative text-[13px] font-[family-name:var(--font-dm-sans)] font-medium tracking-[0.1em] uppercase transition-colors duration-300 pb-1 group",
                   locale === "ja" && "tracking-normal capitalize",
-                  scrolled ? "text-charcoal" : "text-charcoal/80",
-                  "hover:text-saffron",
+                  scrolled ? "text-charcoal hover:text-saffron" : "text-white/90 hover:text-white",
                   isActive(link.href) && "text-saffron"
                 )}
               >
@@ -83,33 +101,19 @@ export function Header() {
           {/* Right side */}
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Language Toggle */}
-            <div className="hidden sm:flex items-center rounded-full border border-charcoal/15 overflow-hidden text-[13px] font-medium">
-              <span
-                className={cn(
-                  "px-3 py-1.5 transition-all duration-300 cursor-default",
-                  locale === "en"
-                    ? "bg-saffron text-white"
-                    : "bg-transparent text-charcoal/60 hover:text-charcoal"
-                )}
-              >
-                EN
-              </span>
-              <span
-                className={cn(
-                  "px-3 py-1.5 transition-all duration-300 cursor-default",
-                  locale === "ja"
-                    ? "bg-saffron text-white"
-                    : "bg-transparent text-charcoal/60 hover:text-charcoal"
-                )}
-              >
-                JP
-              </span>
+            <div className="hidden sm:flex">
+              <LanguageToggleBtn />
             </div>
 
             {/* Reservation Button */}
             <Link
               href={`/${locale}/contact`}
-              className="hidden sm:inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-br from-saffron to-gold text-white text-[13px] font-semibold tracking-[0.08em] uppercase font-[family-name:var(--font-dm-sans)] shadow-[0_4px_15px_rgba(212,132,26,0.25)] hover:shadow-[0_6px_20px_rgba(212,132,26,0.35)] hover:-translate-y-[2px] transition-all duration-300 rounded-none"
+              className={cn(
+                "hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-[13px] font-semibold tracking-[0.08em] uppercase font-[family-name:var(--font-dm-sans)] transition-all duration-300 rounded-none",
+                scrolled
+                  ? "bg-gradient-to-br from-saffron to-gold text-white shadow-[0_4px_15px_rgba(212,132,26,0.25)] hover:shadow-[0_6px_20px_rgba(212,132,26,0.35)] hover:-translate-y-[2px]"
+                  : "bg-white/20 text-white border border-white/30 hover:bg-white/30"
+              )}
             >
               {t("reservation")}
             </Link>
@@ -180,28 +184,7 @@ export function Header() {
             )}
             style={{ transitionDelay: isOpen ? `${navLinks.length * 60 + 100}ms` : "0ms" }}
           >
-            <div className="flex items-center rounded-full border border-charcoal/15 overflow-hidden text-[13px] font-medium w-fit">
-              <span
-                className={cn(
-                  "px-4 py-2 transition-all duration-300",
-                  locale === "en"
-                    ? "bg-saffron text-white"
-                    : "bg-transparent text-charcoal/60"
-                )}
-              >
-                EN
-              </span>
-              <span
-                className={cn(
-                  "px-4 py-2 transition-all duration-300",
-                  locale === "ja"
-                    ? "bg-saffron text-white"
-                    : "bg-transparent text-charcoal/60"
-                )}
-              >
-                JP
-              </span>
-            </div>
+            <LanguageToggleBtn />
           </div>
 
           {/* Mobile Reservation */}
