@@ -9,6 +9,8 @@ import {
   Clock,
   Quote,
   ArrowRight,
+  ChevronDown,
+  Phone,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -84,7 +86,7 @@ const fadeInUp = {
   visible: (delay: number = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, delay, ease: "easeOut" as const },
+    transition: { duration: 0.7, delay, ease: "easeOut" as const },
   }),
 };
 
@@ -97,11 +99,11 @@ const fadeIn = {
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8 },
+  hidden: { opacity: 0, scale: 0.85 },
   visible: (delay: number = 0) => ({
     opacity: 1,
     scale: 1,
-    transition: { type: "spring" as const, stiffness: 200, damping: 20, delay },
+    transition: { type: "spring" as const, stiffness: 160, damping: 20, delay },
   }),
 };
 
@@ -110,7 +112,7 @@ const slideInLeft = {
   visible: (delay: number = 0) => ({
     opacity: 1,
     x: 0,
-    transition: { duration: 0.7, delay, ease: "easeOut" as const },
+    transition: { duration: 0.8, delay, ease: "easeOut" as const },
   }),
 };
 
@@ -119,7 +121,7 @@ const slideInRight = {
   visible: (delay: number = 0) => ({
     opacity: 1,
     x: 0,
-    transition: { duration: 0.7, delay, ease: "easeOut" as const },
+    transition: { duration: 0.8, delay, ease: "easeOut" as const },
   }),
 };
 
@@ -127,7 +129,7 @@ const staggerContainer = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 },
+    transition: { staggerChildren: 0.12 },
   },
 };
 
@@ -136,15 +138,7 @@ const staggerItem = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring" as const, stiffness: 200, damping: 24 },
-  },
-};
-
-const heroContainer = {
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+    transition: { type: "spring" as const, stiffness: 180, damping: 22 },
   },
 };
 
@@ -194,19 +188,19 @@ function StatCard({
   const count = useCountUp(value, 1.5, inView);
   return (
     <motion.div
-      className="text-center p-4 bg-cream rounded-xl"
+      className="text-center"
       variants={staggerItem}
     >
-      <p className="text-2xl font-bold text-saffron">
+      <p className="font-display text-4xl md:text-5xl font-light text-saffron">
         {Math.round(count)}
         {suffix}
       </p>
-      <p className="text-sm text-charcoal/70">{label}</p>
+      <p className="text-sm text-white/60 tracking-widest uppercase mt-1">{label}</p>
     </motion.div>
   );
 }
 
-/* ── Star Rating Component with stagger ── */
+/* ── Star Rating Component ── */
 
 function AnimatedStars({ count, inView }: { count: number; inView: boolean }) {
   return (
@@ -227,9 +221,21 @@ function AnimatedStars({ count, inView }: { count: number; inView: boolean }) {
             delay: i * 0.1,
           }}
         >
-          <Star className="w-3 h-3 fill-saffron text-saffron" />
+          <Star className="w-3 h-3 fill-gold text-gold" />
         </motion.div>
       ))}
+    </div>
+  );
+}
+
+/* ── Decorative Divider ── */
+
+function GoldDivider({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex items-center justify-center gap-4 ${className}`}>
+      <span className="h-px flex-1 max-w-[80px] bg-gradient-to-r from-transparent to-gold/60" />
+      <span className="text-gold text-xs">◆</span>
+      <span className="h-px flex-1 max-w-[80px] bg-gradient-to-l from-transparent to-gold/60" />
     </div>
   );
 }
@@ -238,7 +244,6 @@ export default function HomePage() {
   const t = useTranslations("home");
   const locale = useLocale();
   const [reviewsInView, setReviewsInView] = useState(false);
-  const [googleInView, setGoogleInView] = useState(false);
   const [statsInView, setStatsInView] = useState(false);
   const [ratingInView, setRatingInView] = useState(false);
   const rating = useCountUp(4.5, 1.5, ratingInView);
@@ -248,63 +253,67 @@ export default function HomePage() {
       <SchemaMarkup data={generateRestaurantSchema(locale)} />
 
       {/* ===== 1. HERO SECTION ===== */}
-      <section className="relative min-h-[90vh] flex items-center justify-center">
+      <section className="relative min-h-screen flex items-center justify-center noise-overlay">
         <div className="absolute inset-0 z-0">
           <motion.img
             src="/images/about/クマールMain-rotated.jpg"
             alt="Kumar Restaurant Interior"
             className="w-full h-full object-cover"
-            initial={{ scale: 1.1 }}
+            initial={{ scale: 1.08 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" as const }}
+            transition={{ duration: 1.8, ease: "easeOut" as const }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
         {/* Decorative fork left */}
         <motion.img
           src="/images/decorative/fork-free-img.png"
           alt=""
-          className="absolute left-4 md:left-12 top-1/3 w-12 md:w-20 opacity-60 -rotate-12 hidden sm:block"
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 0.6, x: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
+          className="absolute left-6 md:left-16 top-1/4 w-14 md:w-24 opacity-40 -rotate-[25deg] hidden sm:block"
+          initial={{ opacity: 0, x: -40, rotate: -40 }}
+          animate={{ opacity: 0.4, x: 0, rotate: -25 }}
+          transition={{ duration: 1, delay: 1.2 }}
         />
         {/* Decorative knife right */}
         <motion.img
           src="/images/decorative/knife-free-imge.png"
           alt=""
-          className="absolute right-4 md:right-12 top-1/3 w-12 md:w-20 opacity-60 rotate-12 hidden sm:block"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 0.6, x: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
+          className="absolute right-6 md:right-16 top-1/4 w-14 md:w-24 opacity-40 rotate-[25deg] hidden sm:block"
+          initial={{ opacity: 0, x: 40, rotate: 40 }}
+          animate={{ opacity: 0.4, x: 0, rotate: 25 }}
+          transition={{ duration: 1, delay: 1.2 }}
         />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-20">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center py-24">
           <motion.div
-            className="mb-6"
-            initial={{ opacity: 0, scale: 0.8 }}
+            className="mb-8"
+            initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 150, damping: 20, delay: 0.1 }}
+            transition={{ type: "spring", stiffness: 120, damping: 18, delay: 0.1 }}
           >
             <img
               src="/images/decorative/frill-free-img.png"
               alt=""
-              className="mx-auto w-32 md:w-48 opacity-80"
+              className="mx-auto w-36 md:w-52 opacity-70"
             />
           </motion.div>
 
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-2 leading-tight tracking-wide"
+            className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-white mb-4 leading-[0.95] tracking-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
-            {locale === "en" ? "Kumar Restaurant" : "クマールレストラン"}
+            {locale === "en" ? "Kumar" : "クマール"}
+            <br />
+            <span className="font-display italic font-light">
+              {locale === "en" ? "Restaurant" : "レストラン"}
+            </span>
           </motion.h1>
 
           <motion.p
-            className="text-lg sm:text-xl md:text-2xl text-white/90 mb-3 italic"
+            className="text-base sm:text-lg md:text-xl text-white/80 mb-6 font-light tracking-[0.15em] uppercase"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -315,51 +324,72 @@ export default function HomePage() {
           </motion.p>
 
           <motion.div
-            className="flex items-center justify-center gap-3 mb-8"
+            className="flex items-center justify-center gap-4 mb-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
-            <span className="h-px w-12 bg-saffron/60" />
-            <p className="text-base md:text-lg text-saffron font-medium tracking-widest uppercase">
+            <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold" />
+            <p className="text-sm md:text-base text-gold font-light tracking-[0.25em] uppercase">
               {locale === "en"
                 ? "Good Food | Good Culture"
                 : "美味しい食べ物 | 美しい文化"}
             </p>
-            <span className="h-px w-12 bg-saffron/60" />
+            <span className="h-px w-16 bg-gradient-to-l from-transparent to-gold" />
           </motion.div>
 
           <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
+            className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-12"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.7 }}
+            transition={{ type: "spring", stiffness: 180, damping: 20, delay: 0.8 }}
           >
             <Link href={`/${locale}/contact`}>
-              <Button variant="primary" size="lg" className="min-w-[200px]">
-                {locale === "en" ? "Reserve" : "予約する"}
+              <Button variant="primary" size="lg" className="min-w-[220px]">
+                {locale === "en" ? "Reserve a Table" : "ご予約"}
                 <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+            <Link href={`/${locale}/menu`}>
+              <Button variant="secondary" size="lg" className="min-w-[220px] border-white/40 text-white hover:bg-white/10 hover:border-white/60">
+                {locale === "en" ? "View Menu" : "メニューを見る"}
               </Button>
             </Link>
           </motion.div>
 
+          {/* Hours Badge - Glass Morphism */}
           <motion.div
-            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2.5"
-            initial={{ opacity: 0, y: 10 }}
+            className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/10 rounded-full px-6 py-3"
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
+            transition={{ duration: 0.5, delay: 1.0 }}
           >
-            <Clock className="w-4 h-4 text-saffron" />
-            <span className="text-white text-xs md:text-sm">
+            <Clock className="w-4 h-4 text-gold" />
+            <span className="text-white/90 text-xs md:text-sm tracking-wide">
               {t("hero.hours")}
             </span>
+          </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            className="absolute bottom-8 left-1/2 -translate-x-1/2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.5 }}
+          >
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" as const }}
+            >
+              <ChevronDown className="w-6 h-6 text-white/40" />
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* ===== 2. BOOK A TABLE SECTION ===== */}
+      {/* ===== 2. BOOK A TABLE ===== */}
       <motion.section
-        className="py-16 bg-cream"
+        className="py-20 bg-cream pattern-overlay relative"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -368,15 +398,16 @@ export default function HomePage() {
           visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
         }}
       >
-        <div className="max-w-5xl mx-auto px-4 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-charcoal mb-4"
+            className="font-display text-4xl md:text-5xl text-charcoal mb-4"
             variants={fadeInUp}
           >
-            {locale === "en" ? "Book a table!" : "ご予約！"}
+            {locale === "en" ? "Book a Table" : "ご予約"}
           </motion.h2>
+          <GoldDivider className="mb-6" />
           <motion.p
-            className="text-lg text-charcoal/70 mb-8 max-w-2xl mx-auto"
+            className="text-base md:text-lg text-charcoal/60 mb-10 max-w-2xl mx-auto font-light leading-relaxed"
             variants={fadeInUp}
           >
             {locale === "en"
@@ -395,36 +426,35 @@ export default function HomePage() {
       </motion.section>
 
       {/* ===== 3. WELCOME SECTION ===== */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={{
                 hidden: { opacity: 1 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
+                visible: { opacity: 1, transition: { staggerChildren: 0.14 } },
               }}
             >
+              <motion.p
+                className="text-sm text-gold tracking-[0.2em] uppercase mb-3"
+                variants={slideInLeft}
+              >
+                {locale === "en" ? "Since 1995" : "1995年より"}
+              </motion.p>
               <motion.h2
-                className="text-3xl md:text-4xl font-bold text-charcoal mb-3"
+                className="font-display text-4xl md:text-5xl text-charcoal mb-6 leading-tight"
                 variants={slideInLeft}
               >
                 {locale === "en"
                   ? "Welcome to Kumar Restaurant"
                   : "クマールレストランへようこそ"}
               </motion.h2>
+              <GoldDivider className="!justify-start mb-8" />
               <motion.p
-                className="text-xl text-saffron font-semibold mb-6"
-                variants={slideInLeft}
-              >
-                {locale === "en"
-                  ? "Hamamatsu's First Indian Restaurant! Serving Since 1995"
-                  : "「浜松初のインド料理店！1995年より営業」"}
-              </motion.p>
-              <motion.p
-                className="text-lg text-charcoal/70 leading-relaxed mb-8"
+                className="text-lg text-charcoal/60 leading-relaxed mb-10 font-light"
                 variants={slideInLeft}
               >
                 {locale === "en"
@@ -445,9 +475,12 @@ export default function HomePage() {
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, ease: "easeOut" as const }}
+              transition={{ duration: 0.8, ease: "easeOut" as const }}
             >
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-xl">
+              {/* Gold frame effect */}
+              <div className="absolute -inset-3 border-2 border-gold/30" />
+              <div className="absolute -inset-6 border border-gold/15" />
+              <div className="aspect-[4/5] overflow-hidden relative">
                 <img
                   src="/images/about/Serving-chef.jpg"
                   alt="Mr. Binay Kumar - Chef and Owner"
@@ -455,31 +488,39 @@ export default function HomePage() {
                 />
               </div>
               <motion.div
-                className="absolute -bottom-4 -left-4 bg-saffron text-charcoal px-6 py-3 rounded-xl shadow-lg"
+                className="absolute -bottom-5 -left-5 bg-gold text-charcoal px-7 py-3 shadow-xl"
                 initial={{ opacity: 0, scale: 0.6 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.4 }}
               >
-                <p className="font-bold text-lg">Since 1995</p>
+                <p className="font-display text-xl font-semibold tracking-wide">Since 1995</p>
               </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ===== 3.5 MEET MR. BINAY KUMAR SECTION ===== */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* ===== 4. MEET BINAY KUMAR ===== */}
+      <section className="py-24 bg-burgundy text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04]">
+          <img
+            src="/images/decorative/frill-free-img.png"
+            alt=""
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
-              className="relative"
-              initial={{ opacity: 0, scale: 0.9 }}
+              className="relative order-2 lg:order-1"
+              initial={{ opacity: 0, scale: 0.92 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, ease: "easeOut" as const }}
+              transition={{ duration: 0.8, ease: "easeOut" as const }}
             >
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-xl">
+              <div className="absolute -inset-3 border-2 border-saffron/20" />
+              <div className="aspect-[4/5] overflow-hidden relative">
                 <img
                   src="/images/about/Serving-chef.jpg"
                   alt="Mr. Binay Kumar - Owner"
@@ -487,46 +528,48 @@ export default function HomePage() {
                 />
               </div>
               <motion.div
-                className="absolute -top-4 -right-4 bg-saffron text-charcoal px-6 py-3 rounded-xl shadow-lg"
+                className="absolute -top-5 -right-5 bg-gold text-charcoal px-7 py-3 shadow-xl"
                 initial={{ opacity: 0, scale: 0.6 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.3 }}
               >
-                <p className="font-bold text-lg">G7 Summit Caterer 2023</p>
+                <p className="font-display text-lg font-semibold tracking-wide">G7 Summit 2023</p>
               </motion.div>
             </motion.div>
             <motion.div
+              className="order-1 lg:order-2"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={{
                 hidden: { opacity: 1 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
+                visible: { opacity: 1, transition: { staggerChildren: 0.14 } },
               }}
             >
               <motion.p
-                className="text-saffron font-semibold text-lg mb-2"
+                className="text-saffron font-light tracking-[0.2em] uppercase text-sm mb-3"
                 variants={fadeInUp}
               >
                 {locale === "en" ? "Meet Our Owner" : "オーナー紹介"}
               </motion.p>
               <motion.h2
-                className="text-3xl md:text-4xl font-bold text-charcoal mb-6"
+                className="font-display text-4xl md:text-5xl text-white mb-6 leading-tight"
                 variants={fadeInUp}
               >
                 {locale === "en" ? "Mr. Binay Kumar" : "ビナイ・クマー氏"}
               </motion.h2>
+              <GoldDivider className="!justify-start mb-8" />
               <motion.p
-                className="text-lg text-charcoal/70 leading-relaxed mb-8"
+                className="text-base md:text-lg text-white/70 leading-relaxed mb-10 font-light"
                 variants={fadeInUp}
               >
                 {locale === "en"
-                  ? "Mr. Binay Kumar is the heart and soul of Kumar Restaurant. His passion for authentic Indian cuisine and dedication to serving the Hamamatsu community for over 30 years has made Kumar Restaurant a beloved institution. In 2023, he was honored to cater for world leaders at the G7 Summit in Kyoto, bringing international recognition to our little restaurant in Act Tower."
-                  : "ビナイ・クマー氏はクマールレストランの心と魂です。本格的なインド料理への情熱と、30年以上にわたる浜松コミュニティへの奉仕は、クマールレストランを愛されinstitutionsにしました。2023年には京都で開催されたG7サミットで世界のリーダーたちに料理を振る舞う名誉に浴しました。"}
+                  ? "Mr. Binay Kumar is the heart and soul of Kumar Restaurant. His passion for authentic Indian cuisine and dedication to serving the Hamamatsu community for over 30 years has made Kumar Restaurant a beloved institution. In 2023, he was honored to cater for world leaders at the G7 Summit in Kyoto."
+                  : "ビナイ・クマー氏はクマールレストランの心と魂です。本格的なインド料理への情熱と、30年以上にわたる浜松コミュニティへの奉仕は、クマールレストランを愛される存在にしました。2023年には京都で開催されたG7サミットで世界のリーダーたちに料理を振る舞う名誉に浴しました。"}
               </motion.p>
               <motion.div
-                className="grid grid-cols-3 gap-4 mb-8"
+                className="grid grid-cols-3 gap-6 mb-10"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
@@ -543,11 +586,11 @@ export default function HomePage() {
                   inView={statsInView}
                 />
                 <motion.div
-                  className="text-center p-4 bg-cream rounded-xl"
+                  className="text-center"
                   variants={staggerItem}
                 >
-                  <p className="text-2xl font-bold text-saffron">G7</p>
-                  <p className="text-sm text-charcoal/70">
+                  <p className="font-display text-4xl md:text-5xl font-light text-gold">G7</p>
+                  <p className="text-sm text-white/60 tracking-widest uppercase mt-1">
                     {locale === "en" ? "Summit" : "サミット"}
                   </p>
                 </motion.div>
@@ -560,7 +603,7 @@ export default function HomePage() {
               </motion.div>
               <motion.div variants={fadeInUp}>
                 <Link href={`/${locale}/about`}>
-                  <Button variant="secondary" size="lg">
+                  <Button variant="secondary" size="lg" className="border-white/30 text-white hover:bg-white/10 hover:border-white/50">
                     {locale === "en" ? "Read Full Story" : "详情を見る"}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
@@ -571,82 +614,79 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 4. OUR HOURS SECTION ===== */}
+      {/* ===== 5. OUR HOURS ===== */}
       <motion.section
-        className="py-20 bg-charcoal text-white relative overflow-hidden"
-        initial={{ backgroundPositionY: "0%" }}
-        whileInView={{ backgroundPositionY: "20%" }}
-        viewport={{ once: true }}
+        className="py-24 bg-charcoal text-white relative overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={{
+          hidden: { opacity: 1 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
+        }}
       >
-        <motion.div
-          className="absolute inset-0 opacity-10"
-          initial={{ scale: 1.15 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5 }}
-        >
+        <div className="absolute inset-0 opacity-5">
           <img
             src="/images/about/dine-out.jpg"
             alt=""
             className="w-full h-full object-cover"
           />
-        </motion.div>
-        <motion.div
-          className="relative z-10 max-w-4xl mx-auto px-4 text-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={{
-            hidden: { opacity: 1 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
-          }}
-        >
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold mb-10"
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+          <motion.p
+            className="text-gold tracking-[0.2em] uppercase text-sm mb-3"
             variants={fadeInUp}
           >
-            {locale === "en" ? "Hours" : "営業時間"}
+            {locale === "en" ? "Visit Us" : "ご来店お待ちしております"}
+          </motion.p>
+          <motion.h2
+            className="font-display text-4xl md:text-5xl text-white mb-4"
+            variants={fadeInUp}
+          >
+            {locale === "en" ? "Our Hours" : "営業時間"}
           </motion.h2>
+          <GoldDivider className="mb-10" />
           <motion.div
-            className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 max-w-lg mx-auto"
+            className="bg-white/5 backdrop-blur-sm border border-white/10 p-10 md:p-14 max-w-lg mx-auto"
             variants={scaleIn}
           >
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div>
-                <p className="text-saffron font-semibold text-lg mb-1">
-                  {locale === "en" ? "Monday - Friday" : "月曜日 - 金曜日"}
+                <p className="text-gold font-display text-xl mb-2">
+                  {locale === "en" ? "Monday — Friday" : "月曜日 — 金曜日"}
                 </p>
-                <p className="text-xl">11:00 - 15:00 &amp; 17:00 - 22:00</p>
+                <p className="text-lg text-white/90 font-light tracking-wide">11:00 — 15:00 &amp; 17:00 — 22:00</p>
               </div>
-              <div className="h-px bg-white/20" />
+              <div className="h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
               <div>
-                <p className="text-saffron font-semibold text-lg mb-1">
+                <p className="text-gold font-display text-xl mb-2">
                   {locale === "en"
                     ? "Saturday · Sunday · Holiday"
                     : "土曜日・日曜日・祝日"}
                 </p>
-                <p className="text-xl">11:00 - 22:00</p>
+                <p className="text-lg text-white/90 font-light tracking-wide">11:00 — 22:00</p>
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.section>
 
-      {/* ===== 5. OUR MENU SECTION ===== */}
-      <section className="py-20 bg-cream">
+      {/* ===== 6. OUR MENU ===== */}
+      <section className="py-24 bg-cream relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
-              className="order-2 lg:order-1"
+              className="order-2 lg:order-1 relative"
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, ease: "easeOut" as const }}
+              transition={{ duration: 0.8, ease: "easeOut" as const }}
             >
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+              <div className="absolute -inset-3 border-2 border-gold/30" />
+              <div className="aspect-[4/3] overflow-hidden relative">
                 <img
                   src="/images/food/india-indian-indian-food-1481500-1024x682.jpg"
-                  alt="Samosa - Indian appetizer"
+                  alt="Indian cuisine"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -658,25 +698,24 @@ export default function HomePage() {
               viewport={{ once: true, margin: "-100px" }}
               variants={{
                 hidden: { opacity: 1 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
+                visible: { opacity: 1, transition: { staggerChildren: 0.14 } },
               }}
             >
+              <motion.p
+                className="text-sm text-gold tracking-[0.2em] uppercase mb-3"
+                variants={slideInRight}
+              >
+                {locale === "en" ? "Royal Recipes" : "王室のレシピ"}
+              </motion.p>
               <motion.h2
-                className="text-3xl md:text-4xl font-bold text-charcoal mb-3"
+                className="font-display text-4xl md:text-5xl text-charcoal mb-6 leading-tight"
                 variants={slideInRight}
               >
                 {locale === "en" ? "Our Menu" : "メニュー"}
               </motion.h2>
+              <GoldDivider className="!justify-start mb-8" />
               <motion.p
-                className="text-xl text-saffron font-semibold mb-6"
-                variants={slideInRight}
-              >
-                {locale === "en"
-                  ? "Quality Ingredients, Tasty Meals"
-                  : "「高品質な食材、美味しい料理」"}
-              </motion.p>
-              <motion.p
-                className="text-lg text-charcoal/70 leading-relaxed mb-8"
+                className="text-base md:text-lg text-charcoal/60 leading-relaxed mb-10 font-light"
                 variants={slideInRight}
               >
                 {locale === "en"
@@ -696,11 +735,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 6. TASTY TRADITIONS SECTION ===== */}
-      <section className="py-20 bg-white">
+      {/* ===== 7. TASTY TRADITIONS ===== */}
+      <section className="py-24 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-16"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
@@ -709,18 +748,25 @@ export default function HomePage() {
               visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
             }}
           >
+            <motion.p
+              className="text-sm text-gold tracking-[0.2em] uppercase mb-3"
+              variants={fadeInUp}
+            >
+              {locale === "en" ? "Signature Dishes" : "名物料理"}
+            </motion.p>
             <motion.h2
-              className="text-3xl md:text-4xl font-bold text-charcoal mb-3"
+              className="font-display text-4xl md:text-5xl text-charcoal mb-4"
               variants={fadeInUp}
             >
               {t("signatureDishes.title")}
             </motion.h2>
-            <motion.p className="text-lg text-charcoal/70" variants={fadeInUp}>
+            <GoldDivider className="mb-6" />
+            <motion.p className="text-base text-charcoal/60 font-light max-w-2xl mx-auto" variants={fadeInUp}>
               {t("signatureDishes.subtitle")}
             </motion.p>
           </motion.div>
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -730,41 +776,39 @@ export default function HomePage() {
               <motion.div
                 key={dish.key}
                 variants={staggerItem}
-                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.15)" }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
               >
-                <Card className="h-full">
+                <Card hover className="h-full">
                   <div className="aspect-[4/3] relative overflow-hidden">
                     <img
                       src={dish.image}
                       alt={t(`signatureDishes.dishes.${dish.key}.name`)}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    <span className="absolute bottom-3 right-3 text-lg font-display font-semibold text-gold drop-shadow-lg">
+                      ¥{dish.price}
+                    </span>
                   </div>
                   <CardContent className="flex flex-col h-full">
-                    <h3 className="text-xl font-semibold text-charcoal mb-2">
+                    <h3 className="font-display text-xl text-charcoal mb-2">
                       {t(`signatureDishes.dishes.${dish.key}.name`)}
                     </h3>
-                    <p className="text-charcoal/70 text-sm mb-4 flex-1">
+                    <p className="text-charcoal/60 text-sm mb-4 flex-1 font-light leading-relaxed">
                       {t(`signatureDishes.dishes.${dish.key}.description`)}
                     </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-bold text-saffron">
-                        ¥{dish.price}
-                      </span>
-                      <Link href={`/${locale}/menu`}>
-                        <Button variant="secondary" size="sm">
-                          {locale === "en" ? "Order" : "注文"}
-                        </Button>
-                      </Link>
-                    </div>
+                    <Link href={`/${locale}/menu`}>
+                      <Button variant="secondary" size="sm" className="w-full">
+                        {locale === "en" ? "Order" : "注文"}
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
           </motion.div>
-          <div className="text-center mt-12">
+          <div className="text-center mt-14">
             <Link href={`/${locale}/menu`}>
               <Button variant="primary" size="lg">
                 {locale === "en" ? "Discover Entire Menu" : "全メニューを見る"}
@@ -775,11 +819,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 7. HAPPY CUSTOMERS SECTION ===== */}
-      <section className="py-20 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ===== 8. REVIEWS ===== */}
+      <section className="py-24 bg-cream pattern-overlay relative">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Google Reviews */}
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-16"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
@@ -788,16 +833,49 @@ export default function HomePage() {
               visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
             }}
           >
-            <motion.h2
-              className="text-3xl md:text-4xl font-bold text-charcoal mb-3"
+            <motion.p
+              className="text-sm text-gold tracking-[0.2em] uppercase mb-3"
               variants={fadeInUp}
             >
-              {locale === "en" ? "Happy Customers!" : "お客様の声！"}
+              {locale === "en" ? "What Our Guests Say" : "お客様の声"}
+            </motion.p>
+            <motion.h2
+              className="font-display text-4xl md:text-5xl text-charcoal mb-4"
+              variants={fadeInUp}
+            >
+              {locale === "en" ? "Google Reviews" : "Googleレビュー"}
             </motion.h2>
+            <GoldDivider className="mb-8" />
+            <motion.div
+              className="flex items-center justify-center gap-4 mb-10"
+              variants={fadeInUp}
+            >
+              <motion.span
+                className="font-display text-6xl text-charcoal font-light"
+                onViewportEnter={() => setRatingInView(true)}
+              >
+                {ratingInView ? rating.toFixed(1) : "0.0"}
+              </motion.span>
+              <div className="text-left">
+                <div className="flex gap-1 mb-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-5 h-5 ${i < 4 ? "fill-gold text-gold" : "fill-gold/40 text-gold/40"}`}
+                    />
+                  ))}
+                </div>
+                <p className="text-charcoal/50 text-sm font-light">
+                  {locale === "en"
+                    ? "Based on 168 reviews"
+                    : "168件のレビューに基づく"}
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -808,17 +886,17 @@ export default function HomePage() {
               <motion.div
                 key={index}
                 variants={staggerItem}
-                whileHover={{ y: -5, boxShadow: "0 15px 35px rgba(0,0,0,0.1)" }}
+                whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <Card className="h-full">
-                  <CardContent className="pt-6 pb-6">
-                    <Quote className="w-8 h-8 text-saffron/40 mb-3" />
-                    <p className="text-charcoal/80 italic mb-4 text-sm leading-relaxed">
+                <Card hover className="h-full">
+                  <CardContent className="pt-8 pb-8">
+                    <Quote className="w-8 h-8 text-gold/30 mb-4" />
+                    <p className="text-charcoal/70 italic mb-5 text-sm leading-relaxed font-light">
                       &ldquo;{review.quote}&rdquo;
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                      <div className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-gold/20">
                         <img
                           src={review.avatar}
                           alt={review.name}
@@ -826,7 +904,7 @@ export default function HomePage() {
                         />
                       </div>
                       <div>
-                        <p className="font-semibold text-charcoal text-sm">
+                        <p className="font-display text-base text-charcoal">
                           {review.name}
                         </p>
                         <AnimatedStars count={review.rating} inView={reviewsInView} />
@@ -838,168 +916,30 @@ export default function HomePage() {
             ))}
           </motion.div>
 
-          {/* Social proof about dietary options */}
-          <motion.div
-            className="bg-white rounded-2xl p-8 text-center shadow-sm"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="text-charcoal/70 text-lg mb-4">
-              {locale === "en"
-                ? "We offer a variety of Indian food options for every dietary need"
-                : "あらゆる食事のニーズに対応する多様なインド料理を提供しています"}
-            </p>
-            <div className="flex flex-wrap justify-center gap-3 mb-6">
-              {[
-                { en: "Vegetarian", jp: "ベジタリアン" },
-                { en: "Vegan", jp: "ヴィーガン" },
-                { en: "Halal", jp: "ハラル" },
-                { en: "Gluten-Free", jp: "グルテンフリー" },
-              ].map((item) => (
-                <span
-                  key={item.en}
-                  className="px-4 py-2 bg-forest/10 text-forest rounded-full text-sm font-medium"
-                >
-                  {locale === "en" ? item.en : item.jp}
-                </span>
-              ))}
-            </div>
-            <a
-              href="https://www.instagram.com/kumarhamamatsu/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="ghost" size="md">
-                {locale === "en" ? "Follow on Instagram" : "Instagramをフォロー"}
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ===== 8. GOOGLE REVIEWS SECTION ===== */}
-      <motion.section
-        className="py-20 bg-white"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={{
-          hidden: { opacity: 1 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
-        }}
-      >
-        <div className="max-w-5xl mx-auto px-4 text-center">
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-charcoal mb-3"
-            variants={fadeInUp}
-          >
-            {locale === "en" ? "Google Reviews" : "Googleレビュー"}
-          </motion.h2>
-          <motion.div
-            className="flex items-center justify-center gap-3 mb-8"
-            variants={fadeInUp}
-          >
-            <motion.span
-              className="text-5xl font-bold text-charcoal"
-              onViewportEnter={() => setRatingInView(true)}
-            >
-              {ratingInView ? rating.toFixed(1) : "0.0"}
-            </motion.span>
-            <div className="text-left">
-              <div className="flex gap-1 mb-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${i < 4 ? "fill-saffron text-saffron" : "fill-saffron/50 text-saffron/50"}`}
-                  />
-                ))}
-              </div>
-              <p className="text-charcoal/60 text-sm">
-                {locale === "en"
-                  ? "GOOD · Based on 168 reviews"
-                  : "良い · 168件のレビューに基づく"}
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            {REVIEWS.slice(0, 3).map((review, index) => (
-              <motion.div
-                key={index}
-                className="bg-cream/50 rounded-xl p-6 text-left"
-                variants={staggerItem}
-                whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden">
-                    <img
-                      src={review.avatar}
-                      alt={review.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-charcoal text-sm">
-                      {review.name}
-                    </p>
-                    <div className="flex gap-0.5">
-                      {Array.from({ length: review.rating }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-3 h-3 fill-saffron text-saffron"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-charcoal/70 text-sm italic">
-                  &ldquo;{review.quote}&rdquo;
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* ===== 9. FACEBOOK REVIEWS SECTION ===== */}
-      <motion.section
-        className="py-20 bg-cream"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={{
-          hidden: { opacity: 1 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Facebook Reviews */}
           <motion.div
             className="flex items-center justify-center gap-4 mb-12"
-            variants={fadeInUp}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
             <img
               src="/images/social/fb-free-imng.png"
               alt="Facebook"
               className="w-10 h-10"
             />
-            <h2 className="text-3xl md:text-4xl font-bold text-charcoal">
+            <h2 className="font-display text-3xl md:text-4xl text-charcoal">
               {locale === "en" ? "Facebook Reviews" : "Facebookレビュー"}
             </h2>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
           >
             {REVIEWS.map((review, index) => (
               <motion.div
@@ -1008,10 +948,10 @@ export default function HomePage() {
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <Card className="h-full">
-                  <CardContent className="pt-6 pb-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-12 h-12 rounded-full overflow-hidden">
+                <Card hover className="h-full">
+                  <CardContent className="pt-8 pb-8">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-gold/20">
                         <img
                           src={review.avatar}
                           alt={review.name}
@@ -1019,20 +959,20 @@ export default function HomePage() {
                         />
                       </div>
                       <div>
-                        <p className="font-semibold text-charcoal">
+                        <p className="font-display text-base text-charcoal">
                           {review.name}
                         </p>
                         <div className="flex gap-0.5">
                           {Array.from({ length: review.rating }).map((_, i) => (
                             <Star
                               key={i}
-                              className="w-3 h-3 fill-saffron text-saffron"
+                              className="w-3 h-3 fill-gold text-gold"
                             />
                           ))}
                         </div>
                       </div>
                     </div>
-                    <p className="text-charcoal/70 text-sm leading-relaxed">
+                    <p className="text-charcoal/60 text-sm leading-relaxed font-light">
                       &ldquo;{review.quote}&rdquo;
                     </p>
                   </CardContent>
@@ -1041,13 +981,13 @@ export default function HomePage() {
             ))}
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* ===== 10. SOCIAL LINKS ===== */}
-      <section className="py-12 bg-charcoal">
+      {/* ===== 9. SOCIAL LINKS ===== */}
+      <section className="py-14 bg-charcoal">
         <div className="max-w-4xl mx-auto px-4">
           <motion.p
-            className="text-center text-white/80 mb-6 text-lg"
+            className="text-center text-white/60 mb-8 text-sm tracking-[0.2em] uppercase"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -1055,7 +995,7 @@ export default function HomePage() {
           >
             {locale === "en" ? "Follow Us" : "フォローする"}
           </motion.p>
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex items-center justify-center gap-8">
             {[
               { href: "https://www.facebook.com/kumarhamamatsu/", img: "/images/social/fb-free-imng.png", alt: "Facebook" },
               { href: "https://twitter.com/kumarhamamatsu", img: "/images/social/tweet-free-img.png", alt: "Twitter" },
@@ -1066,16 +1006,17 @@ export default function HomePage() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-gold/30 transition-all duration-300"
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.2 }}
+                whileHover={{ scale: 1.15 }}
                 transition={{ type: "spring", stiffness: 400, damping: 15, delay: i * 0.1 }}
               >
                 <img
                   src={social.img}
                   alt={social.alt}
-                  className="w-12 h-12"
+                  className="w-7 h-7"
                 />
               </motion.a>
             ))}
@@ -1083,23 +1024,22 @@ export default function HomePage() {
               href="https://www.instagram.com/kumarhamamatsu/"
               target="_blank"
               rel="noopener noreferrer"
+              className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 flex items-center justify-center hover:scale-110 transition-transform duration-300"
               initial={{ opacity: 0, scale: 0 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.2 }}
+              whileHover={{ scale: 1.15 }}
               transition={{ type: "spring", stiffness: 400, damping: 15, delay: 0.3 }}
             >
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">Ig</span>
-              </div>
+              <span className="text-white font-bold text-lg">Ig</span>
             </motion.a>
           </div>
         </div>
       </section>
 
-      {/* ===== 11. FOOTER CTA ===== */}
-      <section className="py-20 bg-charcoal text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
+      {/* ===== 10. FOOTER CTA ===== */}
+      <section className="py-24 bg-charcoal text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]">
           <img
             src="/images/decorative/frill-free-img.png"
             alt=""
@@ -1116,48 +1056,57 @@ export default function HomePage() {
             visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
           }}
         >
-          <motion.img
-            src="/images/decorative/old-typical-phone.png"
-            alt="Phone"
-            className="mx-auto w-16 h-16 mb-6 opacity-80"
+          <motion.div
+            className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-saffron/10 border border-saffron/20 mb-8"
             variants={fadeInUp}
-            whileHover={{ rotate: [0, -5, 5, -3, 3, 0] }}
+            whileHover={{ rotate: [0, -8, 8, -4, 4, 0] }}
             transition={{ duration: 0.5 }}
-          />
+          >
+            <Phone className="w-8 h-8 text-saffron" />
+          </motion.div>
+
           <motion.h2
-            className="text-2xl md:text-3xl font-bold mb-4"
+            className="font-display text-3xl md:text-4xl mb-5"
             variants={fadeInUp}
           >
             {locale === "en"
-              ? "Call for All Your Reservations"
+              ? "Call for Reservations"
               : "ご予約はお電話で"}
           </motion.h2>
           <motion.a
             href="tel:053-451-0154"
-            className="text-3xl md:text-4xl font-bold text-saffron hover:text-saffron/80 transition-colors mb-8 inline-block"
+            className="font-display text-4xl md:text-5xl text-saffron hover:text-gold transition-colors duration-300 mb-10 inline-block font-light tracking-wide"
             variants={fadeInUp}
-            animate={{ textShadow: ["0 0 0px rgba(232,163,53,0)", "0 0 12px rgba(232,163,53,0.3)", "0 0 0px rgba(232,163,53,0)"] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" as const }}
+            animate={{
+              textShadow: [
+                "0 0 0px rgba(201,168,76,0)",
+                "0 0 20px rgba(201,168,76,0.25)",
+                "0 0 0px rgba(201,168,76,0)",
+              ],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" as const }}
           >
             053-451-0154
           </motion.a>
 
-          <div className="mt-12 mb-6">
+          <div className="mt-12 mb-8">
             <motion.img
               src="/images/logos/cropped-KumarLogo1-2-1-300x143.png"
               alt="Kumar Restaurant Logo"
-              className="mx-auto w-48 md:w-64"
+              className="mx-auto w-48 md:w-64 opacity-90"
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              whileInView={{ opacity: 0.9 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.5 }}
             />
           </div>
 
-          <p className="text-white/50 text-sm mb-2">
+          <GoldDivider className="mb-6" />
+
+          <p className="text-white/40 text-xs tracking-wider mb-2">
             © {new Date().getFullYear()} Kumar Restaurant. All rights reserved.
           </p>
-          <p className="text-saffron/80 text-sm italic">
+          <p className="text-gold/60 text-sm italic font-display">
             {locale === "en"
               ? "Spice up life at Kumar Restaurant"
               : "クマールレストランで人生をスパイシーに"}

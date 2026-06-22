@@ -19,13 +19,30 @@ export function LanguageToggle({ className }: { className?: string }) {
     <button
       onClick={toggleLanguage}
       className={cn(
-        "flex items-center gap-2 px-3 py-2 rounded-lg bg-cream text-charcoal hover:bg-charcoal/10 transition-colors",
+        "flex items-center rounded-full border border-charcoal/15 overflow-hidden text-[13px] font-medium transition-all duration-300",
         className
       )}
       aria-label={locale === "en" ? "Switch to Japanese" : "Switch to English"}
     >
-      <span className="text-sm font-medium">
-        {locale === "en" ? "JP" : "EN"}
+      <span
+        className={cn(
+          "px-3 py-1.5 transition-all duration-300",
+          locale === "en"
+            ? "bg-saffron text-white"
+            : "bg-transparent text-charcoal/60"
+        )}
+      >
+        EN
+      </span>
+      <span
+        className={cn(
+          "px-3 py-1.5 transition-all duration-300",
+          locale === "ja"
+            ? "bg-saffron text-white"
+            : "bg-transparent text-charcoal/60"
+        )}
+      >
+        JP
       </span>
     </button>
   );

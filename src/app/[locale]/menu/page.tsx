@@ -164,64 +164,134 @@ export default function MenuPage() {
   }, [lightboxIndex, closeLightbox, navigateLightbox]);
 
   return (
-    <div>
+    <div className="bg-cream">
       {/* Hero Section */}
-      <section className="relative h-[500px] overflow-hidden">
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden noise-overlay">
         <motion.div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url(/images/about/dine-out.jpg)" }}
-          initial={{ scale: 1.1 }}
+          initial={{ scale: 1.15 }}
           whileInView={{ scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" as const }}
+          transition={{ duration: 1.8, ease: "easeOut" as const }}
           viewport={{ once: true }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/60 to-charcoal/85" />
+        <div className="absolute inset-0 pattern-overlay opacity-30" />
+
         <motion.div
-          className="absolute top-4 right-4 md:top-8 md:right-8 opacity-20 pointer-events-none"
-          initial={{ rotate: -10, opacity: 0 }}
-          whileInView={{ rotate: 5, opacity: 0.2 }}
-          transition={{ duration: 1.2, ease: "easeOut" as const }}
+          className="absolute top-8 right-8 md:top-12 md:right-12 opacity-15 pointer-events-none"
+          initial={{ rotate: -15, opacity: 0, scale: 0.8 }}
+          whileInView={{ rotate: 5, opacity: 0.15, scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" as const }}
           viewport={{ once: true }}
         >
           <Image
             src="/images/decorative/frill-free-img.png"
             alt=""
-            width={200}
-            height={200}
+            width={220}
+            height={220}
           />
         </motion.div>
-        <div className="relative z-10 h-full flex items-center justify-center">
-          <div className="text-center px-4">
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring" as const, stiffness: 80, damping: 12, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              {isJa ? "クマールレストラン メニュー" : "Kumar restaurant Menu."}
-            </motion.h1>
-            <motion.p
-              className="text-xl md:text-2xl text-saffron-light max-w-3xl mx-auto"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              {isJa
-                ? "日本の浜松の中心部に位置するクマールレストランは、本格的なインド料理の灯台です。"
-                : "Nestled in the heart of Hamamatsu, Japan, Kumar Restaurant stands as a beacon of authentic Indian cuisine."}
-            </motion.p>
-          </div>
+
+        <motion.div
+          className="absolute bottom-8 left-8 md:bottom-12 md:left-12 opacity-10 pointer-events-none"
+          initial={{ rotate: 20, opacity: 0, scale: 0.8 }}
+          whileInView={{ rotate: 10, opacity: 0.1, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" as const }}
+          viewport={{ once: true }}
+        >
+          <Image
+            src="/images/decorative/leaf-free-img.png"
+            alt=""
+            width={160}
+            height={160}
+          />
+        </motion.div>
+
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut" as const }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="h-px bg-gradient-to-r from-transparent via-gold to-transparent flex-1 max-w-[120px]" />
+              <motion.span
+                className="text-gold text-sm font-sans tracking-[0.3em] uppercase"
+                initial={{ opacity: 0, letterSpacing: "0.5em" }}
+                whileInView={{ opacity: 1, letterSpacing: "0.3em" }}
+                transition={{ duration: 1, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                {isJa ? "本日のおすすめ" : "Curated with care"}
+              </motion.span>
+              <div className="h-px bg-gradient-to-r from-gold via-transparent to-transparent flex-1 max-w-[120px]" />
+            </div>
+          </motion.div>
+
+          <motion.h1
+            className="font-display text-6xl md:text-7xl lg:text-8xl text-white mb-6 leading-[0.95] tracking-tight"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring" as const, stiffness: 70, damping: 14, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            {isJa ? "クマールレストラン メニュー" : "Kumar Restaurant Menu"}
+          </motion.h1>
+
+          <motion.div
+            className="flex items-center justify-center gap-4 mb-8"
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <div className="h-px bg-gradient-to-r from-transparent to-gold w-16" />
+            <svg width="24" height="24" viewBox="0 0 24 24" className="text-gold">
+              <path
+                d="M12 2L15 8.5L22 9.5L17 14.5L18 21.5L12 18.5L6 21.5L7 14.5L2 9.5L9 8.5L12 2Z"
+                fill="currentColor"
+                opacity="0.8"
+              />
+            </svg>
+            <div className="h-px bg-gradient-to-l from-transparent to-gold w-16" />
+          </motion.div>
+
+          <motion.p
+            className="font-sans text-lg md:text-xl text-cream/85 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            viewport={{ once: true }}
+          >
+            {isJa
+              ? "日本の浜松の中心部に位置するクマールレストランは、本格的なインド料理の灯台です。"
+              : "Nestled in the heart of Hamamatsu, Japan, Kumar Restaurant stands as a beacon of authentic Indian cuisine."}
+          </motion.p>
         </div>
       </section>
 
       {/* The Kumar Experience */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+      <section className="py-24 bg-white pattern-overlay relative">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.div
+              className="flex items-center justify-center gap-4 mb-6"
+              initial={{ opacity: 0, scaleX: 0 }}
+              whileInView={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="h-px bg-gradient-to-r from-transparent to-gold flex-1 max-w-[100px]" />
+              <span className="text-gold text-xs tracking-[0.3em] uppercase font-sans">
+                {isJa ? "季節の特別メニュー" : "Seasonal Specials"}
+              </span>
+              <div className="h-px bg-gradient-to-l from-transparent to-gold flex-1 max-w-[100px]" />
+            </motion.div>
+
             <motion.h2
-              className="text-3xl md:text-4xl font-bold text-charcoal mb-4"
+              className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ type: "spring" as const, stiffness: 100, damping: 15 }}
@@ -230,7 +300,7 @@ export default function MenuPage() {
               {isJa ? "クマール体験" : "The Kumar Experience"}
             </motion.h2>
             <motion.p
-              className="text-lg text-charcoal/70 max-w-3xl mx-auto"
+              className="font-sans text-lg text-charcoal/60 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -241,6 +311,7 @@ export default function MenuPage() {
                 : "Savor the warmth of traditional Indian hospitality paired with our carefully crafted seasonal menus. Each season brings new flavors to delight your palate."}
             </motion.p>
           </div>
+
           <motion.div
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
             variants={containerVariants}
@@ -248,24 +319,33 @@ export default function MenuPage() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {seasonalMenuImages.map((img, i) => (
+            {seasonalMenuImages.slice(0, 3).map((img, i) => (
               <motion.div
                 key={i}
                 variants={itemVariants}
-                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.15)" }}
+                whileHover={{ y: -8, boxShadow: "0 25px 50px rgba(107,29,42,0.15)" }}
                 onClick={() => openLightbox(i)}
-                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-lg group cursor-pointer"
+                className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
               >
                 <Image
                   src={img.src}
                   alt={img.alt}
                   fill
-                  className="object-cover"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-lg font-semibold">{img.alt}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-charcoal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                  <p className="font-display text-2xl text-white">{img.alt}</p>
+                  <div className="w-12 h-0.5 bg-gold mt-2" />
+                </div>
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                      <circle cx="11" cy="11" r="8" />
+                      <path d="m21 21-4.3-4.3" />
+                    </svg>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -274,26 +354,41 @@ export default function MenuPage() {
       </section>
 
       {/* Indian Delicacies */}
-      <section className="py-16 bg-cream">
+      <section className="py-24 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 relative">
+          <div className="text-center mb-16 relative">
             <motion.div
-              className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8 opacity-30 pointer-events-none"
-              initial={{ y: -40, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 0.3 }}
-              transition={{ duration: 1, ease: "easeOut" as const }}
+              className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-10 opacity-25 pointer-events-none"
+              initial={{ y: -40, opacity: 0, rotate: -10 }}
+              whileInView={{ y: 0, opacity: 0.25, rotate: 0 }}
+              transition={{ duration: 1.2, ease: "easeOut" as const }}
               viewport={{ once: true }}
             >
               <Image
                 src="/images/decorative/leaf-free-img.png"
                 alt=""
-                width={120}
-                height={120}
+                width={100}
+                height={100}
               />
             </motion.div>
+
+            <motion.div
+              className="flex items-center justify-center gap-4 mb-6"
+              initial={{ opacity: 0, scaleX: 0 }}
+              whileInView={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="h-px bg-gradient-to-r from-transparent to-gold flex-1 max-w-[80px]" />
+              <span className="text-gold text-xs tracking-[0.3em] uppercase font-sans">
+                {isJa ? "本格の味わい" : "Authentic flavors"}
+              </span>
+              <div className="h-px bg-gradient-to-l from-transparent to-gold flex-1 max-w-[80px]" />
+            </motion.div>
+
             <motion.h2
-              className="text-3xl md:text-4xl font-bold text-charcoal mb-4"
-              initial={{ opacity: 0, scale: 0.9 }}
+              className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6"
+              initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ type: "spring" as const, stiffness: 100, damping: 15 }}
               viewport={{ once: true }}
@@ -301,7 +396,7 @@ export default function MenuPage() {
               {isJa ? "インドの美食" : "Indian Delicacies"}
             </motion.h2>
             <motion.p
-              className="text-lg text-charcoal/70 max-w-2xl mx-auto"
+              className="font-sans text-lg text-charcoal/60 max-w-2xl mx-auto leading-relaxed"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -312,8 +407,9 @@ export default function MenuPage() {
                 : "Discover our signature dishes crafted with the finest ingredients and traditional cooking methods passed down through generations."}
             </motion.p>
           </div>
+
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -323,21 +419,24 @@ export default function MenuPage() {
               <motion.div
                 key={i}
                 variants={itemVariants}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group"
+                className="group relative rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-2xl transition-all duration-500"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={dish.src}
                     alt={isJa ? dish.nameJa : dish.name}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-charcoal/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <div className="p-4 text-center">
-                  <h3 className="text-lg font-bold text-charcoal">
+                <div className="relative p-5 text-center">
+                  <h3 className="font-display text-xl md:text-2xl text-charcoal group-hover:text-saffron transition-colors duration-300">
                     {isJa ? dish.nameJa : dish.name}
                   </h3>
+                  <div className="w-8 h-0.5 bg-gold mx-auto mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </motion.div>
             ))}
@@ -346,20 +445,34 @@ export default function MenuPage() {
       </section>
 
       {/* Full Menu Gallery */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+      <section className="py-24 bg-white pattern-overlay relative">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.div
+              className="flex items-center justify-center gap-4 mb-6"
+              initial={{ opacity: 0, scaleX: 0 }}
+              whileInView={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="h-px bg-gradient-to-r from-transparent to-gold flex-1 max-w-[80px]" />
+              <span className="text-gold text-xs tracking-[0.3em] uppercase font-sans">
+                {isJa ? "全メニュー" : "Complete offerings"}
+              </span>
+              <div className="h-px bg-gradient-to-l from-transparent to-gold flex-1 max-w-[80px]" />
+            </motion.div>
+
             <motion.h2
-              className="text-3xl md:text-4xl font-bold text-charcoal mb-4"
+              className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-4"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ type: "spring" as const, stiffness: 80, damping: 12 }}
               viewport={{ once: true }}
             >
-              {isJa ? "メニュー" : "Menu"}
+              {isJa ? "メニュー" : "Our Menu"}
             </motion.h2>
             <motion.p
-              className="text-lg text-charcoal/70"
+              className="font-sans text-lg text-charcoal/50"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -370,8 +483,9 @@ export default function MenuPage() {
                 : "Click on any menu image to view full size"}
             </motion.p>
           </div>
+
           <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5"
             variants={rowContainerVariants}
             initial="hidden"
             whileInView="visible"
@@ -382,18 +496,18 @@ export default function MenuPage() {
                 key={i}
                 variants={gridItemVariants}
                 onClick={() => openLightbox(i)}
-                whileHover={{ scale: 1.1, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
-                className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-md cursor-pointer group bg-charcoal/5"
+                whileHover={{ y: -6, boxShadow: "0 20px 40px rgba(107,29,42,0.2)" }}
+                className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-md cursor-pointer group bg-cream-dark"
               >
                 <Image
                   src={src}
                   alt={`Menu page ${i + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
                   sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 17vw"
                 />
-                <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
-                  <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm font-medium bg-charcoal/60 px-2 py-1 rounded">
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end justify-center pb-4">
+                  <span className="text-white text-xs font-sans tracking-wider uppercase bg-charcoal/50 backdrop-blur-sm px-3 py-1.5 rounded-full">
                     {isJa ? "拡大" : "View"}
                   </span>
                 </div>
@@ -404,54 +518,68 @@ export default function MenuPage() {
       </section>
 
       {/* Takeout Special */}
-      <section className="py-16 bg-charcoal">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="py-24 bg-burgundy noise-overlay relative overflow-hidden">
+        <div className="absolute inset-0 pattern-overlay opacity-10" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ type: "spring" as const, stiffness: 80, damping: 15 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-px bg-gradient-to-r from-gold to-transparent flex-1 max-w-[60px]" />
+                <span className="text-gold text-xs tracking-[0.3em] uppercase font-sans">
+                  {isJa ? "テイクアウト" : "Takeaway"}
+                </span>
+              </div>
+
+              <h2 className="font-display text-4xl md:text-5xl text-white mb-6 leading-tight">
                 {isJa ? "テイクアウト特集" : "Takeout Special"}
               </h2>
-              <p className="text-gray-300 mb-6">
+              <p className="font-sans text-cream/70 text-lg mb-8 leading-relaxed">
                 {isJa
                   ? "お気に入りの料理をお持ち帰りください。テイクアウトで10%割引！"
                   : "Take your favorite dishes to go. Get 10% off on takeout orders!"}
               </p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-3 text-gray-300">
-                  <span className="w-2 h-2 bg-saffron rounded-full" />
-                  {isJa ? "全メニュー対象" : "All menu items available for takeout"}
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <span className="w-2 h-2 bg-saffron rounded-full" />
-                  {isJa ? "テイクアウト10%割引" : "10% discount on takeout orders"}
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <span className="w-2 h-2 bg-saffron rounded-full" />
-                  {isJa ? "電話で事前注文可能" : "Pre-order by phone available"}
-                </li>
+              <ul className="space-y-4 mb-10">
+                {[
+                  { ja: "全メニュー対象", en: "All menu items available for takeout" },
+                  { ja: "テイクアウト10%割引", en: "10% discount on takeout orders" },
+                  { ja: "電話で事前注文可能", en: "Pre-order by phone available" },
+                ].map((item, idx) => (
+                  <motion.li
+                    key={idx}
+                    className="flex items-center gap-4 text-cream/80 font-sans"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + idx * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <span className="w-2 h-2 bg-gold rounded-full flex-shrink-0" />
+                    {isJa ? item.ja : item.en}
+                  </motion.li>
+                ))}
               </ul>
               <motion.a
                 href="tel:053-451-0154"
-                className="inline-flex items-center gap-2 bg-saffron text-charcoal px-6 py-3 rounded-lg font-semibold hover:bg-saffron-light transition-colors"
+                className="inline-flex items-center gap-3 bg-gold text-charcoal px-8 py-4 rounded-full font-sans font-semibold hover:bg-gold-light transition-colors duration-300 shadow-lg hover:shadow-xl"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" as const }}
+                  animate={{ rotate: [0, 15, -15, 0] }}
+                  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" as const }}
                 >
                   <Phone className="w-5 h-5" />
                 </motion.div>
                 {isJa ? "今すぐ注文" : "Order Now"}
               </motion.a>
             </motion.div>
+
             <motion.div
-              className="grid grid-cols-2 gap-4"
+              className="grid grid-cols-2 gap-5"
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
@@ -461,7 +589,8 @@ export default function MenuPage() {
                 <motion.div
                   key={i}
                   variants={itemVariants}
-                  className="relative aspect-square rounded-xl overflow-hidden shadow-lg"
+                  className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl"
+                  whileHover={{ scale: 1.03, rotate: i % 2 === 0 ? 1 : -1 }}
                 >
                   <Image
                     src={src}
@@ -470,6 +599,7 @@ export default function MenuPage() {
                     className="object-cover"
                     sizes="(max-width: 1024px) 50vw, 25vw"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-burgundy/40 to-transparent" />
                 </motion.div>
               ))}
             </motion.div>
@@ -477,66 +607,90 @@ export default function MenuPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-charcoal text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      {/* Footer CTA */}
+      <footer className="relative bg-charcoal py-20 noise-overlay overflow-hidden">
+        <div className="absolute inset-0 pattern-overlay opacity-5" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+          >
             <motion.div
-              className="text-center md:text-left"
+              className="flex justify-center mb-8"
+              whileHover={{ y: -3 }}
+            >
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" as const }}
+              >
+                <Image
+                  src="/images/decorative/old-typical-phone.png"
+                  alt="Phone"
+                  width={56}
+                  height={56}
+                  className="opacity-80"
+                />
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              className="flex items-center justify-center gap-3 mb-4"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="h-px bg-gradient-to-r from-transparent to-gold/40 w-12" />
+              <span className="text-gold text-xs tracking-[0.3em] uppercase font-sans">
+                {isJa ? "ご予約はこちら" : "Reservations"}
+              </span>
+              <div className="h-px bg-gradient-to-l from-transparent to-gold/40 w-12" />
+            </motion.div>
+
+            <motion.a
+              href="tel:053-451-0154"
+              className="font-display text-4xl md:text-5xl text-saffron hover:text-saffron-light transition-colors duration-300 inline-block mb-8"
+              whileHover={{ scale: 1.08 }}
+              transition={{ type: "spring" as const, stiffness: 300, damping: 15 }}
+            >
+              053-451-0154
+            </motion.a>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
             >
               <Image
                 src="/images/logos/cropped-KumarLogo1-2-1-300x143.png"
                 alt="Kumar Restaurant Logo"
-                width={200}
-                height={95}
-                className="mx-auto md:mx-0 mb-4"
+                width={180}
+                height={85}
+                className="mx-auto mb-6"
               />
             </motion.div>
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <Image
-                  src="/images/decorative/old-typical-phone.png"
-                  alt="Phone"
-                  width={40}
-                  height={40}
-                  className="opacity-70"
-                />
-                <div>
-                  <p className="text-sm text-gray-400">
-                    {isJa ? "ご予約はこちら" : "Call for All Your Reservations"}
-                  </p>
-                  <motion.a
-                    href="tel:053-451-0154"
-                    className="text-xl font-bold text-saffron hover:text-saffron-light transition-colors inline-block"
-                    whileHover={{ scale: 1.15 }}
-                    transition={{ type: "spring" as const, stiffness: 300, damping: 15 }}
-                  >
-                    053-451-0154
-                  </motion.a>
-                </div>
-              </div>
-            </div>
+
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-6" />
+
             <motion.div
-              className="text-center md:text-right"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
             >
-              <p className="text-gray-400 text-sm mb-2">
+              <p className="font-sans text-white/40 text-sm mb-2">
                 {isJa
                   ? `© ${new Date().getFullYear()} クマールレストラン. All rights reserved.`
                   : `© ${new Date().getFullYear()} Kumar Restaurant. All rights reserved.`}
               </p>
-              <p className="text-saffron font-semibold text-lg italic">
+              <p className="font-display text-gold/80 text-lg italic">
                 {isJa ? "スパイシーな生活を" : "Spice up life at Kumar Restaurant"}
               </p>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </footer>
 
@@ -545,7 +699,7 @@ export default function MenuPage() {
         {lightboxIndex !== null && (
           <motion.div
             key="lightbox"
-            className="fixed inset-0 z-50 bg-charcoal/95 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-charcoal/95 flex items-center justify-center noise-overlay"
             onClick={closeLightbox}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -554,8 +708,8 @@ export default function MenuPage() {
           >
             <motion.button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 text-white hover:text-saffron transition-colors z-10"
-              whileHover={{ scale: 1.1 }}
+              className="absolute top-6 right-6 text-white/70 hover:text-gold transition-colors z-10"
+              whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
             >
               <X className="w-8 h-8" />
@@ -563,45 +717,49 @@ export default function MenuPage() {
 
             <motion.button
               onClick={(e) => { e.stopPropagation(); navigateLightbox("prev"); }}
-              className="absolute left-4 text-white hover:text-saffron transition-colors z-10 p-2"
-              whileHover={{ scale: 1.2, x: -3 }}
+              className="absolute left-4 md:left-8 text-white/70 hover:text-gold transition-colors z-10 p-3"
+              whileHover={{ scale: 1.15, x: -4 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring" as const, stiffness: 400, damping: 15 }}
             >
               <ChevronLeft className="w-10 h-10" />
             </motion.button>
 
-            <motion.div
-              className="relative max-w-4xl max-h-[90vh] w-full h-full p-4"
-              onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ type: "spring" as const, stiffness: 120, damping: 18 }}
-              key={lightboxIndex}
-            >
-              <Image
-                src={allMenuImages[lightboxIndex]}
-                alt={`Menu page ${lightboxIndex + 1}`}
-                fill
-                className="object-contain"
-                sizes="90vw"
-                priority
-              />
-            </motion.div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                className="relative max-w-5xl max-h-[90vh] w-full h-full p-4 md:p-8"
+                onClick={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, scale: 0.88, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.88, y: -20 }}
+                transition={{ type: "spring" as const, stiffness: 120, damping: 20 }}
+                key={lightboxIndex}
+              >
+                <Image
+                  src={allMenuImages[lightboxIndex]}
+                  alt={`Menu page ${lightboxIndex + 1}`}
+                  fill
+                  className="object-contain rounded-lg"
+                  sizes="90vw"
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
 
             <motion.button
               onClick={(e) => { e.stopPropagation(); navigateLightbox("next"); }}
-              className="absolute right-4 text-white hover:text-saffron transition-colors z-10 p-2"
-              whileHover={{ scale: 1.2, x: 3 }}
+              className="absolute right-4 md:right-8 text-white/70 hover:text-gold transition-colors z-10 p-3"
+              whileHover={{ scale: 1.15, x: 4 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring" as const, stiffness: 400, damping: 15 }}
             >
               <ChevronRight className="w-10 h-10" />
             </motion.button>
 
-            <div className="absolute bottom-4 text-white text-sm">
-              {lightboxIndex + 1} / {allMenuImages.length}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3">
+              <span className="font-sans text-white/50 text-sm tracking-wider">
+                {lightboxIndex + 1} / {allMenuImages.length}
+              </span>
             </div>
           </motion.div>
         )}

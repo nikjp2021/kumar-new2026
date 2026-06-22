@@ -30,7 +30,11 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-cream text-charcoal">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className="min-h-full flex flex-col bg-cream text-charcoal font-sans">
         <HreflangTags locale={locale} />
         <NextIntlClientProvider messages={messages}>
           <Header />

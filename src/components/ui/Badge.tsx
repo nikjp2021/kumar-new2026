@@ -9,9 +9,9 @@ interface BadgeProps {
 
 const variantStyles: Record<BadgeVariant, string> = {
   vegetarian: "bg-forest text-white",
-  vegan: "bg-green-600 text-white",
+  vegan: "bg-green-800 text-white",
   halal: "bg-blue-600 text-white",
-  glutenFree: "bg-amber-500 text-white",
+  glutenFree: "bg-orange-500 text-white",
   spicy: "bg-red text-white",
 };
 
@@ -27,7 +27,7 @@ export function Badge({ variant, className }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full",
+        "inline-flex items-center justify-center px-2.5 py-0.5 text-xs font-bold rounded-full",
         variantStyles[variant],
         className
       )}
