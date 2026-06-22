@@ -1,19 +1,17 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 export function LanguageToggle({ className }: { className?: string }) {
   const locale = useLocale();
-  const router = useRouter();
 
   const toggleLanguage = () => {
     const newLocale = locale === "en" ? "ja" : "en";
-    // Get current path from window, remove locale prefix, and navigate
     const currentPath = window.location.pathname;
     const pathWithoutLocale = currentPath.replace(/^\/(en|ja)/, "") || "/";
-    router.push(`/${newLocale}${pathWithoutLocale}`);
+    // Use direct navigation to force full page reload with new locale
+    window.location.href = `/${newLocale}${pathWithoutLocale}`;
   };
 
   return (
