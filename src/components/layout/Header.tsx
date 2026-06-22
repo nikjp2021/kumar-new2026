@@ -6,21 +6,31 @@ import { useLocale, useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-function LanguageToggleBtn() {
+function LanguageToggleBtn({ scrolled }: { scrolled: boolean }) {
   const locale = useLocale();
   const toggle = () => {
     const newLocale = locale === "en" ? "ja" : "en";
     const path = window.location.pathname.replace(/^\/(en|ja)/, "") || "/";
     window.location.href = `/${newLocale}${path}`;
   };
+  // Show the language you can SWITCH TO, not the current one
   return (
     <button
       onClick={toggle}
-      className="flex items-center rounded-full border border-current/15 overflow-hidden text-[13px] font-medium cursor-pointer"
-      aria-label={locale === "en" ? "Switch to Japanese" : "Switch to English"}
+      className={cn(
+        "flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all duration-300 cursor-pointer text-[13px] font-medium",
+        scrolled
+          ? "border-charcoal/20 text-charcoal hover:border-saffron hover:text-saffron"
+          : "border-white/30 text-white/90 hover:border-white hover:text-white"
+      )}
+      aria-label={locale === "en" ? "Japaneseに切替" : "Switch to English"}
     >
-      <span className={cn("px-3 py-1.5 transition-all duration-300", locale === "en" ? "bg-saffron text-white" : "text-charcoal/60 hover:text-charcoal")}>EN</span>
-      <span className={cn("px-3 py-1.5 transition-all duration-300", locale === "ja" ? "bg-saffron text-white" : "text-charcoal/60 hover:text-charcoal")}>JP</span>
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <span>{locale === "en" ? "日本語" : "English"}</span>
     </button>
   );
 }
@@ -102,7 +112,7 @@ export function Header() {
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Language Toggle */}
             <div className="hidden sm:flex">
-              <LanguageToggleBtn />
+              <LanguageToggleBtn scrolled={scrolled} />
             </div>
 
             {/* Reservation Button */}
@@ -184,7 +194,7 @@ export function Header() {
             )}
             style={{ transitionDelay: isOpen ? `${navLinks.length * 60 + 100}ms` : "0ms" }}
           >
-            <LanguageToggleBtn />
+            <LanguageToggleBtn scrolled={true} />
           </div>
 
           {/* Mobile Reservation */}
